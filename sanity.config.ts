@@ -12,6 +12,7 @@ import {
   projectInfoWidget,
 } from '@sanity/dashboard';
 import { documentListWidget } from 'sanity-plugin-dashboard-widget-document-list';
+import { unsplashImageAsset } from 'sanity-plugin-asset-source-unsplash'
 import { singletonPlugin } from 'sanity/plugins/singleton';
 
 export default defineConfig({
@@ -41,6 +42,7 @@ export default defineConfig({
       'settings',
     ]),
     visionTool(),
+    unsplashImageAsset(),
   ],
   schema,
 });

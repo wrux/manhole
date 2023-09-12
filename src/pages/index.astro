@@ -1,18 +1,68 @@
 ---
 import { getPostTeasers } from '../sanity/queries';
 import BaseLayout from 'components/layout/BaseLayout.astro';
+import PageLayout from 'components/layout/PageLayout.astro';
 import { Heading, PostTeaser } from 'components/shared';
 
 const posts = await getPostTeasers();
 ---
 
-<BaseLayout>
-  <div class="container xl:max-w-[125rm]">
+<PageLayout>
+  <div class="container mb:8 md:mb-12 lg:mb-16">
     <Heading class:list={['mb-8']} as="h1">Welcome to Manhole.com</Heading>
-    <div
-      class="grid xs:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4"
-    >
-      {posts.map((post) => <PostTeaser post={post} />)}
+    <div class="prose xl:prose-xl dark:prose-invert">
+      <p>
+        Cras mattis consectetur purus sit amet fermentum. Maecenas faucibus
+        mollis interdum. Aenean lacinia bibendum nulla sed consectetur.
+      </p>
+      <p>
+        Maecenas sed diam eget risus varius blandit sit amet non magna. Duis
+        mollis, est non commodo luctus.
+      </p>
     </div>
   </div>
-</BaseLayout>
+
+  <div
+    class="grid xs:grid-cols-2 lg:grid-cols-3 flex-1 align-top justify-start gap-4 max-w-[125rem] mx-auto"
+  >
+    {posts.map((post) => <PostTeaser post={post} />)}
+    {
+      posts.length % 3 !== 0 && (
+        <div class="hidden align-middle justify-center flex-col border-2 border-dashed border-gray-500 col-span-[-1] text-center teaser-placeholder">
+          <p>Feel free to contribute</p>
+          <p>
+            <a href="#">Message Me</a>
+          </p>
+        </div>
+      )
+    }
+  </div>
+</PageLayout>
+
+<style>
+  .teaser-placeholder:nth-child(3n):nth-last-of-type(1) {
+    @screen xs {
+      display: flex;
+    }
+  }
+
+  .teaser-placeholder:nth-child(3n-1):nth-last-of-type(1) {
+    grid-column: span 1;
+
+    @screen xs {
+      display: flex;
+    }
+
+    @screen lg {
+      grid-column: span 2;
+    }
+  }
+
+  .teaser-placeholder:nth-child(3n-2):nth-last-of-type(1) {
+    grid-column: span 3;
+
+    @screen xs {
+      display: flex;
+    }
+  }
+</style>

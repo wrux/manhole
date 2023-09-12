@@ -4,9 +4,10 @@ import { imageFragment } from 'sanity/fragments/imageFragment';
 
 const postTeaserQuery = groq`
   *[_type=="post"]|order(_createdAt desc) {
-    ...,
+    _id,
     ${imageFragment('mainImage')},
     "slug": slug.current,
+    title,
   }
 `;
 
@@ -16,9 +17,27 @@ export async function getPostTeasers(): Promise<object[]> {
 
 const postsQuery = groq`
   *[_type=="post"]|order(_createdAt desc) {
-    ...,
+    _id,
+    credits[] {
+      ...,
+      person-> {
+        _id,
+        fullName,
+        website
+      },
+    },
+    gallery,
+    locations[]-> {
+      _key,
+      _id,
+      name,
+      "slug": slug.current,
+      type,
+    },
     ${imageFragment('mainImage')},
     "slug": slug.current,
+    title,
+    titleLocalised,
   }
 `;
 

@@ -1,0 +1,25 @@
+---
+export type Props = {
+  credits: Array<any>;
+};
+
+const { credits } = Astro.props;
+---
+
+<div>
+  <p class="mb-3 text-lg font-semibold">Credits</p>
+  {
+    credits.length > 0 ? (
+      <div class="grid items-start justify-start gap-1.5">
+        {credits.map((credit) => {
+          // const Component =
+          //   creditComponents?.[credit.type] || creditComponents.default
+          // return <Component key={credit._key} {...credit} />
+          <p>WORKS</p>;
+        })}
+      </div>
+    ) : (
+      <p>No credits.</p>
+    )
+  }
+</div>

@@ -1,0 +1,118 @@
+---
+import { getPosts } from 'sanity/queries';
+import imageUrlBuilder from '@sanity/image-url';
+import type { SanityImageSource } from '@sanity/image-url/lib/types/types';
+import { client } from 'sanity/client';
+import { Credits, Heading } from 'components/shared';
+import PageLayout from 'components/layout/PageLayout.astro';
+
+const imageBuilder = imageUrlBuilder(client);
+
+// @TODO: Refactor to use `astro-sanity-picture`.
+function urlFor(source: SanityImageSource): string {
+  return imageBuilder.image(source).width(600).height(600).url();
+}
+
+export async function getStaticPaths() {
+  const posts = await getPosts();
+  return posts.map((posts) => ({
+    params: { slug: posts.slug },
+    props: posts,
+  }));
+}
+
+type Props = any;
+
+const post = Astro.props;
+
+let invocations = 1;
+
+const fadeInAnimation = () => {
+  const delay = `${invocations++ * 250}ms`;
+  const duration = '750ms';
+  const animation = {
+    old: {
+      name: 'fadeIn',
+      delay,
+      duration,
+      easing: 'linear',
+      fillMode: 'forwards',
+    },
+    new: {
+      name: 'fadeIn',
+      delay,
+      duration,
+      easing: 'linear',
+      fillMode: 'backwards',
+    },
+  };
+  return {
+    forwards: animation,
+    backwards: animation,
+  };
+};
+
+console.log('PPPPP', post);
+---
+
+<PageLayout>
+  <div class="container">
+    <article class="grid md:grid-cols-2 gap-8">
+      <div>
+        {
+          post?.mainImage && (
+            <figure>
+              <img
+                alt={post.mainImage?.alt || ''}
+                title={post.mainImage?.alt}
+                class="max-w-full h-auto object-cover bg-gray-100 aspect-square"
+                src={urlFor(post.mainImage)}
+                transition:name={`post_${post._id}_image`}
+              />
+            </figure>
+          )
+        }
+      </div>
+
+      <div class="space-y-4">
+        <Heading as="h1" transition:animate={fadeInAnimation()}>
+          {post.title}
+        </Heading>
+
+        {
+          post?.locations && (
+            <p
+              class="flex gap-3 flex-wrap text-lg"
+              transition:animate={fadeInAnimation()}
+            >
+              <span class="sr-only">Locations:</span>
+              {post.locations.map((location) => (
+                <span>{location.name}</span>
+              ))}
+            </p>
+          )
+        }
+
+        <!-- {post?.summary && (
+          <SanityPortableText content={post.summary} />
+        )} -->
+
+        {
+          post?.credits && post.credits.length > 0 && (
+            <div class="space-y-4">
+              <hr class="opacity-1 max-w-xs border-t-2 border-gray-300" />
+              <Credits credits={post.credits} />
+            </div>
+          )
+        }
+
+        <p transition:animate={fadeInAnimation()}>
+          Lorem ipsum dolor, sit amet consectetur adipisicing elit. Est, nemo
+          quam beatae consequuntur dolore distinctio numquam porro illo fugit ea
+          qui, aliquam natus molestias non incidunt eos laboriosam similique
+          vitae.
+        </p>
+      </div>
+    </article>
+  </div>
+</PageLayout>
