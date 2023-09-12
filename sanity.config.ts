@@ -12,6 +12,7 @@ import {
   projectInfoWidget,
 } from '@sanity/dashboard';
 import { documentListWidget } from 'sanity-plugin-dashboard-widget-document-list';
+import { singletonPlugin } from 'sanity/plugins/singleton';
 
 export default defineConfig({
   name: 'manhole',
@@ -36,6 +37,9 @@ export default defineConfig({
       structure: settingsStructure(settingsType),
     }),
     media(),
+    singletonPlugin([
+      'settings',
+    ]),
     visionTool(),
   ],
   schema,
