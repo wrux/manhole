@@ -8,5 +8,9 @@
   "prettier.semi": true,
   "prettier.singleQuote": true,
   "prettier.tabWidth": 2,
-  "prettier.useTabs": false
+  "prettier.useTabs": false,
+  "tailwindCSS.experimental.classRegex": [
+    ["cva\\(([^)]*)\\)", "[\"'`]([^\"'`]*).*?[\"'`]"],
+    ["cx\\(([^)]*)\\)", "(?:'|\"|`)([^']*)(?:'|\"|`)"]
+  ]
 }

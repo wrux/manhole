@@ -1,0 +1,61 @@
+---
+import CommonHead from './CommonHead.astro';
+
+const navigation = [
+  { href: '/', label: 'Home' },
+  { href: '/archive', label: 'Archive' },
+  { href: '/about', label: 'About' },
+];
+---
+
+<html lang="en" class="flex flex-col min-h-full" transition:animate="none">
+  <head>
+    <CommonHead />
+    <title>Manhole.com</title>
+  </head>
+  <body
+    class="flex flex-col min-h-full flex-1 bg-white text-black dark:bg-black dark:text-white"
+  >
+    <header
+      class="sticky top-0 w-screen flex mb-8 py-6 justify-center bg-black/70 backdrop-blur-lg"
+    >
+      <div class="container">
+        <a class="text-2xl font-bold tracking-tight uppercase" href="/">
+          Manhole
+        </a>
+      </div>
+    </header>
+
+    <main class="flex-1 w-screen min-h-screen" transition:animate="fade">
+      <slot />
+    </main>
+
+    <footer class="mt-8 py-8 lg:py-16 bg-gray-100 dark:bg-gray-900 w-screen">
+      <div class="container">
+        <div class="grid grid-cols-3 gap-8 sm:grid-cols-6 md:grid-cols-12">
+          <div class="col-span-3 sm:col-span-6">
+            <a href="/">Manhole</a>
+          </div>
+
+          <div class="col-span-3">
+            <h5>Navigation</h5>
+            <ul>
+              {
+                navigation.map((link) => (
+                  <li>
+                    <a href={link.href}>{link.label}</a>
+                  </li>
+                ))
+              }
+            </ul>
+          </div>
+
+          <div class="col-span-3">
+            <h5>Social</h5>
+            <p>Find us on social media</p>
+          </div>
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>

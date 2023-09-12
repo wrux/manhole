@@ -17,6 +17,9 @@ export default {
       fontFamily: {
         sans: ['InterVariable', 'Inter', ...defaultTheme.fontFamily.sans],
       },
+      screens: {
+        xs: '475px',
+      },
     },
   },
   plugins: [require('@tailwindcss/typography')],

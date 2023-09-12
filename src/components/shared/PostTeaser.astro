@@ -1,0 +1,52 @@
+---
+import imageUrlBuilder from '@sanity/image-url';
+import type { SanityImageSource } from '@sanity/image-url/lib/types/types';
+import { client } from 'sanity/client';
+
+const imageBuilder = imageUrlBuilder(client);
+
+interface Post {
+  mainImage: SanityImageSource;
+  title: string;
+  titleLocalised: string;
+}
+
+export type Props = {
+  post: Post;
+};
+
+const { post } = Astro.props;
+
+// @TODO: Refactor to use `astro-sanity-picture`.
+function urlFor(source: SanityImageSource): string {
+  return imageBuilder.image(source).width(600).height(600).url();
+}
+---
+
+<article class="relative bg-gray-900 group">
+  {
+    post?.mainImage && (
+      <figure>
+        <img
+          alt={post.mainImage?.alt || ''}
+          title={post.mainImage?.alt}
+          class="absolute inset-0 max-w-full h-auto object-cover bg-gray-100 aspect-square"
+          src={urlFor(post.mainImage)}
+          transition:name={`post_${post._id}_image`}
+        />
+      </figure>
+    )
+  }
+  <div
+    class="flex items-end relative aspect-square z-10 pt-4 pr-8 pb-4 pl-4 opacity-0 group-hover:opacity-100 transition-opacity"
+  >
+    <h2>
+      <a
+        class="block before:absolute before:inset-0 before:bg-primary/50 before:z-[-1]"
+        href={`post/${post.slug}`}
+      >
+        {post.title}
+      </a>
+    </h2>
+  </div>
+</article>

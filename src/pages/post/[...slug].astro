@@ -1,0 +1,54 @@
+---
+import { getPosts } from 'sanity/queries';
+import imageUrlBuilder from '@sanity/image-url';
+import type { SanityImageSource } from '@sanity/image-url/lib/types/types';
+import { client } from 'sanity/client';
+import BaseLayout from 'components/layout/BaseLayout.astro';
+import { Heading } from 'components/shared';
+const imageBuilder = imageUrlBuilder(client);
+
+// @TODO: Refactor to use `astro-sanity-picture`.
+function urlFor(source: SanityImageSource): string {
+  return imageBuilder.image(source).width(600).height(600).url();
+}
+
+export async function getStaticPaths() {
+  const posts = await getPosts();
+  return posts.map((posts) => ({
+    params: { slug: posts.slug },
+    props: posts,
+  }));
+}
+
+type Props = any;
+
+const post = Astro.props;
+---
+
+<BaseLayout>
+  <div class="container">
+    <article class="grid md:grid-cols-2 gap-8">
+      <div>
+        {
+          post?.mainImage && (
+            <figure>
+              <img
+                alt={post.mainImage?.alt || ''}
+                title={post.mainImage?.alt}
+                class="max-w-full h-auto object-cover bg-gray-100 aspect-square"
+                src={urlFor(post.mainImage)}
+                transition:name={`post_${post._id}_image`}
+              />
+            </figure>
+          )
+        }
+      </div>
+
+      <div>
+        <Heading as="h1">
+          {post.title}
+        </Heading>
+      </div>
+    </article>
+  </div>
+</BaseLayout>
