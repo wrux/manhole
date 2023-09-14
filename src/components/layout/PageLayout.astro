@@ -7,10 +7,13 @@ import BaseLayout from './BaseLayout.astro';
   <div class="sticky top-0 w-screen h-24 mb-8 z-50">
     <header
       id="site-header"
-      class="header flex justify-center bg-black/70 backdrop-blur-lg transition-all duration-300"
+      class="header flex justify-center bg-white/70 dark:bg-black/70 backdrop-blur-lg transition-all duration-300"
     >
       <div class="container">
-        <a class="text-2xl font-bold tracking-tight uppercase" href="/">
+        <a
+          class="text-2xl font-bold tracking-tight uppercase hover:text-secondary focus:text-secondary transition-colors duration-300"
+          href="/"
+        >
           Manhole
         </a>
       </div>
@@ -28,7 +31,7 @@ import BaseLayout from './BaseLayout.astro';
       <div class="grid gap-y-8 gap-x-16 md:grid-cols-2 lg:grid-cols-4">
         <div>
           <a
-            class="text-2xl font-bold tracking-tight leading-none link-reverse"
+            class="text-2xl font-bold tracking-tight uppercase link-reverse"
             href="/"
           >
             Manhole
@@ -85,6 +88,6 @@ import BaseLayout from './BaseLayout.astro';
   }
 
   .header.small {
-    @apply py-2;
+    @apply py-2 shadow-md;
   }
 </style>
