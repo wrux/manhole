@@ -13,10 +13,7 @@
 
   &:hover,
   &:focus {
-    @apply bg-primary;
-
-    border-color: currentColor;
-    color: white;
+    @apply bg-secondary border-secondary;
   }
 }
 

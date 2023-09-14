@@ -2,7 +2,6 @@ import { BookIcon } from '@sanity/icons';
 import { format, parseISO } from 'date-fns';
 import { defineField, defineType } from 'sanity';
 
-import blocks from '../blocks';
 import { Camera, Pencil, Person } from '@phosphor-icons/react';
 
 const capitalized = (s: string) => s.charAt(0).toUpperCase() + s.slice(1);
@@ -58,11 +57,11 @@ export default defineType({
       group: 'general',
     }),
     defineField({
-      name: 'content',
-      title: 'Content',
+      name: 'body',
+      title: 'Body',
+      description: 'Extended post body content',
       type: 'array',
-      of: blocks,
-      validation: (rule) => rule.required(),
+      of: [{ type: 'block' }],
       group: 'general',
     }),
     defineField({

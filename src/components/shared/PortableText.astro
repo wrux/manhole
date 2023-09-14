@@ -1,0 +1,18 @@
+---
+import { PortableText as PortableTextInternal } from 'astro-portabletext';
+import { mergeComponents } from 'astro-portabletext/utils';
+
+type PortableTextProps = Parameters<typeof PortableTextInternal>[0];
+
+export type Props = Pick<PortableTextProps, 'value' | 'components'>;
+
+const { value, components: overrideComponents = {} } = Astro.props;
+
+const customComponents = {
+  type: {},
+};
+
+const components = mergeComponents(customComponents, overrideComponents);
+---
+
+<PortableTextInternal value={value} components={components} />

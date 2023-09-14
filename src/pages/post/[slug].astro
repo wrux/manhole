@@ -3,7 +3,13 @@ import { getPosts } from 'sanity/queries';
 import imageUrlBuilder from '@sanity/image-url';
 import type { SanityImageSource } from '@sanity/image-url/lib/types/types';
 import { client } from 'sanity/client';
-import { Credits, Heading, PostTeaser } from 'components/shared';
+import {
+  Credits,
+  Heading,
+  PortableText,
+  PostTeaser,
+  Text,
+} from 'components/shared';
 import PageLayout from 'components/layout/PageLayout.astro';
 
 const imageBuilder = imageUrlBuilder(client);
@@ -96,28 +102,30 @@ const fadeInAnimation = () => {
           )
         }
 
-        <!-- {post?.summary && (
-          <SanityPortableText content={post.summary} />
-        )} -->
+        {
+          (post?.body || post?.summary) && (
+            <div
+              class="max-w-prose lg:py-4"
+              transition:animate={fadeInAnimation()}
+              transition:name={`post_${post._id}_description`}
+            >
+              <PortableText value={post.body || post.summary} components={{}} />
+            </div>
+          )
+        }
 
-        <!-- {
+        {
           post?.credits && post.credits.length > 0 && (
-            <div class="space-y-4">
+            <div
+              class="space-y-4"
+              transition:animate={fadeInAnimation()}
+              transition:name={`post_${post._id}_credits`}
+            >
               <hr class="opacity-1 max-w-xs border-t-2 border-gray-300" />
               <Credits credits={post.credits} />
             </div>
           )
-        } -->
-
-        <p
-          transition:animate={fadeInAnimation()}
-          transition:name={`post_${post._id}_description`}
-        >
-          Lorem ipsum dolor, sit amet consectetur adipisicing elit. Est, nemo
-          quam beatae consequuntur dolore distinctio numquam porro illo fugit ea
-          qui, aliquam natus molestias non incidunt eos laboriosam similique
-          vitae.
-        </p>
+        }
       </div>
     </article>
 
