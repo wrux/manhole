@@ -23,7 +23,7 @@ const posts = await getPostTeasers();
     {posts.map((post) => <PostTeaser post={post} />)}
     {
       posts.length % 3 !== 0 && (
-        <div class="hidden align-middle justify-center flex-col border-2 border-dashed border-white/30 col-span-[-1] text-center teaser-placeholder space-y-4">
+        <div class="hidden align-middle justify-center flex-col border-2 border-dashed border-black/30 dark:border-white/30 col-span-[-1] text-center teaser-placeholder space-y-4">
           <Heading as="p" size="h3">
             Feel free to contribute
           </Heading>

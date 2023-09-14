@@ -18,12 +18,13 @@ export async function getPostTeasers(): Promise<object[]> {
 const postsQuery = groq`
   *[_type=="post"]|order(_createdAt desc) {
     _id,
+    body,
     credits[] {
       ...,
       person-> {
         _id,
         fullName,
-        website
+        website,
       },
     },
     gallery,
@@ -42,6 +43,7 @@ const postsQuery = groq`
       title,
     },
     "slug": slug.current,
+    summary,
     title,
     titleLocalised,
   }

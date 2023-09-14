@@ -1,21 +1,49 @@
 ---
+import { Heading } from '.';
+
 export type Props = {
   credits: Array<any>;
 };
 
-const { credits } = Astro.props;
+const { credits, ...props } = Astro.props;
+
+const labels = {
+  author: 'Written by',
+  edit: 'Edited by',
+  photo: 'Photo by',
+};
 ---
 
-<div>
-  <p class="mb-3 text-lg font-semibold">Credits</p>
+<div {...props}>
+  <Heading as="p" class:list="mb-3" size="h6">Credits</Heading>
   {
     credits.length > 0 ? (
-      <div class="grid items-start justify-start gap-1.5">
+      <div class="space-y-1.5">
         {credits.map((credit) => {
-          // const Component =
-          //   creditComponents?.[credit.type] || creditComponents.default
-          // return <Component key={credit._key} {...credit} />
-          <p>WORKS</p>;
+          const label = labels?.[credit.type];
+          return (
+            <div>
+              <p>
+                {label && (
+                  <span class="inline mr-1 font-semibold">{label}</span>
+                )}
+                {credit?.person?.website ? (
+                  <a
+                    href={credit?.person?.website}
+                    class="link"
+                    target="_blank"
+                    rel="noreferrer"
+                  >
+                    {credit?.person?.fullName}
+                    <span class="sr-only">(opens in new tab)</span>
+                  </a>
+                ) : (
+                  <span>{credit?.person?.fullName}</span>
+                )}
+              </p>
+              {credit?.note && <p class="text-sm italic">{credit.note}</p>}
+            </div>
+          );
         })}
       </div>
     ) : (
