@@ -1,55 +1,90 @@
 ---
+import { Heading, Text } from 'components/shared';
 import BaseLayout from './BaseLayout.astro';
-
-const navigation = [
-  { href: '/', label: 'Home' },
-  { href: '/archive', label: 'Archive' },
-  { href: '/about', label: 'About' },
-];
 ---
 
 <BaseLayout>
-  <header
-    class="sticky top-0 w-screen flex mb-8 py-6 justify-center bg-black/70 backdrop-blur-lg z-50"
-  >
-    <div class="container">
-      <a class="text-2xl font-bold tracking-tight uppercase" href="/">
-        Manhole
-      </a>
-    </div>
-  </header>
+  <div class="sticky top-0 w-screen h-24 mb-8 z-50">
+    <header
+      id="site-header"
+      class="header flex justify-center bg-black/70 backdrop-blur-lg transition-all duration-300"
+    >
+      <div class="container">
+        <a class="text-2xl font-bold tracking-tight uppercase" href="/">
+          Manhole
+        </a>
+      </div>
+    </header>
+  </div>
 
   <main class="flex-1 w-screen" transition:animate="fade">
     <slot />
   </main>
 
   <footer
-    class="mt-8 md:mt-12 lg:mt-16 py-8 lg:py-16 bg-gray-100 dark:bg-gray-900 w-screen"
+    class="mt-8 md:mt-12 lg:mt-16 pt-8 lg:pt-16 pb-16 md:pb-24 lg:pb-32 bg-gray-100 dark:bg-gray-900 w-screen"
   >
     <div class="container">
-      <div class="grid grid-cols-3 gap-8 sm:grid-cols-6 md:grid-cols-12">
-        <div class="col-span-3 sm:col-span-6">
-          <a href="/">Manhole</a>
+      <div class="grid gap-y-8 gap-x-16 md:grid-cols-2 lg:grid-cols-4">
+        <div>
+          <a
+            class="text-2xl font-bold tracking-tight leading-none link-reverse"
+            href="/"
+          >
+            Manhole
+          </a>
         </div>
 
-        <div class="col-span-3">
-          <h5>Navigation</h5>
-          <ul>
-            {
-              navigation.map((link) => (
-                <li>
-                  <a href={link.href}>{link.label}</a>
-                </li>
-              ))
-            }
-          </ul>
+        <div class="space-y-4">
+          <Heading as="h5" size="h5" class:list="leading-none">
+            About Manhole
+          </Heading>
+          <Text size="sm">
+            Manhole is a collection of images of manhole covers from around the
+            world.
+          </Text>
+          <Text size="sm">
+            Manhole is an open source project by <a
+              href="https://callum.co.uk"
+              target="_blank"
+              class="link">Callum Bonnyman</a
+            >.
+          </Text>
         </div>
 
-        <div class="col-span-3">
-          <h5>Social</h5>
-          <p>Find us on social media</p>
+        <div class="lg:col-span-2 space-y-4">
+          <Heading as="h5" size="h5" class:list="leading-none">
+            Like this website?
+          </Heading>
+          <Text size="sm">
+            Check out and star the project on
+            <a
+              href="https://github.com/wrux/manhole"
+              rel="nofollow"
+              class="link"
+              target="_blank">Github</a
+            >.
+          </Text>
         </div>
       </div>
     </div>
   </footer>
 </BaseLayout>
+
+<script>
+  window.addEventListener('scroll', () => {
+    document
+      .getElementById('site-header')
+      ?.classList.toggle('small', window.scrollY > 0);
+  });
+</script>
+
+<style is:scoped>
+  .header {
+    @apply py-8;
+  }
+
+  .header.small {
+    @apply py-2;
+  }
+</style>

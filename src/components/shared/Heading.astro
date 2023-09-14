@@ -1,26 +1,26 @@
 ---
 import { cva, type VariantProps } from 'class-variance-authority';
 
-const sectionVariants = cva(['font-serif'], {
+const sectionVariants = cva(['font-sans', 'font-bold', 'leading-tight'], {
   variants: {
     size: {
-      h1: 'text-5xl font-bold leading-tight',
-      h2: 'bg-blue-500',
-      h3: 'bg-green-500',
-      h4: 'bg-orange-500',
-      h5: 'bg-purple-500',
-      h6: 'bg-teal-500',
+      h1: 'text-5xl',
+      h2: 'text-4xl',
+      h3: 'text-3xl',
+      h4: 'text-2xl',
+      h5: 'text-xl uppercase tracking-wider',
+      h6: 'text-lg',
     },
   },
 });
 
 export type Props = VariantProps<typeof sectionVariants> & {
-  as?: 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6';
+  as?: 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6' | 'p';
 };
 
-const { as: As = 'h2', size, ...props } = Astro.props;
+const { as: As = 'h2', size = 'h2', ...props } = Astro.props;
 ---
 
-<As class:list={sectionVariants({ size: size || As })} {...props}>
+<As class:list={sectionVariants({ size: size })} {...props}>
   <slot />
 </As>

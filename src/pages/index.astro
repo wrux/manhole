@@ -1,8 +1,7 @@
 ---
 import { getPostTeasers } from '../sanity/queries';
-import BaseLayout from 'components/layout/BaseLayout.astro';
 import PageLayout from 'components/layout/PageLayout.astro';
-import { Heading, PostTeaser } from 'components/shared';
+import { Heading, PostTeaser, Text } from 'components/shared';
 
 const posts = await getPostTeasers();
 ---
@@ -10,15 +9,11 @@ const posts = await getPostTeasers();
 <PageLayout>
   <div class="container mb:8 md:mb-12 lg:mb-16">
     <Heading class:list={['mb-8']} as="h1">Welcome to Manhole.com</Heading>
-    <div class="prose xl:prose-xl dark:prose-invert">
-      <p>
-        Cras mattis consectetur purus sit amet fermentum. Maecenas faucibus
-        mollis interdum. Aenean lacinia bibendum nulla sed consectetur.
-      </p>
-      <p>
-        Maecenas sed diam eget risus varius blandit sit amet non magna. Duis
-        mollis, est non commodo luctus.
-      </p>
+    <div class="max-w-prose">
+      <Text size="lg">
+        Pavement Chronicles Unveiled - Unearth street art beneath your feet from
+        all <em>around</em> the flat earth.
+      </Text>
     </div>
   </div>
 
@@ -28,10 +23,14 @@ const posts = await getPostTeasers();
     {posts.map((post) => <PostTeaser post={post} />)}
     {
       posts.length % 3 !== 0 && (
-        <div class="hidden align-middle justify-center flex-col border-2 border-dashed border-gray-500 col-span-[-1] text-center teaser-placeholder">
-          <p>Feel free to contribute</p>
+        <div class="hidden align-middle justify-center flex-col border-2 border-dashed border-white/30 col-span-[-1] text-center teaser-placeholder space-y-4">
+          <Heading as="p" size="h3">
+            Feel free to contribute
+          </Heading>
           <p>
-            <a href="#">Message Me</a>
+            <a href="mailto:callum@wrux.com" class="button">
+              Message Me
+            </a>
           </p>
         </div>
       )
