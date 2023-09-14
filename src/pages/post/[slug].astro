@@ -3,16 +3,10 @@ import { getPosts } from 'sanity/queries';
 import imageUrlBuilder from '@sanity/image-url';
 import type { SanityImageSource } from '@sanity/image-url/lib/types/types';
 import { client } from 'sanity/client';
-import {
-  Credits,
-  Heading,
-  PortableText,
-  PostTeaser,
-  Text,
-} from 'components/shared';
+import { Credits, Heading, PortableText, PostTeaser } from 'components/shared';
 import PageLayout from 'components/layout/PageLayout.astro';
 
-const imageBuilder = imageUrlBuilder(client);
+const imageBuilder = imageUrlBuilder(client).format('webp');
 
 // @TODO: Refactor to use `astro-sanity-picture`.
 function urlFor(source: SanityImageSource): string {
@@ -71,6 +65,8 @@ const fadeInAnimation = () => {
                 title={post.mainImage?.alt}
                 class="max-w-full h-auto object-cover bg-gray-100 aspect-square"
                 src={urlFor(post.mainImage)}
+                width="600"
+                height="600"
                 transition:name={`post_${post._id}_image`}
               />
             </figure>
