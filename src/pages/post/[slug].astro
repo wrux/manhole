@@ -131,7 +131,7 @@ const fadeInAnimation = () => {
       <div
         class="grid xs:grid-cols-2 lg:grid-cols-3 align-top justify-start gap-4"
       >
-        {post.morePosts.map((post) => <PostTeaser post={post} />)}
+        {post.morePosts.map((post) => <PostTeaser lazy post={post} />)}
       </div>
     </section>
   </div>

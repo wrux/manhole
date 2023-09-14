@@ -12,10 +12,11 @@ interface Post {
 }
 
 export type Props = {
+  lazy: boolean;
   post: Post;
 };
 
-const { post } = Astro.props;
+const { lazy = false, post } = Astro.props;
 
 // @TODO: Refactor to use `astro-sanity-picture`.
 function urlFor(source: SanityImageSource): string {
@@ -33,6 +34,7 @@ function urlFor(source: SanityImageSource): string {
           class="absolute inset-0 max-w-full h-auto object-cover bg-gray-100 aspect-square"
           src={urlFor(post.mainImage)}
           transition:name={`post_${post._id}_image`}
+          loading={lazy ? 'lazy' : 'eager'}
         />
       </figure>
     )

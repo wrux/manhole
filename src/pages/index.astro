@@ -20,7 +20,7 @@ const posts = await getPostTeasers();
   <div
     class="grid xs:grid-cols-2 lg:grid-cols-3 flex-1 align-top justify-start gap-4 max-w-[125rem] mx-auto"
   >
-    {posts.map((post) => <PostTeaser post={post} />)}
+    {posts.map((post, index) => <PostTeaser post={post} lazy={index >= 6} />)}
     {
       posts.length % 3 !== 0 && (
         <div class="hidden align-middle justify-center flex-col border-2 border-dashed border-black/30 dark:border-white/30 col-span-[-1] text-center teaser-placeholder space-y-4">
