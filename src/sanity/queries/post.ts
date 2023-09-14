@@ -24,7 +24,7 @@ const postsQuery = groq`
       person-> {
         _id,
         fullName,
-        website
+        website,
       },
     },
     gallery,

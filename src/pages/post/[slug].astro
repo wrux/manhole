@@ -116,14 +116,11 @@ const fadeInAnimation = () => {
 
         {
           post?.credits && post.credits.length > 0 && (
-            <div
-              class="space-y-4"
+            <Credits
+              credits={post.credits}
               transition:animate={fadeInAnimation()}
               transition:name={`post_${post._id}_credits`}
-            >
-              <hr class="opacity-1 max-w-xs border-t-2 border-gray-300" />
-              <Credits credits={post.credits} />
-            </div>
+            />
           )
         }
       </div>
