@@ -35,6 +35,12 @@ const postsQuery = groq`
       type,
     },
     ${imageFragment('mainImage')},
+    "morePosts": *[_type=="post" && _id != ^._id]|order(_createdAt desc)[0...3] {
+      _id,
+      ${imageFragment('mainImage')},
+      "slug": slug.current,
+      title,
+    },
     "slug": slug.current,
     title,
     titleLocalised,
