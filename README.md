@@ -1,4 +1,4 @@
-# 🕳️ Website for Manhole Gallery
+# 🕳️ Website for Manhole · Gallery
 
 Simple site built with AstroJS to experiment with the Astro v3 features and the View Transitions API.
 
