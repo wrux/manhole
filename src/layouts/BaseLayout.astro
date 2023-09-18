@@ -1,0 +1,69 @@
+---
+import { SEO } from 'astro-seo';
+import { ViewTransitions } from 'astro:transitions';
+
+import '~/styles/animations.css';
+import '~/styles/links.css';
+
+type meta = {
+  title?: string;
+  description?: string;
+  image?: string;
+};
+
+export type Props = {
+  meta?: meta;
+};
+
+const { meta } = Astro.props;
+
+const title = meta?.title || 'Manhole Gallery';
+const description =
+  meta?.description ||
+  'Mahole Gallery, the Pavement Chronicles. An image gallery of manhole covers from around the world.';
+const image =
+  meta?.image ||
+  'https://user-images.githubusercontent.com/5182256/131216951-8f74f425-f775-463d-a11b-0e01ad9fce8d.png';
+---
+
+<html lang="en" class="flex flex-col min-h-full" transition:animate="none">
+  <head>
+    <meta charset="utf-8" />
+
+    <SEO
+      title={title}
+      description={description}
+      openGraph={{
+        basic: {
+          title,
+          type: 'A type.',
+          image,
+        },
+      }}
+      twitter={{
+        creator: '@wrux',
+      }}
+      extend={{
+        link: [
+          { rel: 'icon', type: 'image/svg+xml', href: '/favicon.ico' },
+          { rel: 'icon', type: 'image/png', href: '/favicon.png' },
+        ],
+        meta: [
+          {
+            name: 'twitter:image',
+            content: image,
+          },
+          { name: 'twitter:title', content: title },
+          { name: 'twitter:description', content: description },
+        ],
+      }}
+    />
+
+    <ViewTransitions />
+  </head>
+  <body
+    class="flex flex-col min-h-full flex-1 bg-white text-black dark:bg-black dark:text-white"
+  >
+    <slot />
+  </body>
+</html>

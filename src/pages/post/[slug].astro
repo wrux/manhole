@@ -1,10 +1,10 @@
 ---
-import { getPosts } from 'sanity/queries';
 import imageUrlBuilder from '@sanity/image-url';
 import type { SanityImageSource } from '@sanity/image-url/lib/types/types';
-import { client } from 'sanity/client';
-import { Credits, Heading, PortableText, PostTeaser } from 'components/shared';
-import PageLayout from 'components/layout/PageLayout.astro';
+import { getPosts } from '~/sanity/queries';
+import { client } from '~/sanity/client';
+import { Credits, Heading, PortableText, PostTeaser } from '~/components';
+import PageLayout from '~/layouts/PageLayout.astro';
 
 const imageBuilder = imageUrlBuilder(client).format('webp');
 
@@ -53,7 +53,12 @@ const fadeInAnimation = () => {
 };
 ---
 
-<PageLayout>
+<PageLayout
+  meta={{
+    title: `${post.title} | Manhole Gallery`,
+    description: post?.metaDescription,
+  }}
+>
   <article class="grid sm:grid-cols-2 gap-y-8 mb-16 max-w-[125rem] mx-auto">
     <div>
       {
@@ -106,7 +111,7 @@ const fadeInAnimation = () => {
       {
         (post?.body || post?.summary) && (
           <div
-            class="max-w-prose lg:py-4"
+            class="max-w-[40ch] lg:py-4"
             transition:animate={fadeInAnimation()}
             transition:name={`post_${post._id}_description`}
           >
@@ -127,12 +132,12 @@ const fadeInAnimation = () => {
     </div>
   </article>
 
-  <section class="my-8 md:my-12 lg:my-16">
-    <div class="container mb-8 lg:mb-12 md:text-center">
+  <section class="container">
+    <div class="mb-8 lg:mb-12 md:text-center">
       <Heading as="h2">More Posts</Heading>
     </div>
     <div
-      class="grid xs:grid-cols-2 lg:grid-cols-3 align-top justify-start gap-4 max-w-screen-xl mx-auto"
+      class="grid xs:grid-cols-2 lg:grid-cols-3 align-top justify-start gap-4"
     >
       {
         post.morePosts.map((post) => (

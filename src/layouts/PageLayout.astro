@@ -1,9 +1,21 @@
 ---
-import { Heading, Text } from 'components/shared';
+import { Heading, Text } from '~/components';
 import BaseLayout from './BaseLayout.astro';
+
+type meta = {
+  title?: string;
+  description?: string;
+  image?: string;
+};
+
+export type Props = {
+  meta?: meta;
+};
+
+const { meta } = Astro.props;
 ---
 
-<BaseLayout>
+<BaseLayout meta={meta}>
   <header
     id="site-header"
     class="sticky top-0 w-screen mb-8 z-50 flex justify-center py-4 bg-white/70 dark:bg-black/70 backdrop-blur-lg transition-all duration-300"
@@ -22,9 +34,7 @@ import BaseLayout from './BaseLayout.astro';
     <slot />
   </main>
 
-  <footer
-    class="mt-8 md:mt-12 lg:mt-16 pt-8 lg:pt-16 pb-16 md:pb-24 lg:pb-32 w-screen"
-  >
+  <footer class="mt-8 md:mt-12 lg:mt-16 mb-16 md:mb-24 lg:mb-32 w-screen">
     <div class="container">
       <div class="grid gap-y-8 gap-x-16 md:grid-cols-2 xl:grid-cols-4">
         <div class="md:col-span-2 xl:col-span-1">

@@ -1,10 +1,10 @@
 import { defineConfig } from 'sanity';
 import { deskTool } from 'sanity/desk';
-import { dataset, projectId } from 'sanity/config';
-import schema from 'sanity/schemas';
+import { dataset, projectId } from '~/sanity/config';
+import schema from '~/sanity/schemas';
 import { media } from 'sanity-plugin-media';
-import { settingsStructure } from 'sanity/plugins/settings';
-import settingsType from 'sanity/schemas/settings';
+import { settingsStructure } from '~/sanity/plugins/settings';
+import settingsType from '~/sanity/schemas/settings';
 import { visionTool } from '@sanity/vision';
 import {
   dashboardTool,
@@ -12,8 +12,8 @@ import {
   projectInfoWidget,
 } from '@sanity/dashboard';
 import { documentListWidget } from 'sanity-plugin-dashboard-widget-document-list';
-import { unsplashImageAsset } from 'sanity-plugin-asset-source-unsplash'
-import { singletonPlugin } from 'sanity/plugins/singleton';
+import { unsplashImageAsset } from 'sanity-plugin-asset-source-unsplash';
+import { singletonPlugin } from '~/sanity/plugins/singleton';
 
 export default defineConfig({
   name: 'manhole',
@@ -38,9 +38,7 @@ export default defineConfig({
       structure: settingsStructure(settingsType),
     }),
     media(),
-    singletonPlugin([
-      'settings',
-    ]),
+    singletonPlugin(['settings']),
     visionTool(),
     unsplashImageAsset(),
   ],
