@@ -1,0 +1,46 @@
+---
+import { Heading, Text } from '..';
+const props = Astro.props;
+const { node, index, isInline, ...attrs } = props;
+const styleIs = (style: string) => style === node.style;
+---
+
+{
+  styleIs('h1') ? (
+    <Heading as="h1" size="h1" class:list="mt-[0.8em] mb-[0.4em]" {...attrs}>
+      <slot />
+    </Heading>
+  ) : styleIs('h2') ? (
+    <Heading as="h2" size="h2" class:list="mt-[0.8em] mb-[0.4em]" {...attrs}>
+      <slot />
+    </Heading>
+  ) : styleIs('h3') ? (
+    <Heading as="h3" size="h3" class:list="mt-[0.8em] mb-[0.4em]" {...attrs}>
+      <slot />
+    </Heading>
+  ) : styleIs('h4') ? (
+    <Heading as="h4" size="h4" class:list="mt-[0.8em] mb-[0.4em]" {...attrs}>
+      <slot />
+    </Heading>
+  ) : styleIs('h5') ? (
+    <Heading as="h5" size="h5" class:list="mt-[0.8em] mb-[0.4em]" {...attrs}>
+      <slot />
+    </Heading>
+  ) : styleIs('h6') ? (
+    <Heading as="h6" size="h6" class:list="mt-[0.8em] mb-[0.4em]" {...attrs}>
+      <slot />
+    </Heading>
+  ) : styleIs('blockquote') ? (
+    <blockquote {...attrs}>
+      <slot />
+    </blockquote>
+  ) : styleIs('normal') ? (
+    <Text class:list="my-4" {...attrs}>
+      <slot />
+    </Text>
+  ) : (
+    <Text {...props}>
+      <slot />
+    </Text>
+  )
+}
