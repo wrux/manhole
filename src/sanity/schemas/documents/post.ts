@@ -1,8 +1,6 @@
-import { BookIcon } from '@sanity/icons';
 import { format, parseISO } from 'date-fns';
 import { defineField, defineType } from 'sanity';
-
-import { Camera, Pencil, Person } from '@phosphor-icons/react';
+import { BookOpen, Camera, Pencil, Person } from '@phosphor-icons/react';
 
 const capitalized = (s: string) => s.charAt(0).toUpperCase() + s.slice(1);
 
@@ -15,7 +13,7 @@ const icons = {
 export default defineType({
   name: 'post',
   title: 'Post',
-  icon: BookIcon,
+  icon: BookOpen,
   type: 'document',
   groups: [
     { name: 'general', title: 'General', default: true },
@@ -173,12 +171,6 @@ export default defineType({
         }),
       ],
       group: 'general',
-    }),
-    defineField({
-      name: 'seo',
-      title: 'SEO and Social Sharing',
-      type: 'seo',
-      group: 'metadata',
     }),
   ],
   preview: {
