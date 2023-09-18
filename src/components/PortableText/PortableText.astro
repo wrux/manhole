@@ -1,6 +1,7 @@
 ---
 import { PortableText as PortableTextInternal } from 'astro-portabletext';
 import { mergeComponents } from 'astro-portabletext/utils';
+import Block from './Block.astro';
 
 type PortableTextProps = Parameters<typeof PortableTextInternal>[0];
 
@@ -9,6 +10,16 @@ export type Props = Pick<PortableTextProps, 'value' | 'components'>;
 const { value, components: overrideComponents = {} } = Astro.props;
 
 const customComponents = {
+  block: {
+    h1: Block,
+    h2: Block,
+    h3: Block,
+    h4: Block,
+    h5: Block,
+    h6: Block,
+    blockquote: Block,
+    normal: Block,
+  },
   type: {},
 };
 

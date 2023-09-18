@@ -1,6 +1,6 @@
 import groq from 'groq';
-import { client } from 'sanity/client';
-import { imageFragment } from 'sanity/fragments/imageFragment';
+import { client } from '~/sanity/client';
+import { imageFragment } from '~/sanity/fragments/imageFragment';
 
 const postTeaserQuery = groq`
   *[_type=="post"]|order(_createdAt desc) {
@@ -36,6 +36,7 @@ const postsQuery = groq`
       type,
     },
     ${imageFragment('mainImage')},
+    "metaDescription": pt::text(summary),
     "morePosts": *[_type=="post" && _id != ^._id]|order(_createdAt desc)[0...6] {
       _id,
       ${imageFragment('mainImage')},

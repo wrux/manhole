@@ -50,12 +50,6 @@ export default defineType({
       validation: (rule) => rule.required(),
       group: 'general',
     }),
-    defineField({
-      name: 'seo',
-      title: 'SEO and Social Sharing',
-      type: 'seo',
-      group: 'metadata',
-    }),
   ],
   preview: {
     select: {
