@@ -4,21 +4,19 @@ import BaseLayout from './BaseLayout.astro';
 ---
 
 <BaseLayout>
-  <div class="sticky top-0 w-screen h-24 mb-8 z-50">
-    <header
-      id="site-header"
-      class="header flex justify-center bg-white/70 dark:bg-black/70 backdrop-blur-lg transition-all duration-300"
-    >
-      <div class="container">
-        <a
-          class="text-2xl font-bold tracking-tight uppercase hover:text-secondary focus:text-secondary transition-colors duration-300"
-          href="/"
-        >
-          Manhole
-        </a>
-      </div>
-    </header>
-  </div>
+  <header
+    id="site-header"
+    class="sticky top-0 w-screen mb-8 z-50 flex justify-center py-4 bg-white/70 dark:bg-black/70 backdrop-blur-lg transition-all duration-300"
+  >
+    <div class="container">
+      <a
+        class="text-2xl font-bold tracking-tight uppercase hover:text-secondary focus:text-secondary transition-colors duration-300"
+        href="/"
+      >
+        Manhole
+      </a>
+    </div>
+  </header>
 
   <main class="flex-1 w-screen" transition:animate="fade">
     <slot />
@@ -81,13 +79,3 @@ import BaseLayout from './BaseLayout.astro';
       ?.classList.toggle('small', window.scrollY > 0);
   });
 </script>
-
-<style is:scoped>
-  .header {
-    @apply py-8;
-  }
-
-  .header.small {
-    @apply py-2 shadow-md;
-  }
-</style>

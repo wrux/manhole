@@ -12,15 +12,16 @@ interface Post {
 }
 
 export type Props = {
+  imageSizes: string;
   lazy: boolean;
   post: Post;
 };
 
-const { lazy = false, post } = Astro.props;
+const { imageSizes, lazy = false, post } = Astro.props;
 
 // @TODO: Refactor to use `astro-sanity-picture`.
-function urlFor(source: SanityImageSource): string {
-  return imageBuilder.image(source).width(600).height(600).url();
+function urlFor(source: SanityImageSource, size: number): string {
+  return imageBuilder.image(source).width(size).height(size).url();
 }
 ---
 
@@ -32,9 +33,14 @@ function urlFor(source: SanityImageSource): string {
           alt={post.mainImage?.alt || ''}
           title={post.mainImage?.alt}
           class="absolute inset-0 max-w-full h-auto object-cover bg-gray-100 aspect-square"
-          src={urlFor(post.mainImage)}
-          width="600"
-          height="600"
+          srcset={[
+            `${urlFor(post.mainImage, 480)} 480w`,
+            `${urlFor(post.mainImage, 768)} 768w`,
+            `${urlFor(post.mainImage, 1000)} 1000w`,
+          ].join(', ')}
+          sizes={imageSizes}
+          width="1000"
+          height="1000"
           loading={lazy ? 'lazy' : 'eager'}
           transition:name={`post_${post._id}_image`}
         />
