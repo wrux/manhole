@@ -57,6 +57,9 @@ const fadeInAnimation = () => {
   meta={{
     title: `${post.title} | Manhole Gallery`,
     description: post?.metaDescription,
+    image:
+      post.mainImage &&
+      imageBuilder.image(post.mainImage).width(1600).height(900).url(),
   }}
 >
   <article class="grid sm:grid-cols-2 gap-y-8 mb-16 max-w-[125rem] mx-auto">
