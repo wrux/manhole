@@ -26,7 +26,6 @@ export type Props = Post;
 const post = Astro.props;
 
 let invocations = 1;
-
 const fadeInAnimation = () => {
   const delay = `${invocations++ * 250}ms`;
   const duration = '750ms';
@@ -50,6 +49,49 @@ const fadeInAnimation = () => {
     forwards: animation,
     backwards: animation,
   };
+};
+
+const author = post?.credits?.find((credit) => credit.type === 'author');
+
+const schema = {
+  '@context': 'https://schema.org',
+  '@type': 'BlogPosting',
+  mainEntityOfPage: `https://manhole.design/posts/${post.slug}`,
+  headline: post.title,
+  name: post.title,
+  description: post.summaryHTML,
+  datePublished: post._createdAt.substring(0, 10),
+  ...(post._updatedAt &&
+    post._createdAt !== post._createdAt && {
+      dateModified: post._updatedAt.substring(0, 10),
+    }),
+  ...(author && {
+    author: {
+      '@type': 'Person',
+      name: author?.person?.fullName,
+      url: author?.person?.website,
+    },
+  }),
+  ...(post.mainImage && {
+    image: {
+      '@type': 'ImageObject',
+      '@id': urlFor(post.mainImage, 1000),
+      url: urlFor(post.mainImage, 1000),
+      height: '1000',
+      width: '1000',
+    },
+  }),
+  url: `https://manhole.design/posts/${post.slug}`,
+  isPartOf: {
+    '@type': 'Blog',
+    '@id': 'https://manhole.gallery/',
+    name: 'Manhole · Gallery',
+    publisher: {
+      '@type': 'Organization',
+      '@id': 'https://manhole.gallery/',
+      name: 'Manhole · Gallery',
+    },
+  },
 };
 ---
 
@@ -153,4 +195,6 @@ const fadeInAnimation = () => {
       </section>
     )
   }
+
+  <script type="application/ld+json" set:html={JSON.stringify(schema)} />
 </PageLayout>
