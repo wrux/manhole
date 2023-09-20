@@ -12,4 +12,6 @@
     ],
     "verbatimModuleSyntax": true
   }
+  // "include": ["./src/env.d.ts", "./src/types/**.*.d.ts", "./src/**/*.ts"],
+  // "exclude": ["node_modules"]
 }

@@ -21,7 +21,7 @@ export async function getStaticPaths() {
   }));
 }
 
-type Props = any;
+export type Props = Post;
 
 const post = Astro.props;
 
@@ -135,22 +135,22 @@ const fadeInAnimation = () => {
     </div>
   </article>
 
-  <section class="container">
-    <div class="mb-8 lg:mb-12 md:text-center">
-      <Heading as="h2">More Posts</Heading>
-    </div>
-    <div
-      class="grid xs:grid-cols-2 lg:grid-cols-3 align-top justify-start gap-4"
-    >
-      {
-        post.morePosts.map((post) => (
-          <PostTeaser
-            imageSizes="(max-width: 474px) 100vw, (max-width: 1023px) 50vw, 20.625rem"
-            lazy
-            post={post}
-          />
-        ))
-      }
-    </div>
-  </section>
+  {
+    post?.morePosts && post?.morePosts?.length > 0 && (
+      <section class="container">
+        <div class="mb-8 lg:mb-12 md:text-center">
+          <Heading as="h2">More Posts</Heading>
+        </div>
+        <div class="grid xs:grid-cols-2 lg:grid-cols-3 align-top justify-start gap-4">
+          {post.morePosts.map((post) => (
+            <PostTeaser
+              imageSizes="(max-width: 474px) 100vw, (max-width: 1023px) 50vw, 20.625rem"
+              lazy
+              post={post}
+            />
+          ))}
+        </div>
+      </section>
+    )
+  }
 </PageLayout>

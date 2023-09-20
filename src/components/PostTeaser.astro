@@ -5,16 +5,10 @@ import { client } from '~/sanity/client';
 
 const imageBuilder = imageUrlBuilder(client).format('webp');
 
-interface Post {
-  mainImage: SanityImageSource;
-  title: string;
-  titleLocalised: string;
-}
-
 export type Props = {
   imageSizes: string;
   lazy: boolean;
-  post: Post;
+  post: PostTeaser;
 };
 
 const { imageSizes, lazy = false, post } = Astro.props;
