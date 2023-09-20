@@ -36,6 +36,7 @@ declare global {
 
   type Post = SanityPublicDocument<{
     body: PortableTextBlock;
+    bodyHTML: string;
     credits: Array<Credit>;
     gallery: Array<ImageWithMeta>;
     locations: Array<KeyedObject & Location>;
@@ -43,8 +44,8 @@ declare global {
     metaDescription?: string;
     morePosts?: Array<PostTeaser>;
     summary?: PortableTextBlock;
+    summaryHTML?: string;
     title: string;
-    titleLocalised?: string;
   }>;
 
   type Location = SanityPublicDocument<{

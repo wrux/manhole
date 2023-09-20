@@ -27,6 +27,7 @@ const postsQuery = groq`
     _createdAt,
     _updatedAt,
     body,
+    "bodyHTML": pt::text(body),
     credits[] {
       ...,
       person-> {
@@ -61,8 +62,8 @@ const postsQuery = groq`
     },
     "slug": slug.current,
     summary,
+    "summaryHTML": pt::text(summary),
     title,
-    titleLocalised,
   }
 `;
 
