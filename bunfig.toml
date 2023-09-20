@@ -1,0 +1,5 @@
+[install]
+registry = "https://registry.npmjs.org"
+
+[install.scopes]
+"@wrux" = { token = "$GITHUB_TOKEN", url = "https://npm.pkg.github.com/" }
