@@ -13,6 +13,10 @@ import { unsplashImageAsset } from 'sanity-plugin-asset-source-unsplash';
 import { dataset, projectId } from '~/sanity/config';
 import schema from '~/sanity/schemas';
 import { defaultDocumentNodeResolver, structure } from '~/sanity/structure';
+import { plausibleWidget } from '@wrux/sanity-analytics-dashboard-widgets';
+
+const PLAUSIBLE_DASHBOARD_AUTH = import.meta.env.PLAUSIBLE_DASHBOARD_AUTH;
+const PLAUSIBLE_DOMAIN = 'manhole.gallery';
 
 export default defineConfig({
   name: 'manhole',
@@ -31,6 +35,10 @@ export default defineConfig({
           layout: { width: 'small' },
         }),
         projectUsersWidget(),
+        plausibleWidget({
+          auth: PLAUSIBLE_DASHBOARD_AUTH,
+          domain: PLAUSIBLE_DOMAIN,
+        }),
       ],
     }),
     deskTool({
