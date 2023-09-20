@@ -5,19 +5,27 @@ import { imageFragment } from '~/sanity/fragments/imageFragment';
 const postTeaserQuery = groq`
   *[_type=="post"]|order(_createdAt desc) {
     _id,
+    _rev,
+    _type,
+    _createdAt,
+    _updatedAt,
     ${imageFragment('mainImage')},
     "slug": slug.current,
     title,
   }
 `;
 
-export async function getPostTeasers(): Promise<object[]> {
+export async function getPostTeasers(): Promise<PostTeaser[]> {
   return await client.fetch(postTeaserQuery);
 }
 
 const postsQuery = groq`
   *[_type=="post"]|order(_createdAt desc) {
     _id,
+    _rev,
+    _type,
+    _createdAt,
+    _updatedAt,
     body,
     credits[] {
       ...,
@@ -31,6 +39,10 @@ const postsQuery = groq`
     locations[]-> {
       _key,
       _id,
+      _rev,
+      _type,
+      _createdAt,
+      _updatedAt,
       name,
       "slug": slug.current,
       type,
@@ -39,6 +51,10 @@ const postsQuery = groq`
     "metaDescription": pt::text(summary),
     "morePosts": *[_type=="post" && _id != ^._id]|order(_createdAt desc)[0...6] {
       _id,
+      _rev,
+      _type,
+      _createdAt,
+      _updatedAt,
       ${imageFragment('mainImage')},
       "slug": slug.current,
       title,
@@ -50,6 +66,6 @@ const postsQuery = groq`
   }
 `;
 
-export async function getPosts(): Promise<object[]> {
+export async function getPosts(): Promise<Post[]> {
   return await client.fetch(postsQuery);
 }
