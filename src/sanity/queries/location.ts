@@ -31,7 +31,7 @@ export async function getCountries(): Promise<Country[]> {
 }
 
 const countryListQuery = groq`
-  *[_type == "location" && type == "country"]|order(_createdAt desc) {
+  *[_type == "location" && type == "country"]|order(name asc) {
     _id,
     _rev,
     _type,
