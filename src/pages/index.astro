@@ -9,7 +9,7 @@ const countries = await getCountryList();
 
 <PageLayout>
   <div class="container mb-8 md:mb-12 lg:mb-16">
-    <div class="max-w-[40ch]">
+    <div class="max-w-[40ch] text-center md:text-left">
       <Heading class:list="mb-8" as="h1">
         Mahole Gallery, the Pavement Chronicles
       </Heading>
@@ -38,7 +38,7 @@ const countries = await getCountryList();
   </div>
 
   <div
-    class="grid xs:grid-cols-2 lg:grid-cols-3 flex-1 align-top justify-start gap-4 max-w-[125rem] mx-auto"
+    class="grid grid-cols-1 xs:grid-cols-2 lg:grid-cols-3 flex-1 align-top justify-start gap-4 max-w-[125rem] mx-auto"
   >
     {
       posts.map((post, index) => (
