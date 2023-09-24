@@ -20,6 +20,9 @@ export default {
         secondary: '#AE445A',
         tertiary: '#F39F5A',
       },
+      dropShadow: {
+        heavy: '2px 4px 6px rgba(0, 0, 0, 0.666)',
+      },
       fontFamily: {
         sans: ['InterVariable', 'Inter', ...defaultTheme.fontFamily.sans],
       },

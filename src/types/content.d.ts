@@ -1,6 +1,7 @@
 import { PortableTextBlock } from '@portabletext/types';
 import { SanityDocument, SanityImageAssetDocument } from '@sanity/client';
 import { Block, type KeyedObject } from 'sanity';
+import type { countryIDs } from '~/lib/countries';
 
 declare global {
   /**
@@ -39,7 +40,7 @@ declare global {
     bodyHTML: string;
     credits: Array<Credit>;
     gallery: Array<ImageWithMeta>;
-    locations: Array<KeyedObject & Location>;
+    locations: Array<Country | City>;
     mainImage: ImageWithMeta;
     metaDescription?: string;
     morePosts?: Array<PostTeaser>;
@@ -50,8 +51,23 @@ declare global {
 
   type Location = SanityPublicDocument<{
     name: string;
+    nameLocalised: string;
     type: 'country' | 'city';
   }>;
+
+  type LocationTeaser = SanityPublicDocument<{
+    name: string;
+  }>;
+
+  type Country = Omit<Location, 'type'> & {
+    type: 'country';
+    countryCode: countryIDs | undefined;
+    posts?: Array<PostTeaser>;
+  };
+
+  type City = Omit<Location, 'type'> & {
+    type: 'city';
+  };
 }
 
 export {};

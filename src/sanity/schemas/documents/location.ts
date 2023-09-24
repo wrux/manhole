@@ -25,18 +25,6 @@ export default defineType({
       group: 'general',
     }),
     defineField({
-      name: 'slug',
-      title: 'Slug',
-      type: 'slug',
-      options: {
-        source: 'name',
-        maxLength: 96,
-        isUnique: (value, context) => context.defaultIsUnique(value, context),
-      },
-      validation: (rule) => rule.required(),
-      group: 'general',
-    }),
-    defineField({
       title: 'Type',
       name: 'type',
       type: 'string',
@@ -49,6 +37,26 @@ export default defineType({
       initialValue: 'city',
       validation: (rule) => rule.required(),
       group: 'general',
+    }),
+    defineField({
+      name: 'slug',
+      title: 'Slug',
+      type: 'slug',
+      options: {
+        source: 'name',
+        maxLength: 96,
+        isUnique: (value, context) => context.defaultIsUnique(value, context),
+      },
+      validation: (rule) => rule.required(),
+      group: 'general',
+    }),
+    defineField({
+      name: 'countryCode',
+      title: 'Country Code',
+      description: 'Two letter ISOcode of the country',
+      type: 'string',
+      group: 'general',
+      hidden: ({ parent }) => parent?.type !== 'country',
     }),
   ],
   preview: {

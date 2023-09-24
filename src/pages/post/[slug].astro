@@ -3,7 +3,13 @@ import imageUrlBuilder from '@sanity/image-url';
 import type { SanityImageSource } from '@sanity/image-url/lib/types/types';
 import { getPosts } from '~/sanity/queries';
 import { client } from '~/sanity/client';
-import { Credits, Heading, PortableText, PostTeaser } from '~/components';
+import {
+  CountryShape,
+  Credits,
+  Heading,
+  PortableText,
+  PostTeaser,
+} from '~/components';
 import PageLayout from '~/layouts/PageLayout.astro';
 
 const imageBuilder = imageUrlBuilder(client).format('webp');
@@ -21,38 +27,9 @@ export async function getStaticPaths() {
   }));
 }
 
-export type Props = Post;
-
-const post = Astro.props;
-
-let invocations = 1;
-const fadeInAnimation = () => {
-  const delay = `${invocations++ * 250}ms`;
-  const duration = '750ms';
-  const animation = {
-    old: {
-      name: 'fadeIn',
-      delay,
-      duration,
-      easing: 'linear',
-      fillMode: 'forwards',
-    },
-    new: {
-      name: 'fadeIn',
-      delay,
-      duration,
-      easing: 'linear',
-      fillMode: 'backwards',
-    },
-  };
-  return {
-    forwards: animation,
-    backwards: animation,
-  };
-};
+const post = Astro.props as Post;
 
 const author = post?.credits?.find((credit) => credit.type === 'author');
-
 const schema = {
   '@context': 'https://schema.org',
   '@type': 'BlogPosting',
@@ -93,6 +70,10 @@ const schema = {
     },
   },
 };
+
+const country = post?.locations?.find(
+  (location) => location.type === 'country'
+) as Country;
 ---
 
 <PageLayout
@@ -108,7 +89,7 @@ const schema = {
     <div>
       {
         post?.mainImage && (
-          <figure>
+          <figure class="max-w-full h-auto aspect-square">
             <img
               alt={post.mainImage?.alt || ''}
               title={post.mainImage?.alt}
@@ -130,34 +111,46 @@ const schema = {
     </div>
 
     <div class="space-y-4 px-4 sm:px-8 md:px-12 lg:px-16">
-      <Heading
-        as="h1"
-        transition:animate={fadeInAnimation()}
-        transition:name={`post_${post._id}_title`}
-      >
-        {post.title}
-      </Heading>
-
       {
-        post?.locations && (
-          <p
-            class="flex gap-3 flex-wrap text-lg"
-            transition:animate={fadeInAnimation()}
-            transition:name={`post_${post._id}_locations`}
-          >
-            <span class="sr-only">Locations:</span>
-            {post.locations.map((location) => (
-              <span>{location.name}</span>
-            ))}
-          </p>
+        post?.locations?.length > 0 && (
+          <div class="flex gap-4 items-center">
+            {country && country?.countryCode && (
+              <CountryShape
+                countryCode={country.countryCode}
+                size="xs"
+                transition:name={`country_${country._id}`}
+              />
+            )}
+
+            {post?.locations && (
+              <p
+                class="flex gap-3 flex-wrap text-lg"
+                transition:name={`post_${post._id}_locations`}
+              >
+                <span class="sr-only">Locations:</span>
+                {post.locations.map((location) =>
+                  location.type === 'country' ? (
+                    <a href={`/country/${location.slug}`} class="link">
+                      {location.name}
+                    </a>
+                  ) : (
+                    <span>{location.name}</span>
+                  )
+                )}
+              </p>
+            )}
+          </div>
         )
       }
+
+      <Heading as="h1" transition:name={`post_${post._id}_title`}>
+        {post.title}
+      </Heading>
 
       {
         (post?.body || post?.summary) && (
           <div
             class="max-w-[40ch] lg:py-4"
-            transition:animate={fadeInAnimation()}
             transition:name={`post_${post._id}_description`}
           >
             <PortableText value={post.body || post.summary} components={{}} />
@@ -169,7 +162,6 @@ const schema = {
         post?.credits && post.credits.length > 0 && (
           <Credits
             credits={post.credits}
-            transition:animate={fadeInAnimation()}
             transition:name={`post_${post._id}_credits`}
           />
         )

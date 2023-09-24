@@ -1,0 +1,83 @@
+---
+import { getCountries, getCountryList } from '~/sanity/queries';
+import PageLayout from '~/layouts/PageLayout.astro';
+import { CountryShape, Heading, PostTeaser, Text } from '~/components';
+
+export async function getStaticPaths() {
+  const countries = await getCountries();
+  return countries.map((country) => ({
+    params: { slug: country.slug },
+    props: country,
+  }));
+}
+
+const countries = await getCountryList();
+
+export type Props = Country;
+
+const country = Astro.props;
+---
+
+<PageLayout
+  meta={{
+    title: `${country.name} | Manhole Gallery`,
+  }}
+>
+  <article class="max-w-[125rem] mx-auto">
+    <div>
+      <div class="container space-y-4 md:space-y-8 lg:space-y-10">
+        {
+          country?.countryCode && (
+            <CountryShape
+              countryCode={country.countryCode}
+              transition:name={`country_${country._id}`}
+            />
+          )
+        }
+        <div>
+          <Heading as="h1" size="h1">{country.name}</Heading>
+          {
+            country.nameLocalised && (
+              <Heading as="p" size="h3">
+                {country.nameLocalised}
+              </Heading>
+            )
+          }
+        </div>
+        <div>
+          <Text size="md">Other countries</Text>
+          <Text size="sm">
+            {
+              countries
+                ?.filter(({ _id }) => _id != country._id)
+                ?.map((country) => (
+                  <a
+                    class="link mr-2"
+                    href={`/country/${country.slug}`}
+                    aria-label={`View all posts in ${country.name}`}
+                    transition:name={`country_list_${country._id}`}
+                  >
+                    {country.name}
+                  </a>
+                ))
+            }
+          </Text>
+        </div>
+      </div>
+    </div>
+  </article>
+
+  {
+    country?.posts && country.posts.length > 0 && (
+      <div class="mt-8 md:mt-10 lg:mt-12 grid xs:grid-cols-2 lg:grid-cols-3 flex-1 align-top justify-start gap-4 max-w-[125rem] mx-auto">
+        {country.posts.map((post, index) => (
+          <PostTeaser
+            imageSizes="(max-width: 474px) 100vw, (max-width: 1023px) 50vw, (max-width: 125rem) 33.334vw, 40rem"
+            post={post}
+            lazy={index >= 6}
+          />
+        ))}
+      </div>
+    )
+  }
+</PageLayout>
