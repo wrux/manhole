@@ -135,17 +135,13 @@ const country = post?.locations?.find(
               transition:name={`post_${post._id}_image`}
             />
             {country && country?.countryCode && (
-              <div
-                class="absolute top-4 left-4"
+              <CountryShape
+                countryCode={country.countryCode}
+                size="sm"
+                class="absolute top-4 left-4 drop-shadow-heavy"
                 transition:animate={firstAnimation}
-                transition:name={`post_${post._id}_country`}
-              >
-                <CountryShape
-                  countryCode={country.countryCode}
-                  size="sm"
-                  class={['drop-shadow-heavy', 'max-w-[20ch]']}
-                />
-              </div>
+                transition:name={`country_${country._id}`}
+              />
             )}
           </figure>
         )
@@ -169,9 +165,15 @@ const country = post?.locations?.find(
             transition:name={`post_${post._id}_locations`}
           >
             <span class="sr-only">Locations:</span>
-            {post.locations.map((location) => (
-              <span>{location.name}</span>
-            ))}
+            {post.locations.map((location) =>
+              location.type === 'country' ? (
+                <a href={`/country/${location.slug}`} class="link">
+                  {location.name}
+                </a>
+              ) : (
+                <span>{location.name}</span>
+              )
+            )}
           </p>
         )
       }

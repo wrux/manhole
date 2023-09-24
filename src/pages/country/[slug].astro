@@ -30,7 +30,10 @@ const country = Astro.props;
       <div class="container space-y-8 md:space-y-12 lg:space-y-16">
         {
           country?.countryCode && (
-            <CountryShape countryCode={country.countryCode} />
+            <CountryShape
+              countryCode={country.countryCode}
+              transition:name={`country_${country._id}`}
+            />
           )
         }
         <div>

@@ -19,10 +19,10 @@ const countryShapeVariants = cva(
   }
 );
 
-export type Props = VariantProps<typeof countryShapeVariants> & {
-  countryCode: countryIDs | unknown | undefined;
-  class?: string | string[];
-};
+export type Props = VariantProps<typeof countryShapeVariants> &
+  astroHTML.JSX.SVGAttributes & {
+    countryCode: countryIDs | unknown | undefined;
+  };
 
 const { countryCode, size = 'base', ...props } = Astro.props;
 const countryShape = countryCode
@@ -38,6 +38,7 @@ const countryShape = countryCode
       class:list={cx(countryShapeVariants({ size: size }), props?.class)}
       aria-hidden="true"
       role="presentation"
+      {...props}
     >
       <path d={countryShape.shape} fill="currentColor" />
     </svg>
