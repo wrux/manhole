@@ -19,15 +19,11 @@ const country = Astro.props;
 <PageLayout
   meta={{
     title: `${country.name} | Manhole Gallery`,
-    // description: post?.metaDescription,
-    // image:
-    //   post.mainImage &&
-    //   imageBuilder.image(post.mainImage).width(1600).height(900).url(),
   }}
 >
   <article class="max-w-[125rem] mx-auto">
     <div>
-      <div class="container space-y-8 md:space-y-12 lg:space-y-16">
+      <div class="container space-y-4 md:space-y-8 lg:space-y-10">
         {
           country?.countryCode && (
             <CountryShape
@@ -52,7 +48,7 @@ const country = Astro.props;
 
   {
     country?.posts && country.posts.length > 0 && (
-      <div class="mt-8 md:mt-12 lg:mt-16 grid xs:grid-cols-2 lg:grid-cols-3 flex-1 align-top justify-start gap-4 max-w-[125rem] mx-auto">
+      <div class="mt-8 md:mt-10 lg:mt-12 grid xs:grid-cols-2 lg:grid-cols-3 flex-1 align-top justify-start gap-4 max-w-[125rem] mx-auto">
         {country.posts.map((post, index) => (
           <PostTeaser
             imageSizes="(max-width: 474px) 100vw, (max-width: 1023px) 50vw, (max-width: 125rem) 33.334vw, 40rem"
