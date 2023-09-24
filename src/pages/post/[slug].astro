@@ -135,13 +135,15 @@ const country = post?.locations?.find(
               transition:name={`post_${post._id}_image`}
             />
             {country && country?.countryCode && (
-              <CountryShape
-                countryCode={country.countryCode}
-                size="sm"
-                class="absolute top-4 left-4 drop-shadow-heavy"
-                transition:animate={firstAnimation}
-                transition:name={`country_${country._id}`}
-              />
+              <div class="absolute top-4 left-4">
+                <CountryShape
+                  countryCode={country.countryCode}
+                  size="sm"
+                  class="drop-shadow-heavy"
+                  transition:animate={firstAnimation}
+                  transition:name={`country_${country._id}`}
+                />
+              </div>
             )}
           </figure>
         )

@@ -58,6 +58,7 @@ declare global {
   type Country = Omit<Location, 'type'> & {
     type: 'country';
     countryCode: countryIDs | undefined;
+    posts?: Array<PostTeaser>;
   };
 
   type City = Omit<Location, 'type'> & {
