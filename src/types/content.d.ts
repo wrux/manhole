@@ -55,6 +55,10 @@ declare global {
     type: 'country' | 'city';
   }>;
 
+  type LocationTeaser = SanityPublicDocument<{
+    name: string;
+  }>;
+
   type Country = Omit<Location, 'type'> & {
     type: 'country';
     countryCode: countryIDs | undefined;

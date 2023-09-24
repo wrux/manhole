@@ -118,7 +118,17 @@ const country = post?.locations?.find(
     <div>
       {
         post?.mainImage && (
-          <figure class="relative max-w-full h-auto">
+          <figure class="relative max-w-full h-auto aspect-square">
+            {country && country?.countryCode && (
+              <div class="absolute inset-0 p-4 md:p-6 lg:p-8 z-10">
+                <CountryShape
+                  countryCode={country.countryCode}
+                  size="sm"
+                  transition:animate={firstAnimation}
+                  transition:name={`country_${country._id}`}
+                />
+              </div>
+            )}
             <img
               alt={post.mainImage?.alt || ''}
               title={post.mainImage?.alt}
@@ -134,17 +144,6 @@ const country = post?.locations?.find(
               height="1000"
               transition:name={`post_${post._id}_image`}
             />
-            {country && country?.countryCode && (
-              <div class="absolute top-4 left-4">
-                <CountryShape
-                  countryCode={country.countryCode}
-                  size="sm"
-                  class="drop-shadow-heavy"
-                  transition:animate={firstAnimation}
-                  transition:name={`country_${country._id}`}
-                />
-              </div>
-            )}
           </figure>
         )
       }

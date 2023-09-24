@@ -29,3 +29,19 @@ const countriesQuery = groq`
 export async function getCountries(): Promise<Country[]> {
   return await client.fetch(countriesQuery);
 }
+
+const countryListQuery = groq`
+  *[_type == "location" && type == "country"]|order(_createdAt desc) {
+    _id,
+    _rev,
+    _type,
+    _createdAt,
+    _updatedAt,
+    "slug": slug.current,
+    name,
+  }
+`;
+
+export async function getCountryList(): Promise<LocationTeaser[]> {
+  return await client.fetch(countryListQuery);
+}

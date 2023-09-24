@@ -1,9 +1,10 @@
 ---
-import { getPostTeasers } from '~/sanity/queries';
+import { getCountryList, getPostTeasers } from '~/sanity/queries';
 import PageLayout from '~/layouts/PageLayout.astro';
 import { Heading, PostTeaser, Text } from '~/components';
 
 const posts = await getPostTeasers();
+const countries = await getCountryList();
 ---
 
 <PageLayout>
@@ -16,6 +17,23 @@ const posts = await getPostTeasers();
         Unearth street art beneath your feet from all <em>around</em> the flat
         earth.
       </Text>
+      <div class="mt-4 lg:mt-6">
+        <Text size="md">Countries mentioned</Text>
+        <Text size="sm">
+          {
+            countries?.map((country) => (
+              <a
+                class="link mr-2"
+                href={`/country/${country.slug}`}
+                aria-label={`View all posts in ${country.name}`}
+                transition:name={`country_list_${country._id}`}
+              >
+                {country.name}
+              </a>
+            ))
+          }
+        </Text>
+      </div>
     </div>
   </div>
 

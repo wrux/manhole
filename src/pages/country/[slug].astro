@@ -1,7 +1,7 @@
 ---
-import { getCountries } from '~/sanity/queries';
+import { getCountries, getCountryList } from '~/sanity/queries';
 import PageLayout from '~/layouts/PageLayout.astro';
-import { CountryShape, Heading, PostTeaser } from '~/components';
+import { CountryShape, Heading, PostTeaser, Text } from '~/components';
 
 export async function getStaticPaths() {
   const countries = await getCountries();
@@ -10,6 +10,8 @@ export async function getStaticPaths() {
     props: country,
   }));
 }
+
+const countries = await getCountryList();
 
 export type Props = Country;
 
@@ -41,6 +43,25 @@ const country = Astro.props;
               </Heading>
             )
           }
+        </div>
+        <div>
+          <Text size="md">Other countries</Text>
+          <Text size="sm">
+            {
+              countries
+                ?.filter(({ _id }) => _id != country._id)
+                ?.map((country) => (
+                  <a
+                    class="link mr-2"
+                    href={`/country/${country.slug}`}
+                    aria-label={`View all posts in ${country.name}`}
+                    transition:name={`country_list_${country._id}`}
+                  >
+                    {country.name}
+                  </a>
+                ))
+            }
+          </Text>
         </div>
       </div>
     </div>
