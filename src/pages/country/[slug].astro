@@ -1,0 +1,49 @@
+---
+import { getCountries } from '~/sanity/queries';
+import PageLayout from '~/layouts/PageLayout.astro';
+import { CountryShape, Heading } from '~/components';
+
+export async function getStaticPaths() {
+  const countries = await getCountries();
+  return countries.map((country) => ({
+    params: { slug: country.slug },
+    props: country,
+  }));
+}
+
+export type Props = Country;
+
+const country = Astro.props;
+---
+
+<PageLayout
+  meta={{
+    title: `${country.name} | Manhole Gallery`,
+    // description: post?.metaDescription,
+    // image:
+    //   post.mainImage &&
+    //   imageBuilder.image(post.mainImage).width(1600).height(900).url(),
+  }}
+>
+  <article class="max-w-[125rem] mx-auto">
+    <div>
+      <div class="container space-y-8 md:space-y-12 lg:space-y-16">
+        {
+          country?.countryCode && (
+            <CountryShape countryCode={country.countryCode} />
+          )
+        }
+        <div>
+          <Heading as="h1" size="h1">{country.name}</Heading>
+          {
+            country.nameLocalised && (
+              <Heading as="p" size="h3">
+                {country.nameLocalised}
+              </Heading>
+            )
+          }
+        </div>
+      </div>
+    </div>
+  </article>
+</PageLayout>

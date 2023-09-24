@@ -3,7 +3,13 @@ import imageUrlBuilder from '@sanity/image-url';
 import type { SanityImageSource } from '@sanity/image-url/lib/types/types';
 import { getPosts } from '~/sanity/queries';
 import { client } from '~/sanity/client';
-import { Credits, Heading, PortableText, PostTeaser } from '~/components';
+import {
+  CountryShape,
+  Credits,
+  Heading,
+  PortableText,
+  PostTeaser,
+} from '~/components';
 import PageLayout from '~/layouts/PageLayout.astro';
 
 const imageBuilder = imageUrlBuilder(client).format('webp');
@@ -21,9 +27,7 @@ export async function getStaticPaths() {
   }));
 }
 
-export type Props = Post;
-
-const post = Astro.props;
+const post = Astro.props as Post;
 
 let invocations = 1;
 const fadeInAnimation = () => {
@@ -50,6 +54,8 @@ const fadeInAnimation = () => {
     backwards: animation,
   };
 };
+
+const firstAnimation = fadeInAnimation();
 
 const author = post?.credits?.find((credit) => credit.type === 'author');
 
@@ -93,6 +99,10 @@ const schema = {
     },
   },
 };
+
+const country = post?.locations?.find(
+  (location) => location.type === 'country'
+) as Country;
 ---
 
 <PageLayout
@@ -108,7 +118,7 @@ const schema = {
     <div>
       {
         post?.mainImage && (
-          <figure>
+          <figure class="relative max-w-full h-auto">
             <img
               alt={post.mainImage?.alt || ''}
               title={post.mainImage?.alt}
@@ -124,6 +134,19 @@ const schema = {
               height="1000"
               transition:name={`post_${post._id}_image`}
             />
+            {country && country?.countryCode && (
+              <div
+                class="absolute top-4 left-4"
+                transition:animate={firstAnimation}
+                transition:name={`post_${post._id}_country`}
+              >
+                <CountryShape
+                  countryCode={country.countryCode}
+                  size="sm"
+                  class={['drop-shadow-heavy', 'max-w-[20ch]']}
+                />
+              </div>
+            )}
           </figure>
         )
       }
@@ -132,7 +155,7 @@ const schema = {
     <div class="space-y-4 px-4 sm:px-8 md:px-12 lg:px-16">
       <Heading
         as="h1"
-        transition:animate={fadeInAnimation()}
+        transition:animate={firstAnimation}
         transition:name={`post_${post._id}_title`}
       >
         {post.title}

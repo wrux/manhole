@@ -47,6 +47,9 @@ const postsQuery = groq`
       name,
       "slug": slug.current,
       type,
+      type == 'country' => {
+        countryCode,
+      },
     },
     ${imageFragment('mainImage')},
     "metaDescription": pt::text(summary),
