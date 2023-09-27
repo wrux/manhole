@@ -3,7 +3,7 @@ import { client } from '~/sanity/client';
 import { imageFragment } from '~/sanity/fragments/imageFragment';
 
 const postTeaserQuery = groq`
-  *[_type=="post"]|order(_createdAt desc) {
+  *[_type=="post"]|order(_createdAt desc)[0...$limit] {
     _id,
     _rev,
     _type,
@@ -15,8 +15,10 @@ const postTeaserQuery = groq`
   }
 `;
 
-export async function getPostTeasers(): Promise<PostTeaser[]> {
-  return await client.fetch(postTeaserQuery);
+export async function getPostTeasers(
+  limit: number = 9999
+): Promise<PostTeaser[]> {
+  return await client.fetch(postTeaserQuery, { limit });
 }
 
 const postsQuery = groq`
