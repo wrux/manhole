@@ -9,21 +9,29 @@ const countries = await getCountryList();
 
 <PageLayout>
   <div class="container mb-8 md:mb-12 lg:mb-16">
-    <div class="max-w-[40ch] text-center md:text-left mx-auto md:mx-0">
-      <Heading class:list="mb-8" as="h1">
-        <span class="sr-only">Mahole Gallery</span> The Pavement Chronicles
-      </Heading>
-      <Text size="lg">
-        Unearth street art beneath your feet from all <em>around</em> the flat
-        earth.
-      </Text>
-      <div class="mt-4 lg:mt-6">
+    <div
+      class="flex gap-y-8 flex-col md:flex-row md:justify-between md:items-end"
+    >
+      <div class="max-w-[40ch] text-center md:text-left mx-auto md:mx-0">
+        <Heading class:list="mb-8" as="h1">
+          <span class="sr-only">Mahole Gallery</span> The Pavement Chronicles
+        </Heading>
+        <Text size="lg">
+          Unearth street art beneath your feet from all <em>around</em> the flat
+          earth.
+        </Text>
+      </div>
+
+      <div class="text-center md:text-right">
         <Text size="md">Countries mentioned</Text>
-        <Text size="sm">
+        <Text
+          size="sm"
+          class:list="flex justify-center md:justify-end gap-2 flex-wrap"
+        >
           {
             countries?.map((country) => (
               <a
-                class="link mr-2"
+                class="link"
                 href={`/country/${country.slug}`}
                 aria-label={`View all posts in ${country.name}`}
                 transition:name={`country_list_${country._id}`}
