@@ -25,62 +25,72 @@ const country = Astro.props;
 >
   <article class="max-w-[125rem] mx-auto">
     <div>
-      <div
-        class="container space-y-4 md:space-y-8 lg:space-y-10 text-center md:text-left"
-      >
-        {
-          country?.countryCode && (
-            <CountryShape
-              countryCode={country.countryCode}
-              class:list="mx-auto md:mx-0"
-              transition:name={`country_${country._id}`}
-            />
-          )
-        }
-        <div>
-          <Heading as="h1" size="h1">{country.name}</Heading>
-          {
-            country.nameLocalised && (
-              <Heading as="p" size="h3">
-                {country.nameLocalised}
-              </Heading>
-            )
-          }
-        </div>
-        <div>
-          <Text size="md">Other countries</Text>
-          <Text size="sm">
+      <div class="container">
+        <div
+          class="flex gap-y-8 flex-col md:flex-row md:justify-between md:items-end"
+        >
+          <div
+            class="space-y-4 md:space-y-8 lg:space-y-10 text-center md:text-left"
+          >
             {
-              countries
-                ?.filter(({ _id }) => _id != country._id)
-                ?.map((country) => (
-                  <a
-                    class="link mr-2"
-                    href={`/country/${country.slug}`}
-                    aria-label={`View all posts in ${country.name}`}
-                    transition:name={`country_list_${country._id}`}
-                  >
-                    {country.name}
-                  </a>
-                ))
+              country?.countryCode && (
+                <CountryShape
+                  countryCode={country.countryCode}
+                  class:list="mx-auto md:mx-0 max-w-full"
+                  transition:name={`country_${country._id}`}
+                />
+              )
             }
-          </Text>
+            <div>
+              <Heading as="h1" size="h1">{country.name}</Heading>
+              {
+                country.nameLocalised && (
+                  <Heading as="p" size="h3">
+                    {country.nameLocalised}
+                  </Heading>
+                )
+              }
+            </div>
+          </div>
+
+          <div class="text-center md:text-right">
+            <Text size="md">Other countries</Text>
+            <Text
+              size="sm"
+              class:list="flex justify-center md:justify-end gap-2 flex-wrap"
+            >
+              {
+                countries
+                  ?.filter(({ _id }) => _id != country._id)
+                  ?.map((country) => (
+                    <a
+                      class="link"
+                      href={`/country/${country.slug}`}
+                      aria-label={`View all posts in ${country.name}`}
+                      transition:name={`country_list_${country._id}`}
+                    >
+                      {country.name}
+                    </a>
+                  ))
+              }
+            </Text>
+          </div>
         </div>
       </div>
     </div>
-  </article>
 
-  {
-    country?.posts && country.posts.length > 0 && (
-      <div class="mt-8 md:mt-10 lg:mt-12 grid grid-cols-1 xs:grid-cols-2 lg:grid-cols-3 flex-1 align-top justify-start gap-4 max-w-[125rem] mx-auto">
-        {country.posts.map((post, index) => (
-          <PostTeaser
-            imageSizes="(max-width: 474px) 100vw, (max-width: 1023px) 50vw, (max-width: 125rem) 33.334vw, 40rem"
-            post={post}
-            lazy={index >= 6}
-          />
-        ))}
-      </div>
-    )
-  }
+    {
+      country?.posts && country.posts.length > 0 && (
+        <div class="mt-8 md:mt-10 lg:mt-12 grid grid-cols-1 xs:grid-cols-2 lg:grid-cols-3 flex-1 align-top justify-start gap-4 max-w-[125rem] mx-auto">
+          {country.posts.map((post, index) => (
+            <PostTeaser
+              imageSizes="(max-width: 474px) 100vw, (max-width: 1023px) 50vw, (max-width: 125rem) 33.334vw, 40rem"
+              post={post}
+              lazy={index >= 6}
+            />
+          ))}
+        </div>
+      )
+    }
+  </article>
 </PageLayout>

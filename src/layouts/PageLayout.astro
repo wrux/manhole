@@ -1,5 +1,5 @@
 ---
-import { Heading, Text } from '~/components';
+import { Heading, Text, Wordmark } from '~/components';
 import BaseLayout from './BaseLayout.astro';
 
 type meta = {
@@ -21,11 +21,8 @@ const { meta } = Astro.props;
     class="sticky top-0 w-screen mb-8 z-50 py-4 bg-white/70 dark:bg-black/70 backdrop-blur-lg transition-all duration-300"
   >
     <div class="container flex justify-center md:justify-start">
-      <a
-        class="text-2xl font-bold tracking-tight uppercase hover:text-secondary focus:text-secondary transition-colors duration-300"
-        href="/"
-      >
-        Manhole &middot; Gallery
+      <a class="block w-full md:w-auto text-lg lg:text-2xl" href="/">
+        <Wordmark />
       </a>
     </div>
   </header>
@@ -40,11 +37,8 @@ const { meta } = Astro.props;
         class="grid gap-y-8 gap-x-16 md:grid-cols-2 xl:grid-cols-4 text-center md:text-start"
       >
         <div class="md:col-span-2 xl:col-span-1">
-          <a
-            class="text-2xl font-bold tracking-tight uppercase link-reverse"
-            href="/"
-          >
-            Manhole &middot; Gallery
+          <a class="block w-full md:w-auto text-lg" href="/">
+            <Wordmark />
           </a>
         </div>
 
