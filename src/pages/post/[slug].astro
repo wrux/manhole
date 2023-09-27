@@ -14,6 +14,8 @@ import PageLayout from '~/layouts/PageLayout.astro';
 
 const imageBuilder = imageUrlBuilder(client).format('webp');
 
+const sizes = [256, 360, 440, 529, 625, 729, 841, 961, 1024];
+
 // @TODO: Refactor to use `astro-sanity-picture`.
 function urlFor(source: SanityImageSource, size: number): string {
   return imageBuilder.image(source).width(size).height(size).url();
@@ -94,11 +96,9 @@ const country = post?.locations?.find(
               alt={post.mainImage?.alt || ''}
               title={post.mainImage?.alt}
               class="max-w-full h-auto object-cover bg-gray-100 aspect-square"
-              srcset={[
-                `${urlFor(post.mainImage, 480)} 480w`,
-                `${urlFor(post.mainImage, 768)} 768w`,
-                `${urlFor(post.mainImage, 1000)} 1000w`,
-              ].join(', ')}
+              srcset={sizes
+                .map((size) => `${urlFor(post.mainImage, size)} ${size}w`)
+                .join(', ')}
               sizes="(max-width: 639px) 100vw, (max-width: 1999px) 50vw, 62.5rem"
               src={urlFor(post.mainImage, 768)}
               width="1000"
