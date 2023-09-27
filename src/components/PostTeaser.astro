@@ -7,7 +7,7 @@ const imageBuilder = imageUrlBuilder(client).format('webp');
 
 export type Props = {
   imageSizes: string;
-  lazy: boolean;
+  lazy?: boolean;
   post: PostTeaser;
 };
 

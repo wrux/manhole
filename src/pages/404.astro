@@ -1,0 +1,35 @@
+---
+import { getPostTeasers } from '~/sanity/queries';
+import PageLayout from '~/layouts/PageLayout.astro';
+import { Heading, PostTeaser, Text } from '~/components';
+
+const posts = await getPostTeasers(6);
+---
+
+<PageLayout>
+  <div class="container mb-8 md:mb-12 lg:mb-16">
+    <div class="max-w-[50ch] text-center md:text-left mx-auto md:mx-0">
+      <Heading class:list="mb-8" as="h1">404: Manhole not found!</Heading>
+      <Text class:list="mb-2" size="lg">
+        Looks like our cover got away. While we search, enjoy more hole-some
+        content on our site!
+      </Text>
+      <Text>
+        <a class="link" href="/">Go to the home page</a>
+      </Text>
+    </div>
+  </div>
+
+  <div
+    class="grid grid-cols-1 xs:grid-cols-2 lg:grid-cols-3 flex-1 align-top justify-start gap-4 max-w-[125rem] mx-auto"
+  >
+    {
+      posts.map((post) => (
+        <PostTeaser
+          imageSizes="(max-width: 474px) 100vw, (max-width: 1023px) 50vw, (max-width: 125rem) 33.334vw, 40rem"
+          post={post}
+        />
+      ))
+    }
+  </div>
+</PageLayout>
