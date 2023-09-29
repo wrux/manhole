@@ -11,6 +11,8 @@
     "ngrok": "ngrok http 4321"
   },
   "dependencies": {
+    "@algolia/autocomplete-js": "^1.11.0",
+    "@algolia/autocomplete-theme-classic": "^1.11.0",
     "@astrojs/react": "^3.0.2",
     "@astrojs/sitemap": "^3.0.0",
     "@astrojs/tailwind": "^5.0.0",

@@ -17,18 +17,24 @@ const { meta } = Astro.props;
 
 <BaseLayout meta={meta}>
   <header
-    id="site-header"
     class="sticky top-0 w-full mb-8 z-50 py-4 bg-white/70 dark:bg-black/70 backdrop-blur-lg transition-all duration-300"
+    transition:name="site-header"
+    transition:persist
   >
     <div class="container flex items-center justify-center md:justify-start">
       <a class="block w-full md:w-auto text-lg lg:text-2xl" href="/">
         <Wordmark />
       </a>
 
-      <div class="relative ml-auto">
+      <div class="relative ml-auto w-64 md:w-96 lg:w-128 max-w-full">
+        <div id="autocomplete"></div>
+        <!-- <div id="searchbox"></div>
+        <div id="hits"></div> -->
+      </div>
+
+      <!-- <div class="relative ml-auto">
         <form class="relative w-64 md:w-96 lg:w-128 overflow-hidden">
           <input
-            id="search-input"
             type="search"
             dir="ltr"
             spellcheck="false"
@@ -46,7 +52,7 @@ const { meta } = Astro.props;
             >/</kbd
           >
         </form>
-      </div>
+      </div> -->
     </div>
   </header>
 
@@ -108,3 +114,106 @@ const { meta } = Astro.props;
     </div>
   </footer>
 </BaseLayout>
+
+<link
+  rel="stylesheet"
+  href="https://cdn.jsdelivr.net/npm/instantsearch.css@8.1.0/themes/reset-min.css"
+  integrity="sha256-2AeJLzExpZvqLUxMfcs+4DWcMwNfpnjUeAAvEtPr0wU="
+  crossorigin="anonymous"
+/>
+
+<script>
+  import algoliasearch from 'algoliasearch/lite';
+  import { autocomplete, getAlgoliaResults } from '@algolia/autocomplete-js';
+  import '@algolia/autocomplete-theme-classic';
+
+  // import { algoliaAdminClient, algoliaSearchClient } from '~/algolia/config';
+
+  const searchClient = algoliasearch(
+    'X4W8BJTPMP',
+    '46015b7fec639392393b8c8dba585028'
+  );
+
+  function getDocumentUrl(document: any) {
+    if (document._type === 'post') return `/post/${document.path}`;
+    // if (document.type === 'location' && document.locationType === 'country')
+    //   return `/country/${document.path}`;
+    return '/';
+  }
+
+  autocomplete({
+    container: '#autocomplete',
+    placeholder: 'Search posts',
+    // navigator: {
+    //   navigate(test) {
+    //     console.log('NAV', test);
+    //   },
+    // },
+    getSources({ query }) {
+      return [
+        {
+          sourceId: 'posts',
+          getItemUrl: ({ item }) => getDocumentUrl(item),
+          getItems() {
+            return getAlgoliaResults({
+              searchClient,
+              queries: [
+                {
+                  indexName: 'prod_manhole',
+                  query,
+                  params: {
+                    hitsPerPage: 5,
+                  },
+                },
+              ],
+            });
+          },
+
+          templates: {
+            item({ item, components, html }) {
+              return html`<a
+                href="${getDocumentUrl(item)}"
+                class="aa-ItemWrapper"
+              >
+                <div class="aa-ItemContent">
+                  <div class="aa-ItemContentBody">
+                    <div class="aa-ItemContentTitle">
+                      ${components.Highlight({
+                        hit: item,
+                        attribute: 'title',
+                      })}
+                    </div>
+                    <div class="aa-ItemContentDescription">
+                      ${components.Snippet({
+                        hit: item,
+                        attribute: 'summary',
+                      })}
+                    </div>
+                  </div>
+                  <div class="aa-ItemActions">
+                    <button
+                      class="aa-ItemActionButton aa-DesktopOnly aa-ActiveOnly"
+                      type="button"
+                      title="View ${item.title}"
+                    >
+                      <svg
+                        viewBox="0 0 24 24"
+                        width="20"
+                        height="20"
+                        fill="currentColor"
+                      >
+                        <path
+                          d="M18.984 6.984h2.016v6h-15.188l3.609 3.609-1.406 1.406-6-6 6-6 1.406 1.406-3.609 3.609h13.172v-4.031z"
+                        />
+                      </svg>
+                    </button>
+                  </div>
+                </div>
+              </a>`;
+            },
+          },
+        },
+      ];
+    },
+  });
+</script>
