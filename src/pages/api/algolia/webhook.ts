@@ -1,16 +1,8 @@
-import { sanityAlgolia } from '~/algolia/config';
+import { algoliaSecret, sanityAlgolia } from '~/algolia/config';
 import type { APIRoute } from 'astro';
 import { client } from '~/sanity/client';
 
 export const POST: APIRoute = async ({ request }) => {
-  // Tip: Add webhook secrets to verify that the request is coming from Sanity.
-  // See more at: https://www.sanity.io/docs/webhooks#bfa1758643b3
-  // if (req.headers['content-type'] !== 'application/json') {
-  //   res.status(400);
-  //   res.json({ message: 'Bad request' });
-  //   return;
-  // }
-
   // if (request.headers.get('secret') !== algoliaSecret)
   //   return new Response('Not Authenticated', {
   //     status: 401,

@@ -21,7 +21,11 @@ export const algoliaSearchClient = algoliasearch(
 
 export const algoliaIndex = algoliaAdminClient.initIndex(algoliaPostsIndex);
 
-export const sanityAlgolia = indexer(
+// Workaround for the follow issue: https://github.com/sanity-io/sanity-algolia/issues/28
+// @ts-ignore
+const sanityAlgoliaIndexer = indexer?.default || indexer;
+
+export const sanityAlgolia = sanityAlgoliaIndexer(
   {
     post: {
       index: algoliaIndex,
