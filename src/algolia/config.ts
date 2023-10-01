@@ -1,25 +1,22 @@
 import algoliasearch from 'algoliasearch';
-import algoliasearchClient from 'algoliasearch/lite';
 import groq from 'groq';
 import { type SanityDocumentStub } from '@sanity/client';
 import indexer from 'sanity-algolia';
 
-export const algoliaApplicationId = import.meta.env.ALGOLIA_APPLICATION_ID!;
+export const algoliaApplicationId = import.meta.env.PUBLIC_ALGOLIA_APP_ID!;
+export const algoliaSearchKey = import.meta.env.PUBLIC_ALGOLIA_SEARCH_KEY!;
 export const algoliaAdminKey = import.meta.env.ALGOLIA_ADMIN_API_KEY!;
 export const algoliaPostsIndex = import.meta.env.ALGOLIA_INDEX_POSTS!;
 export const algoliaSecret = import.meta.env.ALGOLIA_SECRET!;
-export const algoliaSearchKey = import.meta.env.ALGOLIA_SEARCH_KEY!;
 
 export const algoliaAdminClient = algoliasearch(
   algoliaApplicationId,
   algoliaAdminKey
 );
 
-export const algoliaSearchClient = algoliasearchClient(
-  // algoliaApplicationId,
-  // algoliaSearchKey
-  'X4W8BJTPMP',
-  '46015b7fec639392393b8c8dba585028'
+export const algoliaSearchClient = algoliasearch(
+  algoliaApplicationId,
+  algoliaSearchKey
 );
 
 export const algoliaIndex = algoliaAdminClient.initIndex(algoliaPostsIndex);

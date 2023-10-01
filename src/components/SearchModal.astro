@@ -118,9 +118,9 @@
 </style>
 
 <script>
-  import algoliasearch from 'algoliasearch/lite';
   import { autocomplete, getAlgoliaResults } from '@algolia/autocomplete-js';
   import '@algolia/autocomplete-theme-classic';
+  import { algoliaSearchClient } from '~/algolia/config';
 
   const dialog = document.querySelector<HTMLDialogElement>('dialog');
 
@@ -131,19 +131,13 @@
   document
     .querySelectorAll<HTMLButtonElement>('[data-show-search]')
     .forEach((button) =>
-      button.addEventListener('click', () => {
-        console.log('dialog?.showModal()');
-        dialog?.showModal();
-      })
+      button.addEventListener('click', () => dialog?.showModal())
     );
 
   document
     .querySelectorAll<HTMLButtonElement>('[data-hide-search]')
     .forEach((button) =>
-      button.addEventListener('click', () => {
-        console.log('dialog?.close()');
-        dialog?.close();
-      })
+      button.addEventListener('click', () => dialog?.close())
     );
 
   window.addEventListener('keydown', (event) => {
@@ -152,11 +146,6 @@
       dialog?.showModal();
     }
   });
-
-  const searchClient = algoliasearch(
-    'X4W8BJTPMP',
-    '46015b7fec639392393b8c8dba585028'
-  );
 
   function getDocumentUrl(document: any) {
     if (document._type === 'post') return `/post/${document.path}`;
@@ -183,7 +172,7 @@
           },
           getItems() {
             return getAlgoliaResults({
-              searchClient,
+              searchClient: algoliaSearchClient,
               queries: [
                 {
                   indexName: 'prod_manhole',
