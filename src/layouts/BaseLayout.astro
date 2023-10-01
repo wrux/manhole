@@ -70,7 +70,20 @@ const image =
   </head>
   <body
     class="flex flex-col min-h-full max-w-[100vw] flex-1 bg-white text-black dark:bg-black dark:text-white"
+    data-theme="dark"
   >
     <slot />
+    <script>
+      // Set data theme on page load
+      document.addEventListener('DOMContentLoaded', () => {
+        const prefersDark = window.matchMedia(
+          '(prefers-color-scheme: dark)'
+        ).matches;
+        document.documentElement.setAttribute(
+          'data-theme',
+          prefersDark ? 'dark' : 'light'
+        );
+      });
+    </script>
   </body>
 </html>

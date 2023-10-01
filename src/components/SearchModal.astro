@@ -1,0 +1,246 @@
+<dialog
+  id="search-dialog"
+  class="p-0 bg-white/50 dark:bg-black/70 backdrop-blur-lg text-inherit border-2 border-gray-200 dark:border-gray-600/50 rounded-lg z-50"
+>
+  <div id="search-dialog-content" class="p-8">
+    <div class="flex justify-between gap-8 mb-6">
+      <p class="text-3xl font-semibold">Search Manhole</p>
+      <button
+        aria-label="Close search"
+        class="inline-block text-3xl leading-none hover:text-secondary focus:text-secondary transition-color duration-300"
+        type="button"
+        data-hide-search
+      >
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          fill="currentColor"
+          viewBox="0 0 256 256"
+          class="w-[1em] h-[1em]"
+        >
+          <path
+            d="M205.66,194.34a8,8,0,0,1-11.32,11.32L128,139.31,61.66,205.66a8,8,0,0,1-11.32-11.32L116.69,128,50.34,61.66A8,8,0,0,1,61.66,50.34L128,116.69l66.34-66.35a8,8,0,0,1,11.32,11.32L139.31,128Z"
+          ></path>
+        </svg>
+      </button>
+    </div>
+    <div id="search-form"></div>
+    <div id="search-form-list"></div>
+  </div>
+</dialog>
+
+<button
+  class="flex gap-3 h-9 w-9 min-w-[2.25rem] md:w-64 items-center justify-center ml-auto px-0 md:px-6 py-2 border-2 border-gray-500/50 bg-gray-100/10 text-gray-600 dark:text-gray-400 text-sm focus:outline-none transition-color duration-300 rounded-full focus:border-current hover:border-current transition-color"
+  data-show-search
+  aria-label="Open search dialog"
+>
+  <svg
+    xmlns="http://www.w3.org/2000/svg"
+    fill="currentColor"
+    viewBox="0 0 256 256"
+    class="w-[1em] h-[1em]"
+    ><path
+      d="M229.66,218.34l-50.07-50.06a88.11,88.11,0,1,0-11.31,11.31l50.06,50.07a8,8,0,0,0,11.32-11.32ZM40,112a72,72,0,1,1,72,72A72.08,72.08,0,0,1,40,112Z"
+    ></path></svg
+  >
+  <span class="hidden md:block">Search...</span>
+  <kbd
+    class="hidden md:inline-flex items-center gap-0 ml-auto flex-0 text-xs text-gray-600 dark:text-gray-400 pointer-events-none"
+  >
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      class="w-[1.15em] h-[1.15em]"
+      fill="currentColor"
+      viewBox="0 0 256 256"
+      ><path
+        d="M180,144H160V112h20a36,36,0,1,0-36-36V96H112V76a36,36,0,1,0-36,36H96v32H76a36,36,0,1,0,36,36V160h32v20a36,36,0,1,0,36-36ZM160,76a20,20,0,1,1,20,20H160ZM56,76a20,20,0,0,1,40,0V96H76A20,20,0,0,1,56,76ZM96,180a20,20,0,1,1-20-20H96Zm16-68h32v32H112Zm68,88a20,20,0,0,1-20-20V160h20a20,20,0,0,1,0,40Z"
+      ></path></svg
+    >
+    <span>K</span>
+  </kbd>
+</button>
+
+<style is:global>
+  #search-dialog {
+    --aa-text-color-rgb: 0, 0, 0;
+    --aa-text-color-alpha: 1;
+    --aa-primary-color-rgb: 174, 68, 90;
+    --aa-primary-color-alpha: 1;
+    --aa-muted-color-rgb: 0, 0, 0;
+    --aa-muted-color-alpha: 0.8;
+
+    --aa-input-background-color-rgb: 255, 255, 255;
+    --aa-input-border-color-rgb: 0, 0, 0;
+    --aa-input-border-color-alpha: 0.333;
+
+    --aa-selected-color-rgb: 0, 0, 0;
+    --aa-selected-color-alpha: 0.1;
+
+    @media (prefers-color-scheme: dark) {
+      --aa-input-background-color-rgb: 0, 0, 0;
+      --aa-text-color-rgb: 255, 255, 255;
+      --aa-muted-color-rgb: 255, 255, 255;
+
+      --aa-input-border-color-rgb: 255, 255, 255;
+
+      --aa-selected-color-rgb: 174, 68, 90;
+      --aa-selected-color-alpha: 0.333;
+    }
+
+    top: 5vh;
+    left: 50%;
+    transform: translateX(-50%);
+    width: min(90vw, 640px);
+    max-height: 90vh;
+    margin: 0;
+
+    &::backdrop {
+      @apply bg-white/30 dark:bg-black/30 backdrop-blur-lg;
+    }
+  }
+
+  #search-form-list {
+    .aa-Panel {
+      position: static !important;
+      border: none;
+      background: none;
+      box-shadow: none;
+    }
+
+    .aa-PanelLayout {
+      padding: 0;
+      background: none;
+    }
+
+    .aa-GradientBottom {
+      display: none !important;
+    }
+  }
+</style>
+
+<script>
+  import algoliasearch from 'algoliasearch/lite';
+  import { autocomplete, getAlgoliaResults } from '@algolia/autocomplete-js';
+  import '@algolia/autocomplete-theme-classic';
+
+  const dialog = document.querySelector<HTMLDialogElement>('dialog');
+
+  dialog?.addEventListener('click', (event) => {
+    if (event.target === dialog) dialog.close();
+  });
+
+  document
+    .querySelectorAll<HTMLButtonElement>('[data-show-search]')
+    .forEach((button) =>
+      button.addEventListener('click', () => {
+        console.log('dialog?.showModal()');
+        dialog?.showModal();
+      })
+    );
+
+  document
+    .querySelectorAll<HTMLButtonElement>('[data-hide-search]')
+    .forEach((button) =>
+      button.addEventListener('click', () => {
+        console.log('dialog?.close()');
+        dialog?.close();
+      })
+    );
+
+  window.addEventListener('keydown', (event) => {
+    if ((event.ctrlKey || event.metaKey) && event.key === 'k') {
+      event.preventDefault();
+      dialog?.showModal();
+    }
+  });
+
+  const searchClient = algoliasearch(
+    'X4W8BJTPMP',
+    '46015b7fec639392393b8c8dba585028'
+  );
+
+  function getDocumentUrl(document: any) {
+    if (document._type === 'post') return `/post/${document.path}`;
+    // if (document.type === 'location' && document.locationType === 'country')
+    //   return `/country/${document.path}`;
+    return '/';
+  }
+
+  autocomplete({
+    autoFocus: true,
+    container: '#search-form',
+    placeholder: 'Search posts',
+    panelContainer: document.querySelector('#search-form-list') as HTMLElement,
+    getSources({ query }) {
+      return [
+        {
+          sourceId: 'posts',
+          getItemUrl: ({ item }) => getDocumentUrl(item),
+          navigator: {
+            navigate({ itemUrl }: { itemUrl: string }) {
+              dialog?.close();
+              window.location.assign(itemUrl);
+            },
+          },
+          getItems() {
+            return getAlgoliaResults({
+              searchClient,
+              queries: [
+                {
+                  indexName: 'prod_manhole',
+                  query,
+                  params: {
+                    hitsPerPage: 5,
+                  },
+                },
+              ],
+            });
+          },
+          templates: {
+            item({ item, components, html }) {
+              return html`<a
+                href="${getDocumentUrl(item)}"
+                class="aa-ItemLink"
+                onClick="${() => dialog?.close()}"
+              >
+                <div class="aa-ItemContent">
+                  <div class="aa-ItemContentBody">
+                    <div class="aa-ItemContentTitle">
+                      ${components.Highlight({
+                        hit: item,
+                        attribute: 'title',
+                      })}
+                    </div>
+                    <div class="aa-ItemContentDescription">
+                      ${components.Snippet({
+                        hit: item,
+                        attribute: 'summary',
+                      })}
+                    </div>
+                  </div>
+                  <div class="aa-ItemActions">
+                    <button
+                      class="aa-ItemActionButton aa-DesktopOnly aa-ActiveOnly"
+                      type="button"
+                      title="View ${item.title}"
+                    >
+                      <svg
+                        viewBox="0 0 24 24"
+                        width="20"
+                        height="20"
+                        fill="currentColor"
+                      >
+                        <path
+                          d="M18.984 6.984h2.016v6h-15.188l3.609 3.609-1.406 1.406-6-6 6-6 1.406 1.406-3.609 3.609h13.172v-4.031z"
+                        />
+                      </svg>
+                    </button>
+                  </div>
+                </div>
+              </a>`;
+            },
+          },
+        },
+      ];
+    },
+  });
+</script>
