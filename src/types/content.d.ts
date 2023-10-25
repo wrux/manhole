@@ -36,10 +36,9 @@ declare global {
   }>;
 
   type Post = SanityPublicDocument<{
-    body: PortableTextBlock;
     bodyHTML: string;
     credits: Array<Credit>;
-    gallery: Array<ImageWithMeta>;
+    // gallery: Array<ImageWithMeta>;
     locations: Array<Country | City>;
     mainImage: ImageWithMeta;
     metaDescription?: string;

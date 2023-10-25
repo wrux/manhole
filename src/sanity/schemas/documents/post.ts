@@ -28,12 +28,6 @@ export default defineType({
       group: 'general',
     }),
     defineField({
-      name: 'titleLocalised',
-      type: 'string',
-      title: 'Title Localised',
-      group: 'general',
-    }),
-    defineField({
       name: 'slug',
       title: 'Slug',
       type: 'slug',
@@ -52,14 +46,6 @@ export default defineType({
       type: 'array',
       of: [{ type: 'block' }],
       validation: (rule) => rule.required(),
-      group: 'general',
-    }),
-    defineField({
-      name: 'body',
-      title: 'Body',
-      description: 'Extended post body content',
-      type: 'array',
-      of: [{ type: 'block' }],
       group: 'general',
     }),
     defineField({
@@ -150,27 +136,27 @@ export default defineType({
       validation: (rule) => rule.required(),
       group: 'general',
     }),
-    defineField({
-      name: 'gallery',
-      title: 'Gallery',
-      type: 'array',
-      of: [
-        defineField({
-          title: 'Image',
-          name: 'image',
-          type: 'image',
-          options: { hotspot: true },
-          fields: [
-            {
-              name: 'caption',
-              type: 'string',
-              title: 'Caption',
-            },
-          ],
-        }),
-      ],
-      group: 'general',
-    }),
+    // defineField({
+    //   name: 'gallery',
+    //   title: 'Gallery',
+    //   type: 'array',
+    //   of: [
+    //     defineField({
+    //       title: 'Image',
+    //       name: 'image',
+    //       type: 'image',
+    //       options: { hotspot: true },
+    //       fields: [
+    //         {
+    //           name: 'caption',
+    //           type: 'string',
+    //           title: 'Caption',
+    //         },
+    //       ],
+    //     }),
+    //   ],
+    //   group: 'general',
+    // }),
   ],
   preview: {
     select: {
