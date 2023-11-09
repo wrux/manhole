@@ -1,5 +1,5 @@
 ---
-import { Heading, Text, Wordmark } from '~/components';
+import { Heading, SearchModal, Text, Wordmark } from '~/components';
 import BaseLayout from './BaseLayout.astro';
 
 type meta = {
@@ -17,13 +17,18 @@ const { meta } = Astro.props;
 
 <BaseLayout meta={meta}>
   <header
-    id="site-header"
     class="sticky top-0 w-full mb-8 z-50 py-4 bg-white/70 dark:bg-black/70 backdrop-blur-lg transition-all duration-300"
+    transition:name="site-header"
+    transition:persist
   >
-    <div class="container flex justify-center md:justify-start">
+    <div class="container flex items-center justify-center md:justify-start">
+      <div class="flex md:hidden h-9 w-9"></div>
+
       <a class="block w-full md:w-auto text-lg lg:text-2xl" href="/">
         <Wordmark />
       </a>
+
+      <SearchModal />
     </div>
   </header>
 
