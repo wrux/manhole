@@ -1,5 +1,3 @@
-<svg xmlns="http://www.w3.org/2000/svg" version="1.1" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:svgjs="http://svgjs.com/svgjs" width="126" height="126"><svg width="126" height="126" viewBox="0 0 126 126" fill="none" xmlns="http://www.w3.org/2000/svg">
+<svg xmlns="http://www.w3.org/2000/svg" version="1.1" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:svgjs="http://svgjs.com/svgjs" width="1000" height="1000"><rect width="1000" height="1000" rx="350" ry="350" fill="#f3a95a"></rect><g transform="matrix(5.555555555555555,0,0,5.555555555555555,150,150)"><svg xmlns="http://www.w3.org/2000/svg" version="1.1" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:svgjs="http://svgjs.com/svgjs" width="126" height="126"><svg width="126" height="126" viewBox="0 0 126 126" fill="none" xmlns="http://www.w3.org/2000/svg">
 <path fill-rule="evenodd" clip-rule="evenodd" d="M63 102C84.5391 102 102 84.5391 102 63C102 41.4609 84.5391 24 63 24C41.4609 24 24 41.4609 24 63C24 84.5391 41.4609 102 63 102ZM63 126C97.7939 126 126 97.7939 126 63C126 28.2061 97.7939 0 63 0C28.2061 0 0 28.2061 0 63C0 97.7939 28.2061 126 63 126Z" fill="black"></path>
-</svg><style>@media (prefers-color-scheme: light) { :root { filter: none; } }
-@media (prefers-color-scheme: dark) { :root { filter: invert(100%); } }
-</style></svg>
+</svg></svg></g></svg>
