@@ -1,5 +1,5 @@
 import groq from 'groq';
-import { client } from '~/sanity/client';
+import { sanityClient } from 'sanity:client';
 import { imageFragment } from '~/sanity/fragments/imageFragment';
 
 const postTeaserQuery = groq`
@@ -18,7 +18,7 @@ const postTeaserQuery = groq`
 export async function getPostTeasers(
   limit: number = 9999
 ): Promise<PostTeaser[]> {
-  return await client.fetch(postTeaserQuery, { limit });
+  return await sanityClient.fetch(postTeaserQuery, { limit });
 }
 
 const postsQuery = groq`
@@ -73,5 +73,5 @@ const postsQuery = groq`
 `;
 
 export async function getPosts(): Promise<Post[]> {
-  return await client.fetch(postsQuery);
+  return await sanityClient.fetch(postsQuery);
 }
