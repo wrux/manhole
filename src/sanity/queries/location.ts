@@ -1,5 +1,5 @@
 import groq from 'groq';
-import { client } from '~/sanity/client';
+import { sanityClient } from 'sanity:client';
 import { imageFragment } from '../fragments/imageFragment';
 
 const countriesQuery = groq`
@@ -27,7 +27,7 @@ const countriesQuery = groq`
 `;
 
 export async function getCountries(): Promise<Country[]> {
-  return await client.fetch(countriesQuery);
+  return await sanityClient.fetch(countriesQuery);
 }
 
 const countryListQuery = groq`
@@ -43,5 +43,5 @@ const countryListQuery = groq`
 `;
 
 export async function getCountryList(): Promise<LocationTeaser[]> {
-  return await client.fetch(countryListQuery);
+  return await sanityClient.fetch(countryListQuery);
 }

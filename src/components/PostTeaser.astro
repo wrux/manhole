@@ -1,9 +1,9 @@
 ---
+import { sanityClient } from 'sanity:client';
 import imageUrlBuilder from '@sanity/image-url';
 import type { SanityImageSource } from '@sanity/image-url/lib/types/types';
-import { client } from '~/sanity/client';
 
-const imageBuilder = imageUrlBuilder(client).format('webp');
+const imageBuilder = imageUrlBuilder(sanityClient).format('webp');
 
 export type Props = {
   imageSizes: string;

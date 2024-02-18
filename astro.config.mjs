@@ -1,6 +1,6 @@
 import { defineConfig } from 'astro/config';
 import tailwind from '@astrojs/tailwind';
-import sanity from '@sanity/astro';
+import { sanityIntegration } from '@sanity/astro';
 import react from '@astrojs/react';
 import vercel from '@astrojs/vercel/serverless';
 import sitemap from '@astrojs/sitemap';
@@ -13,7 +13,7 @@ export default defineConfig({
   output: 'hybrid',
   integrations: [
     tailwind(),
-    sanity({
+    sanityIntegration({
       projectId,
       dataset,
       useCdn: false,

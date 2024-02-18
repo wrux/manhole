@@ -2,7 +2,7 @@
 import imageUrlBuilder from '@sanity/image-url';
 import type { SanityImageSource } from '@sanity/image-url/lib/types/types';
 import { getPosts } from '~/sanity/queries';
-import { client } from '~/sanity/client';
+import { sanityClient } from 'sanity:client';
 import {
   CountryShape,
   Credits,
@@ -12,7 +12,7 @@ import {
 } from '~/components';
 import PageLayout from '~/layouts/PageLayout.astro';
 
-const imageBuilder = imageUrlBuilder(client).format('webp');
+const imageBuilder = imageUrlBuilder(sanityClient).format('webp');
 
 const sizes = [256, 360, 440, 529, 625, 729, 841, 961, 1024];
 
