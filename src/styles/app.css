@@ -1,0 +1,24 @@
+@import "tailwindcss";
+@import "_links";
+
+@theme {
+  /* https://colorhunt.co/palette/451952662549ae445af39f5a */
+  --color-primary: #451952;
+  --color-primary-alt: #662549;
+  --color-secondary: #ae445a;
+  --color-tertiary: #f39f5a;
+
+  --font-family-sans: "InterVariable", Inter, ui-sans-serif, system-ui,
+    sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol",
+    "Noto Color Emoji";
+
+  --shadow-heavy: 2px 4px 6px rgba(0, 0, 0, 0.666);
+
+  --width-screen-xl: 80rem;
+}
+
+@layer components {
+  .container {
+    @apply mx-auto max-w-screen-xl px-4 sm:px-2 lg:px-4 xl:px-6 2xl:px-8;
+  }
+}

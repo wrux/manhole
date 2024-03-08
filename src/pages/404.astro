@@ -1,14 +1,14 @@
 ---
-import { getPostTeasers } from '~/sanity/queries';
-import PageLayout from '~/layouts/PageLayout.astro';
-import { Heading, PostTeaser, Text } from '~/components';
+import { getPostTeasers } from "~/sanity/queries";
+import PageLayout from "~/layouts/PageLayout.astro";
+import { Heading, PostTeaser, Text } from "~/components";
 
 const posts = await getPostTeasers(6);
 ---
 
 <PageLayout>
   <div class="container mb-8 md:mb-12 lg:mb-16">
-    <div class="max-w-[50ch] text-center md:text-left mx-auto md:mx-0">
+    <div class="mx-auto max-w-[50ch] text-center md:mx-0 md:text-left">
       <Heading class:list="mb-8" as="h1">404: Manhole not found!</Heading>
       <Text class:list="mb-2" size="lg">
         Looks like our cover got away. While we search, enjoy more hole-some
@@ -21,7 +21,7 @@ const posts = await getPostTeasers(6);
   </div>
 
   <div
-    class="grid grid-cols-1 xs:grid-cols-2 lg:grid-cols-3 flex-1 align-top justify-start gap-4 max-w-[125rem] mx-auto"
+    class="xs:grid-cols-2 mx-auto grid max-w-[125rem] flex-1 grid-cols-1 justify-start gap-4 align-top lg:grid-cols-3"
   >
     {
       posts.map((post) => (

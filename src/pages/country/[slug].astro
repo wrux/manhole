@@ -1,7 +1,7 @@
 ---
-import { getCountries, getCountryList } from '~/sanity/queries';
-import PageLayout from '~/layouts/PageLayout.astro';
-import { CountryShape, Heading, PostTeaser, Text } from '~/components';
+import { getCountries, getCountryList } from "~/sanity/queries";
+import PageLayout from "~/layouts/PageLayout.astro";
+import { CountryShape, Heading, PostTeaser, Text } from "~/components";
 
 export async function getStaticPaths() {
   const countries = await getCountries();
@@ -23,14 +23,14 @@ const country = Astro.props;
     title: `${country.name} | Manhole Gallery`,
   }}
 >
-  <article class="max-w-[125rem] mx-auto">
+  <article class="mx-auto max-w-[125rem]">
     <div>
       <div class="container">
         <div
-          class="flex gap-y-8 flex-col md:flex-row md:justify-between md:items-end"
+          class="flex flex-col gap-y-8 md:flex-row md:items-end md:justify-between"
         >
           <div
-            class="space-y-4 md:space-y-8 lg:space-y-10 text-center md:text-left"
+            class="space-y-4 text-center md:space-y-8 md:text-left lg:space-y-10"
           >
             {
               country?.countryCode && (
@@ -81,7 +81,7 @@ const country = Astro.props;
 
     {
       country?.posts && country.posts.length > 0 && (
-        <div class="mt-8 md:mt-10 lg:mt-12 grid grid-cols-1 xs:grid-cols-2 lg:grid-cols-3 flex-1 align-top justify-start gap-4 max-w-[125rem] mx-auto">
+        <div class="xs:grid-cols-2 mx-auto mt-8 grid max-w-[125rem] flex-1 grid-cols-1 justify-start gap-4 align-top md:mt-10 lg:mt-12 lg:grid-cols-3">
           {country.posts.map((post, index) => (
             <PostTeaser
               imageSizes="(max-width: 474px) 100vw, (max-width: 1023px) 50vw, (max-width: 125rem) 33.334vw, 40rem"

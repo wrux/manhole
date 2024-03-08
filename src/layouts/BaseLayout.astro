@@ -1,9 +1,8 @@
 ---
-import { SEO } from 'astro-seo';
-import { ViewTransitions } from 'astro:transitions';
+import { SEO } from "astro-seo";
+import { ViewTransitions } from "astro:transitions";
 
-import '~/styles/animations.css';
-import '~/styles/links.css';
+import "~/styles/app.css";
 
 type meta = {
   title?: string;
@@ -17,15 +16,15 @@ export type Props = {
 
 const { meta } = Astro.props;
 
-const title = meta?.title || 'Manhole Gallery';
+const title = meta?.title || "Manhole Gallery";
 const description =
   meta?.description ||
-  'Mahole Gallery, the Pavement Chronicles. An image gallery of manhole covers from around the world.';
+  "Mahole Gallery, the Pavement Chronicles. An image gallery of manhole covers from around the world.";
 const image =
-  meta?.image || 'https://manhole.gallery/manhole-gallery-social-image.webp';
+  meta?.image || "https://manhole.gallery/manhole-gallery-social-image.webp";
 ---
 
-<html lang="en" class="flex flex-col min-h-full" transition:animate="none">
+<html lang="en" class="flex min-h-full flex-col" transition:animate="none">
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width" />
@@ -37,21 +36,21 @@ const image =
       openGraph={{
         basic: {
           title,
-          type: 'A type.',
+          type: "A type.",
           image,
         },
       }}
       twitter={{
-        creator: '@wrux',
+        creator: "@wrux",
       }}
       extend={{
         meta: [
           {
-            name: 'twitter:image',
+            name: "twitter:image",
             content: image,
           },
-          { name: 'twitter:title', content: title },
-          { name: 'twitter:description', content: description },
+          { name: "twitter:title", content: title },
+          { name: "twitter:description", content: description },
         ],
       }}
     />
@@ -74,7 +73,7 @@ const image =
     <ViewTransitions />
   </head>
   <body
-    class="flex flex-col min-h-full max-w-[100vw] flex-1 bg-white text-black dark:bg-black dark:text-white"
+    class="flex min-h-full max-w-[100vw] flex-1 flex-col bg-white text-black dark:bg-black dark:text-white"
   >
     <slot />
   </body>

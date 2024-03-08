@@ -1,18 +1,18 @@
 ---
-import imageUrlBuilder from '@sanity/image-url';
-import type { SanityImageSource } from '@sanity/image-url/lib/types/types';
-import { getPosts } from '~/sanity/queries';
-import { sanityClient } from 'sanity:client';
+import imageUrlBuilder from "@sanity/image-url";
+import type { SanityImageSource } from "@sanity/image-url/lib/types/types";
+import { getPosts } from "~/sanity/queries";
+import { sanityClient } from "sanity:client";
 import {
   CountryShape,
   Credits,
   Heading,
   PortableText,
   PostTeaser,
-} from '~/components';
-import PageLayout from '~/layouts/PageLayout.astro';
+} from "~/components";
+import PageLayout from "~/layouts/PageLayout.astro";
 
-const imageBuilder = imageUrlBuilder(sanityClient).format('webp');
+const imageBuilder = imageUrlBuilder(sanityClient).format("webp");
 
 const sizes = [256, 360, 440, 529, 625, 729, 841, 961, 1024];
 
@@ -31,10 +31,10 @@ export async function getStaticPaths() {
 
 const post = Astro.props as Post;
 
-const author = post?.credits?.find((credit) => credit.type === 'author');
+const author = post?.credits?.find((credit) => credit.type === "author");
 const schema = {
-  '@context': 'https://schema.org',
-  '@type': 'BlogPosting',
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
   mainEntityOfPage: `https://manhole.design/posts/${post.slug}`,
   headline: post.title,
   name: post.title,
@@ -46,35 +46,35 @@ const schema = {
     }),
   ...(author && {
     author: {
-      '@type': 'Person',
+      "@type": "Person",
       name: author?.person?.fullName,
       url: author?.person?.website,
     },
   }),
   ...(post.mainImage && {
     image: {
-      '@type': 'ImageObject',
-      '@id': urlFor(post.mainImage, 1000),
+      "@type": "ImageObject",
+      "@id": urlFor(post.mainImage, 1000),
       url: urlFor(post.mainImage, 1000),
-      height: '1000',
-      width: '1000',
+      height: "1000",
+      width: "1000",
     },
   }),
   url: `https://manhole.design/posts/${post.slug}`,
   isPartOf: {
-    '@type': 'Blog',
-    '@id': 'https://manhole.gallery/',
-    name: 'Manhole · Gallery',
+    "@type": "Blog",
+    "@id": "https://manhole.gallery/",
+    name: "Manhole · Gallery",
     publisher: {
-      '@type': 'Organization',
-      '@id': 'https://manhole.gallery/',
-      name: 'Manhole · Gallery',
+      "@type": "Organization",
+      "@id": "https://manhole.gallery/",
+      name: "Manhole · Gallery",
     },
   },
 };
 
 const country = post?.locations?.find(
-  (location) => location.type === 'country'
+  (location) => location.type === "country",
 ) as Country;
 ---
 
@@ -87,18 +87,18 @@ const country = post?.locations?.find(
       imageBuilder.image(post.mainImage).width(1600).height(900).url(),
   }}
 >
-  <article class="grid sm:grid-cols-2 gap-y-8 mb-16 max-w-[125rem] mx-auto">
+  <article class="mx-auto mb-16 grid max-w-[125rem] gap-y-8 sm:grid-cols-2">
     <div>
       {
         post?.mainImage && (
-          <figure class="max-w-full h-auto aspect-square">
+          <figure class="aspect-square h-auto max-w-full">
             <img
-              alt={post.mainImage?.alt || ''}
+              alt={post.mainImage?.alt || ""}
               title={post.mainImage?.alt}
-              class="max-w-full h-auto object-cover bg-gray-100 aspect-square"
+              class="aspect-square h-auto max-w-full bg-gray-100 object-cover"
               srcset={sizes
                 .map((size) => `${urlFor(post.mainImage, size)} ${size}w`)
-                .join(', ')}
+                .join(", ")}
               sizes="(max-width: 639px) 100vw, (max-width: 1999px) 50vw, 62.5rem"
               src={urlFor(post.mainImage, 768)}
               width="1000"
@@ -113,7 +113,7 @@ const country = post?.locations?.find(
     <div class="space-y-4 px-4 sm:px-8 md:px-12 lg:px-16">
       {
         post?.locations?.length > 0 && (
-          <div class="flex gap-4 items-center">
+          <div class="flex items-center gap-4">
             {country && country?.countryCode && (
               <CountryShape
                 countryCode={country.countryCode}
@@ -124,18 +124,18 @@ const country = post?.locations?.find(
 
             {post?.locations && (
               <p
-                class="flex gap-3 flex-wrap text-lg"
+                class="flex flex-wrap gap-3 text-lg"
                 transition:name={`post_${post._id}_locations`}
               >
                 <span class="sr-only">Locations:</span>
                 {post.locations.map((location) =>
-                  location.type === 'country' ? (
+                  location.type === "country" ? (
                     <a href={`/country/${location.slug}`} class="link">
                       {location.name}
                     </a>
                   ) : (
                     <span>{location.name}</span>
-                  )
+                  ),
                 )}
               </p>
             )}
@@ -172,10 +172,10 @@ const country = post?.locations?.find(
   {
     post?.morePosts && post?.morePosts?.length > 0 && (
       <section class="container">
-        <div class="mb-8 lg:mb-12 text-center">
+        <div class="mb-8 text-center lg:mb-12">
           <Heading as="h2">More Posts</Heading>
         </div>
-        <div class="grid grid-cols-1 xs:grid-cols-2 lg:grid-cols-3 align-top justify-start gap-4">
+        <div class="xs:grid-cols-2 grid grid-cols-1 justify-start gap-4 align-top lg:grid-cols-3">
           {post.morePosts.map((post) => (
             <PostTeaser
               imageSizes="(max-width: 474px) 100vw, (max-width: 1023px) 50vw, 20.625rem"
