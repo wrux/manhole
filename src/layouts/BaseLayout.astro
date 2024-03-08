@@ -1,8 +1,8 @@
 ---
-import { SEO } from "astro-seo";
-import { ViewTransitions } from "astro:transitions";
+import { SEO } from 'astro-seo';
+import { ViewTransitions } from 'astro:transitions';
 
-import "~/styles/app.css";
+import '~/styles/app.css';
 
 type meta = {
   title?: string;
@@ -16,12 +16,12 @@ export type Props = {
 
 const { meta } = Astro.props;
 
-const title = meta?.title || "Manhole Gallery";
+const title = meta?.title || 'Manhole Gallery';
 const description =
   meta?.description ||
-  "Mahole Gallery, the Pavement Chronicles. An image gallery of manhole covers from around the world.";
+  'Mahole Gallery, the Pavement Chronicles. An image gallery of manhole covers from around the world.';
 const image =
-  meta?.image || "https://manhole.gallery/manhole-gallery-social-image.webp";
+  meta?.image || 'https://manhole.gallery/manhole-gallery-social-image.webp';
 ---
 
 <html lang="en" class="flex min-h-full flex-col" transition:animate="none">
@@ -36,21 +36,21 @@ const image =
       openGraph={{
         basic: {
           title,
-          type: "A type.",
+          type: 'A type.',
           image,
         },
       }}
       twitter={{
-        creator: "@wrux",
+        creator: '@wrux',
       }}
       extend={{
         meta: [
           {
-            name: "twitter:image",
+            name: 'twitter:image',
             content: image,
           },
-          { name: "twitter:title", content: title },
-          { name: "twitter:description", content: description },
+          { name: 'twitter:title', content: title },
+          { name: 'twitter:description', content: description },
         ],
       }}
     />

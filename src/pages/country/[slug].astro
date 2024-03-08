@@ -1,7 +1,7 @@
 ---
-import { getCountries, getCountryList } from "~/sanity/queries";
-import PageLayout from "~/layouts/PageLayout.astro";
-import { CountryShape, Heading, PostTeaser, Text } from "~/components";
+import { getCountries, getCountryList } from '~/sanity/queries';
+import PageLayout from '~/layouts/PageLayout.astro';
+import { CountryShape, Heading, PostTeaser, Text } from '~/components';
 
 export async function getStaticPaths() {
   const countries = await getCountries();

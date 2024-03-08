@@ -1,7 +1,7 @@
 ---
-import { getPostTeasers } from "~/sanity/queries";
-import PageLayout from "~/layouts/PageLayout.astro";
-import { Heading, PostTeaser, Text } from "~/components";
+import { getPostTeasers } from '~/sanity/queries';
+import PageLayout from '~/layouts/PageLayout.astro';
+import { Heading, PostTeaser, Text } from '~/components';
 
 const posts = await getPostTeasers(6);
 ---

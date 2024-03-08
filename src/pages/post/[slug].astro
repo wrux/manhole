@@ -1,18 +1,18 @@
 ---
-import imageUrlBuilder from "@sanity/image-url";
-import type { SanityImageSource } from "@sanity/image-url/lib/types/types";
-import { getPosts } from "~/sanity/queries";
-import { sanityClient } from "sanity:client";
+import imageUrlBuilder from '@sanity/image-url';
+import type { SanityImageSource } from '@sanity/image-url/lib/types/types';
+import { getPosts } from '~/sanity/queries';
+import { sanityClient } from 'sanity:client';
 import {
   CountryShape,
   Credits,
   Heading,
   PortableText,
   PostTeaser,
-} from "~/components";
-import PageLayout from "~/layouts/PageLayout.astro";
+} from '~/components';
+import PageLayout from '~/layouts/PageLayout.astro';
 
-const imageBuilder = imageUrlBuilder(sanityClient).format("webp");
+const imageBuilder = imageUrlBuilder(sanityClient).format('webp');
 
 const sizes = [256, 360, 440, 529, 625, 729, 841, 961, 1024];
 
@@ -31,10 +31,10 @@ export async function getStaticPaths() {
 
 const post = Astro.props as Post;
 
-const author = post?.credits?.find((credit) => credit.type === "author");
+const author = post?.credits?.find((credit) => credit.type === 'author');
 const schema = {
-  "@context": "https://schema.org",
-  "@type": "BlogPosting",
+  '@context': 'https://schema.org',
+  '@type': 'BlogPosting',
   mainEntityOfPage: `https://manhole.design/posts/${post.slug}`,
   headline: post.title,
   name: post.title,
@@ -46,35 +46,35 @@ const schema = {
     }),
   ...(author && {
     author: {
-      "@type": "Person",
+      '@type': 'Person',
       name: author?.person?.fullName,
       url: author?.person?.website,
     },
   }),
   ...(post.mainImage && {
     image: {
-      "@type": "ImageObject",
-      "@id": urlFor(post.mainImage, 1000),
+      '@type': 'ImageObject',
+      '@id': urlFor(post.mainImage, 1000),
       url: urlFor(post.mainImage, 1000),
-      height: "1000",
-      width: "1000",
+      height: '1000',
+      width: '1000',
     },
   }),
   url: `https://manhole.design/posts/${post.slug}`,
   isPartOf: {
-    "@type": "Blog",
-    "@id": "https://manhole.gallery/",
-    name: "Manhole · Gallery",
+    '@type': 'Blog',
+    '@id': 'https://manhole.gallery/',
+    name: 'Manhole · Gallery',
     publisher: {
-      "@type": "Organization",
-      "@id": "https://manhole.gallery/",
-      name: "Manhole · Gallery",
+      '@type': 'Organization',
+      '@id': 'https://manhole.gallery/',
+      name: 'Manhole · Gallery',
     },
   },
 };
 
 const country = post?.locations?.find(
-  (location) => location.type === "country",
+  (location) => location.type === 'country',
 ) as Country;
 ---
 
@@ -93,12 +93,12 @@ const country = post?.locations?.find(
         post?.mainImage && (
           <figure class="aspect-square h-auto max-w-full">
             <img
-              alt={post.mainImage?.alt || ""}
+              alt={post.mainImage?.alt || ''}
               title={post.mainImage?.alt}
               class="aspect-square h-auto max-w-full bg-gray-100 object-cover"
               srcset={sizes
                 .map((size) => `${urlFor(post.mainImage, size)} ${size}w`)
-                .join(", ")}
+                .join(', ')}
               sizes="(max-width: 639px) 100vw, (max-width: 1999px) 50vw, 62.5rem"
               src={urlFor(post.mainImage, 768)}
               width="1000"
@@ -129,7 +129,7 @@ const country = post?.locations?.find(
               >
                 <span class="sr-only">Locations:</span>
                 {post.locations.map((location) =>
-                  location.type === "country" ? (
+                  location.type === 'country' ? (
                     <a href={`/country/${location.slug}`} class="link">
                       {location.name}
                     </a>
