@@ -1,5 +1,5 @@
-@import "tailwindcss";
-@import "_links";
+@import 'tailwindcss';
+@import 'links';
 
 @theme {
   /* https://colorhunt.co/palette/451952662549ae445af39f5a */
@@ -8,9 +8,9 @@
   --color-secondary: #ae445a;
   --color-tertiary: #f39f5a;
 
-  --font-family-sans: "InterVariable", Inter, ui-sans-serif, system-ui,
-    sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol",
-    "Noto Color Emoji";
+  --font-family-sans: 'InterVariable', Inter, ui-sans-serif, system-ui,
+    sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol',
+    'Noto Color Emoji';
 
   --shadow-heavy: 2px 4px 6px rgba(0, 0, 0, 0.666);
 
