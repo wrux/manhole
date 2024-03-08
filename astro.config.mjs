@@ -1,25 +1,27 @@
-import { defineConfig } from 'astro/config';
-import tailwind from '@astrojs/tailwind';
-import { sanityIntegration } from '@sanity/astro';
-import react from '@astrojs/react';
-import vercel from '@astrojs/vercel/serverless';
-import sitemap from '@astrojs/sitemap';
-import { dataset, projectId } from './src/sanity/config';
+import { defineConfig } from "astro/config";
+import { sanityIntegration } from "@sanity/astro";
+import react from "@astrojs/react";
+import vercel from "@astrojs/vercel/serverless";
+import sitemap from "@astrojs/sitemap";
+import tailwindcss from "@tailwindcss/vite";
+import { dataset, projectId } from "./src/sanity/config";
 
 // https://astro.build/config
 export default defineConfig({
-  site: 'https://manhole.gallery',
+  site: "https://manhole.gallery",
   adapter: vercel(),
-  output: 'hybrid',
+  output: "hybrid",
   integrations: [
-    tailwind(),
     sanityIntegration({
       projectId,
       dataset,
       useCdn: false,
-      studioBasePath: '/studio',
+      studioBasePath: "/studio",
     }),
     sitemap(),
     react(),
   ],
+  vite: {
+    plugins: [tailwindcss()],
+  },
 });
