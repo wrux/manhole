@@ -1,9 +1,9 @@
 import { defineConfig } from 'astro/config';
-import tailwind from '@astrojs/tailwind';
 import { sanityIntegration } from '@sanity/astro';
 import react from '@astrojs/react';
 import vercel from '@astrojs/vercel/serverless';
 import sitemap from '@astrojs/sitemap';
+import tailwindcss from '@tailwindcss/vite';
 import { dataset, projectId } from './src/sanity/config';
 
 // https://astro.build/config
@@ -12,7 +12,6 @@ export default defineConfig({
   adapter: vercel(),
   output: 'hybrid',
   integrations: [
-    tailwind(),
     sanityIntegration({
       projectId,
       dataset,
@@ -22,4 +21,7 @@ export default defineConfig({
     sitemap(),
     react(),
   ],
+  vite: {
+    plugins: [tailwindcss()],
+  },
 });
