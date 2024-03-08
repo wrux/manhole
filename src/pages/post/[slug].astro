@@ -74,7 +74,7 @@ const schema = {
 };
 
 const country = post?.locations?.find(
-  (location) => location.type === 'country'
+  (location) => location.type === 'country',
 ) as Country;
 ---
 
@@ -87,15 +87,15 @@ const country = post?.locations?.find(
       imageBuilder.image(post.mainImage).width(1600).height(900).url(),
   }}
 >
-  <article class="grid sm:grid-cols-2 gap-y-8 mb-16 max-w-[125rem] mx-auto">
+  <article class="mx-auto mb-16 grid max-w-[125rem] gap-y-8 sm:grid-cols-2">
     <div>
       {
         post?.mainImage && (
-          <figure class="max-w-full h-auto aspect-square">
+          <figure class="aspect-square h-auto max-w-full">
             <img
               alt={post.mainImage?.alt || ''}
               title={post.mainImage?.alt}
-              class="max-w-full h-auto object-cover bg-gray-100 aspect-square"
+              class="aspect-square h-auto max-w-full bg-gray-100 object-cover"
               srcset={sizes
                 .map((size) => `${urlFor(post.mainImage, size)} ${size}w`)
                 .join(', ')}
@@ -113,7 +113,7 @@ const country = post?.locations?.find(
     <div class="space-y-4 px-4 sm:px-8 md:px-12 lg:px-16">
       {
         post?.locations?.length > 0 && (
-          <div class="flex gap-4 items-center">
+          <div class="flex items-center gap-4">
             {country && country?.countryCode && (
               <CountryShape
                 countryCode={country.countryCode}
@@ -124,7 +124,7 @@ const country = post?.locations?.find(
 
             {post?.locations && (
               <p
-                class="flex gap-3 flex-wrap text-lg"
+                class="flex flex-wrap gap-3 text-lg"
                 transition:name={`post_${post._id}_locations`}
               >
                 <span class="sr-only">Locations:</span>
@@ -135,7 +135,7 @@ const country = post?.locations?.find(
                     </a>
                   ) : (
                     <span>{location.name}</span>
-                  )
+                  ),
                 )}
               </p>
             )}
@@ -172,10 +172,10 @@ const country = post?.locations?.find(
   {
     post?.morePosts && post?.morePosts?.length > 0 && (
       <section class="container">
-        <div class="mb-8 lg:mb-12 text-center">
+        <div class="mb-8 text-center lg:mb-12">
           <Heading as="h2">More Posts</Heading>
         </div>
-        <div class="grid grid-cols-1 xs:grid-cols-2 lg:grid-cols-3 align-top justify-start gap-4">
+        <div class="xs:grid-cols-2 grid grid-cols-1 justify-start gap-4 align-top lg:grid-cols-3">
           {post.morePosts.map((post) => (
             <PostTeaser
               imageSizes="(max-width: 474px) 100vw, (max-width: 1023px) 50vw, 20.625rem"

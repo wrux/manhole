@@ -10,17 +10,17 @@ const countries = await getCountryList();
 <PageLayout>
   <div class="container mb-8 md:mb-12 lg:mb-16">
     <div
-      class="flex gap-y-8 flex-col md:flex-row md:justify-between md:items-end"
+      class="flex flex-col gap-y-8 md:flex-row md:items-end md:justify-between"
     >
-      <div class="max-w-[50ch] text-center md:text-left mx-auto md:mx-0">
+      <div class="mx-auto max-w-[50ch] text-center md:mx-0 md:text-left">
         <Heading class:list="mb-8" as="h1">
           <span class="sr-only">Mahole Gallery</span> The Pavement Chronicles
         </Heading>
         <Text size="lg">
           Manhole Gallery is your portal to the world's hidden street art,
           showcasing captivating manhole cover designs from all <em>around</em>
-           the flat earth. Explore the artistic and cultural diversity beneath
-          your feet with us!
+          the flat earth. Explore the artistic and cultural diversity beneath your
+          feet with us!
         </Text>
       </div>
 
@@ -48,7 +48,7 @@ const countries = await getCountryList();
   </div>
 
   <div
-    class="grid grid-cols-1 xs:grid-cols-2 lg:grid-cols-3 flex-1 align-top justify-start gap-4 max-w-[125rem] mx-auto"
+    class="xs:grid-cols-2 mx-auto grid max-w-[125rem] flex-1 grid-cols-1 justify-start gap-4 align-top lg:grid-cols-3"
   >
     {
       posts.map((post, index) => (
@@ -61,7 +61,7 @@ const countries = await getCountryList();
     }
     {
       posts.length % 3 !== 0 && (
-        <div class="hidden align-middle justify-center flex-col border-2 border-dashed border-black/30 dark:border-white/30 col-span-[-1] text-center teaser-placeholder space-y-4">
+        <div class="col-span-[-1] teaser-placeholder hidden flex-col justify-center space-y-4 border-2 border-dashed border-black/30 text-center align-middle dark:border-white/30">
           <Heading as="p" size="h3">
             Feel free to contribute
           </Heading>

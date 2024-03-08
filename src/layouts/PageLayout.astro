@@ -18,26 +18,26 @@ const { meta } = Astro.props;
 <BaseLayout meta={meta}>
   <header
     id="site-header"
-    class="sticky top-0 w-full mb-8 z-50 py-4 bg-white/70 dark:bg-black/70 backdrop-blur-lg transition-all duration-300"
+    class="sticky top-0 z-50 mb-8 w-full bg-white/70 py-4 backdrop-blur-lg transition-all duration-300 dark:bg-black/70"
   >
     <div class="container flex justify-center md:justify-start">
-      <a class="block w-full md:w-auto text-lg lg:text-2xl" href="/">
+      <a class="block w-full text-lg md:w-auto lg:text-2xl" href="/">
         <Wordmark />
       </a>
     </div>
   </header>
 
-  <main class="flex-1 w-full" transition:animate="fade">
+  <main class="w-full flex-1" transition:animate="fade">
     <slot />
   </main>
 
-  <footer class="mt-8 md:mt-12 lg:mt-16 mb-16 md:mb-24 lg:mb-32 w-full">
+  <footer class="mb-16 mt-8 w-full md:mb-24 md:mt-12 lg:mb-32 lg:mt-16">
     <div class="container">
       <div
-        class="grid gap-y-8 gap-x-16 md:grid-cols-2 xl:grid-cols-4 text-center md:text-start"
+        class="grid gap-x-16 gap-y-8 text-center md:grid-cols-2 md:text-start xl:grid-cols-4"
       >
         <div class="md:col-span-2 xl:col-span-1">
-          <a class="block w-full md:w-auto text-lg" href="/">
+          <a class="block w-full text-lg md:w-auto" href="/">
             <Wordmark />
           </a>
         </div>

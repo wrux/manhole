@@ -25,7 +25,7 @@ const image =
   meta?.image || 'https://manhole.gallery/manhole-gallery-social-image.webp';
 ---
 
-<html lang="en" class="flex flex-col min-h-full" transition:animate="none">
+<html lang="en" class="flex min-h-full flex-col" transition:animate="none">
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width" />
@@ -74,7 +74,7 @@ const image =
     <ViewTransitions />
   </head>
   <body
-    class="flex flex-col min-h-full max-w-[100vw] flex-1 bg-white text-black dark:bg-black dark:text-white"
+    class="flex min-h-full max-w-[100vw] flex-1 flex-col bg-white text-black dark:bg-black dark:text-white"
   >
     <slot />
   </body>

@@ -1310,7 +1310,7 @@ export type countryItem = {
 };
 
 export default function getCountryShape(
-  id: countryIDs | undefined
+  id: countryIDs | undefined,
 ): countryItem | null {
   if (!id) return null;
   const uppercaseId = id.toUpperCase();

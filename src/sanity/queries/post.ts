@@ -16,7 +16,7 @@ const postTeaserQuery = groq`
 `;
 
 export async function getPostTeasers(
-  limit: number = 9999
+  limit: number = 9999,
 ): Promise<PostTeaser[]> {
   return await sanityClient.fetch(postTeaserQuery, { limit });
 }
