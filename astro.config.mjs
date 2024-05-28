@@ -1,5 +1,5 @@
 import { defineConfig } from 'astro/config';
-import { sanityIntegration } from '@sanity/astro';
+import sanityIntegration from '@sanity/astro';
 import react from '@astrojs/react';
 import vercel from '@astrojs/vercel/serverless';
 import sitemap from '@astrojs/sitemap';
