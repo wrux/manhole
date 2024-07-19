@@ -1,0 +1,37 @@
+---
+import { sanityClient } from 'sanity:client';
+import imageUrlBuilder from '@sanity/image-url';
+import type { SanityImageSource } from '@sanity/image-url/lib/types/types';
+
+const imageBuilder = imageUrlBuilder(sanityClient).format('webp');
+
+export type Props = {
+  alt: string;
+  id: string;
+  image: SanityImageSource;
+};
+
+const { alt, id, image } = Astro.props;
+
+// const sizes = [256, 360, 440, 529, 625, 729, 841, 961, 1024];
+
+// @TODO: Refactor to use `astro-sanity-picture`.
+function urlFor(source: SanityImageSource, size: number): string {
+  return imageBuilder.image(source).width(size).height(size).url();
+}
+---
+
+<figure
+  class="aspect-square h-auto max-w-full"
+  transition:name={`cover_${id}`}
+  transition:persist
+>
+  <img
+    alt={alt || ''}
+    title={alt}
+    class="aspect-square h-auto max-w-full bg-gray-100 object-cover"
+    src={urlFor(image, 1000)}
+    width="1000"
+    height="1000"
+  />
+</figure>

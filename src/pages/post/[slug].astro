@@ -7,6 +7,7 @@ import {
   CountryShape,
   Credits,
   Heading,
+  ManholeImage,
   PortableText,
   PostTeaser,
 } from '~/components';
@@ -76,6 +77,10 @@ const schema = {
 const country = post?.locations?.find(
   (location) => location.type === 'country',
 ) as Country;
+
+// <ManholeImage alt={post.mainImage?.alt || ''}
+// image={post.mainImage}
+// />
 ---
 
 <PageLayout
@@ -89,25 +94,11 @@ const country = post?.locations?.find(
 >
   <article class="mx-auto mb-16 grid max-w-[125rem] gap-y-8 sm:grid-cols-2">
     <div>
-      {
-        post?.mainImage && (
-          <figure class="aspect-square h-auto max-w-full">
-            <img
-              alt={post.mainImage?.alt || ''}
-              title={post.mainImage?.alt}
-              class="aspect-square h-auto max-w-full bg-gray-100 object-cover"
-              srcset={sizes
-                .map((size) => `${urlFor(post.mainImage, size)} ${size}w`)
-                .join(', ')}
-              sizes="(max-width: 639px) 100vw, (max-width: 1999px) 50vw, 62.5rem"
-              src={urlFor(post.mainImage, 768)}
-              width="1000"
-              height="1000"
-              transition:name={`post_${post._id}_image`}
-            />
-          </figure>
-        )
-      }
+      <ManholeImage
+        alt={post.mainImage?.alt || ''}
+        id={post._id}
+        image={post.mainImage}
+      />
     </div>
 
     <div class="space-y-4 px-4 sm:px-8 md:px-12 lg:px-16">

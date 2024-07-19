@@ -2,6 +2,7 @@
 import { sanityClient } from 'sanity:client';
 import imageUrlBuilder from '@sanity/image-url';
 import type { SanityImageSource } from '@sanity/image-url/lib/types/types';
+import { ManholeImage } from '~/components';
 
 const imageBuilder = imageUrlBuilder(sanityClient).format('webp');
 
@@ -24,21 +25,13 @@ function urlFor(source: SanityImageSource, size: number): string {
 <article class="group relative">
   {
     post?.mainImage && (
-      <figure>
-        <img
+      <div class="absolute inset-0">
+        <ManholeImage
           alt={post.mainImage?.alt || ''}
-          title={post.mainImage?.alt}
-          class="absolute inset-0 aspect-square h-auto max-w-full bg-gray-100 object-cover"
-          srcset={sizes
-            .map((size) => `${urlFor(post.mainImage, size)} ${size}w`)
-            .join(', ')}
-          sizes={imageSizes}
-          width="1000"
-          height="1000"
-          loading={lazy ? 'lazy' : 'eager'}
-          transition:name={`post_${post._id}_image`}
+          id={post._id}
+          image={post.mainImage}
         />
-      </figure>
+      </div>
     )
   }
   <div class="relative z-10 flex aspect-square items-end p-4 lg:p-8">
