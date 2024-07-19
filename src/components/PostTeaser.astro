@@ -33,10 +33,10 @@ function urlFor(source: SanityImageSource, size: number): string {
             .map((size) => `${urlFor(post.mainImage, size)} ${size}w`)
             .join(', ')}
           sizes={imageSizes}
-          width="1000"
-          height="1000"
+          src={urlFor(post.mainImage, 768)}
+          width="1024"
+          height="1024"
           loading={lazy ? 'lazy' : 'eager'}
-          transition:name={`post_${post._id}_image`}
         />
       </figure>
     )
