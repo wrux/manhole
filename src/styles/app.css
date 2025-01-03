@@ -1,6 +1,6 @@
 @import 'tailwindcss';
 
-@import './_link.css' layer(utilities);
+@import './_links.css' layer(utilities);
 @import './_transitions.css' layer(utilities);
 
 @theme {
