@@ -1,7 +1,7 @@
 @import 'tailwindcss';
 
 @import './_links.css' layer(utilities);
-@import './_transitions.css' layer(utilities);
+@import './_animations.css' layer(utilities);
 
 @theme {
   /* https://colorhunt.co/palette/451952662549ae445af39f5a */
