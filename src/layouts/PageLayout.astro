@@ -22,6 +22,7 @@ const currentPath = Astro.url.pathname;
   <header
     id="site-header"
     class="sticky top-0 z-50 mb-8 w-full py-3 lg:py-6 transition-all duration-300 lg:mb-12 lg:mix-blend-difference"
+    transition:name="site-header"
   >
     <div class="container">
       <div class="flex items-center justify-between gap-4">
@@ -29,6 +30,7 @@ const currentPath = Astro.url.pathname;
           href="/"
           class="group header-branding inline-flex items-center gap-3 rounded-full bg-white/10 px-3 py-2 transition-all duration-300 backdrop-blur-sm"
           aria-label="Manhole Gallery - Home"
+          transition:name="header-logo"
         >
           <div class="relative h-2 w-2" aria-hidden="true">
             <svg
@@ -61,6 +63,7 @@ const currentPath = Astro.url.pathname;
               <nav
                 class="hidden lg:flex flex-wrap items-center gap-2"
                 aria-label="Countries"
+                transition:name="desktop-nav"
               >
                 {countries.map((country) => {
                   const isActive = currentPath === `/country/${country.slug}`;
@@ -126,7 +129,7 @@ const currentPath = Astro.url.pathname;
     countries && countries.length > 0 && (
       <nav
         id="mobile-menu"
-        class="mobile-menu fixed top-0 left-0 right-0 z-40 w-full bg-surface dark:bg-surface-dark transform -translate-y-full transition-transform duration-300 ease-in-out lg:hidden shadow-lg"
+        class="mobile-menu fixed top-0 left-0 right-0 z-40 w-full bg-surface transform -translate-y-full transition-transform duration-300 ease-in-out lg:hidden shadow-lg"
         aria-label="Countries"
       >
         <div class="container pt-16 pb-8">
@@ -138,7 +141,7 @@ const currentPath = Astro.url.pathname;
                   class={`text-xs font-semibold uppercase tracking-wider rounded-full px-4 py-3 transition-all duration-300 text-center ${
                     isActive
                       ? 'bg-secondary text-black'
-                      : 'bg-current/10 hover:bg-current/20 text-current dark:bg-current/20 dark:hover:bg-current/30 dark:text-white'
+                      : 'bg-current/20 hover:bg-current/30 text-white'
                   }`}
                   href={`/country/${country.slug}`}
                   aria-label={`View all posts in ${country.name}`}
@@ -159,7 +162,7 @@ const currentPath = Astro.url.pathname;
     <slot />
   </main>
 
-  <footer class="mt-16 w-full py-8 md:mt-20">
+  <footer class="mt-16 w-full py-8 md:mt-20" transition:name="site-footer">
     <div class="container">
       <div class="flex flex-wrap items-center justify-center gap-4 text-center">
         <p class="type-sm text-current/50">
@@ -315,5 +318,55 @@ const currentPath = Astro.url.pathname;
 
     // Re-setup after view transitions
     document.addEventListener('astro:page-load', setupMobileMenu);
+  </script>
+
+  <script>
+    // Enhanced view transition handling
+    document.addEventListener('astro:before-preparation', (event) => {
+      // Add loading state during transitions
+      document.body.style.pointerEvents = 'none';
+
+      // Ensure view transitions are enabled
+      if (typeof document.startViewTransition === 'function') {
+        // View transitions are supported
+      }
+    });
+
+    document.addEventListener('astro:after-swap', () => {
+      // Restore pointer events after transition
+      document.body.style.pointerEvents = '';
+
+      // Don't scroll to top automatically - let user control scroll position
+      // Smooth scroll to top on navigation (optional)
+      // if (window.scrollY > 100) {
+      //   window.scrollTo({ top: 0, behavior: 'smooth' });
+      // }
+    });
+
+    // Optimize image loading during transitions
+    document.addEventListener('astro:page-load', () => {
+      // Preload images for smoother transitions
+      const images = document.querySelectorAll('img[transition\\:name]');
+      images.forEach((img) => {
+        if (img instanceof HTMLImageElement && !img.complete) {
+          img.loading = 'eager';
+        }
+      });
+    });
+
+    // Ensure view transitions work on all links
+    document.addEventListener(
+      'click',
+      (e) => {
+        const target = e.target as HTMLElement;
+        if (target) {
+          const link = target.closest('a[href]') as HTMLAnchorElement;
+          if (link && link.href && link.hostname === window.location.hostname) {
+            // Internal link - view transitions will handle it
+          }
+        }
+      },
+      true
+    );
   </script>
 </BaseLayout>

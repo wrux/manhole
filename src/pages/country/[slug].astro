@@ -35,10 +35,10 @@ const country = Astro.props;
         }
       </div>
       <div class="space-y-3">
-        <h1 class="type-h1">{country.name}</h1>
+        <h1 class="type-h1" transition:name={`country-title-${country._id}`}>{country.name}</h1>
         {
           country.nameLocalised && (
-            <p class="type-h3">{country.nameLocalised}</p>
+            <p class="type-h3" transition:name={`country-subtitle-${country._id}`}>{country.nameLocalised}</p>
           )
         }
       </div>
@@ -47,7 +47,7 @@ const country = Astro.props;
 
   {
     country?.posts && country.posts.length > 0 && (
-      <div class="gallery-grid w-full">
+      <div class="gallery-grid w-full" transition:name={`country-gallery-${country._id}`}>
         {country.posts.map((post, index) => (
           <PostTeaser
             imageSizes="(max-width: 474px) 100vw, (max-width: 1023px) 50vw, (max-width: 125rem) 33.334vw, 40rem"

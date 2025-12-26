@@ -22,7 +22,8 @@ function urlFor(source: SanityImageSource, size: number): string {
 ---
 
 <article
-  class="group relative aspect-square overflow-hidden bg-surface shadow-sm ring-1 ring-inset ring-current/5 transition-all duration-300 hover:shadow-lg hover:ring-current/10 dark:bg-surface-dark"
+  class="group relative aspect-square overflow-hidden bg-surface shadow-sm ring-1 ring-inset ring-current/5 transition-all duration-300 hover:shadow-lg hover:ring-current/10"
+  transition:name={`post-teaser-${post._id}`}
 >
   <a
     href={`/post/${post.slug}`}
@@ -31,7 +32,10 @@ function urlFor(source: SanityImageSource, size: number): string {
   >
     {
       post?.mainImage && (
-        <figure class="relative h-full w-full overflow-hidden bg-current/5">
+        <figure
+          class="relative h-full w-full overflow-hidden bg-current/5"
+          transition:name={`post-image-${post._id}`}
+        >
           <img
             alt={post.mainImage?.alt || post.title}
             title={post.mainImage?.alt || post.title}
@@ -46,14 +50,18 @@ function urlFor(source: SanityImageSource, size: number): string {
             loading={lazy ? 'lazy' : 'eager'}
           />
           <div
-            class="absolute inset-0 bg-gradient-to-t from-black via-black/80 to-transparent"
+            class="absolute inset-0 bg-linear-to-t from-black via-black/80 to-transparent"
             style="background: linear-gradient(to top, rgba(0, 0, 0, 1) 0%, rgba(0, 0, 0, 0.8) 50%, transparent 100%);"
+            transition:name={`post-overlay-${post._id}`}
           />
         </figure>
       )
     }
     <div class="absolute inset-0 flex items-end p-3 lg:p-5">
-      <h3 class="type-h5 text-white drop-shadow-lg">
+      <h3
+        class="type-h5 text-white drop-shadow-lg"
+        transition:name={`post-title-${post._id}`}
+      >
         <span class="line-clamp-2">{post.title}</span>
       </h3>
     </div>

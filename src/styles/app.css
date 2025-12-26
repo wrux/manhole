@@ -3,13 +3,12 @@
 
 @theme {
   /* Modern manhole-inspired palette - industrial yet vibrant */
-  --color-primary: #1a1a1a;
-  --color-primary-alt: #2d2d2d;
+  --color-primary: #ffffff;
+  --color-primary-alt: #e0e0e0;
   --color-secondary: #ff6b35;
   --color-tertiary: #f7931e;
   --color-accent: #4ecdc4;
-  --color-surface: #f8f8f8;
-  --color-surface-dark: #0a0a0a;
+  --color-surface: #0a0a0a;
 
   --font-family-sans:
     'InterVariable', Inter, ui-sans-serif, system-ui, sans-serif,
@@ -52,7 +51,7 @@
   }
 
   .type-h5 {
-    @apply font-sans font-semibold leading-tight text-lg md:text-xl uppercase tracking-wider;
+    @apply font-sans font-semibold leading-tight text-lg md:text-xl tracking-wider;
   }
 
   .type-h6 {

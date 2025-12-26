@@ -9,7 +9,7 @@ const posts = await getPostTeasers();
 <PageLayout>
   <div class="container mb-16 md:mb-20 lg:mb-24">
     <div class="mx-auto max-w-4xl text-center">
-      <h1 class="type-h1 mb-6 md:mb-8">
+      <h1 class="type-h1 mb-6 md:mb-8" transition:name="home-title">
         <span class="sr-only">Manhole Gallery</span>
         <span class="block">The Pavement</span>
         <span
@@ -17,7 +17,7 @@ const posts = await getPostTeasers();
           >Chronicles</span
         >
       </h1>
-      <p class="type-lg mb-8 leading-relaxed text-current/80 md:mb-12">
+      <p class="type-lg mb-8 leading-relaxed text-current/80 md:mb-12" transition:name="home-description">
         Discover the <em class="not-italic font-semibold text-secondary"
           >unseen</em
         > artistry of manhole covers from cities around the world. Each design tells
@@ -26,7 +26,7 @@ const posts = await getPostTeasers();
     </div>
   </div>
 
-  <div class="gallery-grid w-full">
+  <div class="gallery-grid w-full" transition:name="home-gallery-grid">
     {
       posts.map((post, index) => (
         <PostTeaser
@@ -38,7 +38,7 @@ const posts = await getPostTeasers();
     }
     {
       posts.length % 3 !== 0 && (
-        <div class="col-span-[-1] teaser-placeholder hidden flex-col items-center justify-center space-y-6 rounded-lg border-2 border-dashed border-current/20 bg-surface/50 p-12 text-center dark:bg-surface-dark/50">
+        <div class="col-span-[-1] teaser-placeholder hidden flex-col items-center justify-center space-y-6 rounded-lg border-2 border-dashed border-current/20 bg-surface/50 p-12 text-center">
           <div class="manhole-accent">
             <div class="h-16 w-16 rounded-full border-4 border-current" />
           </div>

@@ -15,6 +15,8 @@ export default defineConfig({
     },
   }),
   output: 'static',
+  // View transitions are enabled by default in Astro 3+
+  // ClientRouter handles client-side navigation
   integrations: [
     sanityIntegration({
       projectId,

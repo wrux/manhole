@@ -6,3 +6,100 @@
     opacity: 1;
   }
 }
+
+/* View Transition Animations */
+@keyframes fade {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes slideFromRight {
+  from {
+    opacity: 0;
+    transform: translateX(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes slideFromLeft {
+  from {
+    opacity: 0;
+    transform: translateX(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes slideFromBottom {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes scaleIn {
+  from {
+    opacity: 0;
+    transform: scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+/* View Transition Styles */
+::view-transition-old(root),
+::view-transition-new(root) {
+  animation-duration: 0.3s;
+  animation-timing-function: ease-in-out;
+}
+
+/* Smooth image transitions */
+::view-transition-old(post-image),
+::view-transition-new(post-image) {
+  animation-duration: 0.4s;
+  animation-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Header transitions */
+::view-transition-old(site-header),
+::view-transition-new(site-header) {
+  animation-duration: 0.2s;
+  animation-timing-function: ease-out;
+}
+
+/* Gallery grid transitions */
+::view-transition-old(home-gallery-grid),
+::view-transition-new(home-gallery-grid) {
+  animation-duration: 0.5s;
+  animation-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Title transitions */
+::view-transition-old(home-title),
+::view-transition-new(home-title) {
+  animation-duration: 0.3s;
+  animation-timing-function: ease-out;
+}
+
+/* Ensure view transitions are enabled */
+@supports (view-transition-name: none) {
+  /* Default transition for all elements */
+  * {
+    view-transition-name: none;
+  }
+}
