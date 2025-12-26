@@ -113,4 +113,19 @@
     -webkit-box-orient: vertical;
     overflow: hidden;
   }
+
+  /* Header branding SVG hover effect */
+  .header-branding {
+    position: relative;
+  }
+
+  .header-circle {
+    transition: stroke 0.5s ease, fill 0.5s ease, stroke-width 0.5s ease;
+    fill: transparent;
+  }
+
+  .header-branding:hover .header-circle {
+    stroke: #ff6b35;
+    fill: #ff6b35;
+  }
 }

@@ -24,16 +24,29 @@ const { meta } = Astro.props;
     <div class="container">
       <a
         href="/"
-        class="group inline-flex items-center gap-3 transition-opacity duration-300 hover:opacity-70"
+        class="group header-branding inline-flex items-center gap-3 rounded-full bg-white/10 px-3 py-2 transition-all duration-300 backdrop-blur-sm"
         aria-label="Manhole Gallery - Home"
       >
-        <div
-          class="relative h-2 w-2 rounded-full border border-white transition-all duration-500 group-hover:scale-125 group-hover:border-secondary"
-          aria-hidden="true"
-        >
-          <div class="absolute inset-0 rounded-full bg-white opacity-0 blur-sm transition-opacity duration-500 group-hover:opacity-20"></div>
+        <div class="relative h-2 w-2" aria-hidden="true">
+          <svg
+            class="h-full w-full header-branding-svg"
+            viewBox="0 0 16 16"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <circle
+              cx="8"
+              cy="8"
+              r="7"
+              stroke="white"
+              stroke-width="2"
+              fill="none"
+              class="header-circle"></circle>
+          </svg>
         </div>
-        <span class="text-xs font-semibold uppercase tracking-wider text-white transition-colors group-hover:text-white">
+        <span
+          class="text-xs font-semibold uppercase tracking-wider text-white transition-all duration-300"
+        >
           Manhole Gallery
         </span>
       </a>

@@ -23,35 +23,33 @@ const country = Astro.props;
     title: `${country.name} | Manhole Gallery`,
   }}
 >
-  <article class="container mb-20 lg:mb-24">
-    <div class="mx-auto max-w-4xl">
-      <div class="mb-16 text-center">
-        <div class="mb-8 flex justify-center">
-          {
-            country?.countryCode && (
-              <CountryShape
-                countryCode={country.countryCode}
-                class:list="mx-auto max-w-full"
-                transition:name={`country_${country._id}`}
-              />
-            )
-          }
-        </div>
-        <div class="space-y-3">
-          <h1 class="type-h1">{country.name}</h1>
-          {
-            country.nameLocalised && (
-              <p class="type-h3 text-current/70">
-                {country.nameLocalised}
-              </p>
-            )
-          }
-        </div>
+  <div class="container mb-16 md:mb-20 lg:mb-24">
+    <div class="mx-auto max-w-4xl text-center">
+      <div class="mb-8 flex justify-center">
+        {
+          country?.countryCode && (
+            <CountryShape
+              countryCode={country.countryCode}
+              class:list="mx-auto max-w-full"
+              transition:name={`country_${country._id}`}
+            />
+          )
+        }
+      </div>
+      <div class="space-y-3">
+        <h1 class="type-h1">{country.name}</h1>
+        {
+          country.nameLocalised && (
+            <p class="type-h3 text-current/70">
+              {country.nameLocalised}
+            </p>
+          )
+        }
       </div>
 
       {
         countries && countries.filter(({ _id }) => _id != country._id).length > 0 && (
-          <div class="mb-16">
+          <div class="mt-12">
             <div class="mb-4 flex justify-center">
               <div class="h-px w-12 bg-current/20"></div>
             </div>
@@ -75,19 +73,19 @@ const country = Astro.props;
         )
       }
     </div>
+  </div>
 
-    {
-      country?.posts && country.posts.length > 0 && (
-        <div class="gallery-grid w-full px-4 sm:px-6 lg:px-8 xl:px-12">
-          {country.posts.map((post, index) => (
-            <PostTeaser
-              imageSizes="(max-width: 474px) 100vw, (max-width: 1023px) 50vw, (max-width: 125rem) 33.334vw, 40rem"
-              post={post}
-              lazy={index >= 6}
-            />
-          ))}
-        </div>
-      )
-    }
-  </article>
+  {
+    country?.posts && country.posts.length > 0 && (
+      <div class="gallery-grid w-full px-4 sm:px-6 lg:px-8 xl:px-12">
+        {country.posts.map((post, index) => (
+          <PostTeaser
+            imageSizes="(max-width: 474px) 100vw, (max-width: 1023px) 50vw, (max-width: 125rem) 33.334vw, 40rem"
+            post={post}
+            lazy={index >= 6}
+          />
+        ))}
+      </div>
+    )
+  }
 </PageLayout>
