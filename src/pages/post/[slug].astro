@@ -1,15 +1,9 @@
 ---
 import imageUrlBuilder from '@sanity/image-url';
-import type { SanityImageSource } from '@sanity/image-url/lib/types/types';
+import type { SanityImageSource } from '@sanity/image-url';
 import { getPosts } from '~/sanity/queries';
 import { sanityClient } from 'sanity:client';
-import {
-  CountryShape,
-  Credits,
-  Heading,
-  PortableText,
-  PostTeaser,
-} from '~/components';
+import { CountryShape, Credits, PortableText, PostTeaser } from '~/components';
 import PageLayout from '~/layouts/PageLayout.astro';
 
 const imageBuilder = imageUrlBuilder(sanityClient).format('webp');
@@ -74,7 +68,7 @@ const schema = {
 };
 
 const country = post?.locations?.find(
-  (location) => location.type === 'country',
+  (location) => location.type === 'country'
 ) as Country;
 ---
 
@@ -87,94 +81,120 @@ const country = post?.locations?.find(
       imageBuilder.image(post.mainImage).width(1600).height(900).url(),
   }}
 >
-  <article class="mx-auto mb-16 grid max-w-[125rem] gap-y-8 sm:grid-cols-2">
-    <div>
-      {
-        post?.mainImage && (
-          <figure class="aspect-square h-auto max-w-full">
-            <img
-              alt={post.mainImage?.alt || ''}
-              title={post.mainImage?.alt}
-              class="aspect-square h-auto max-w-full bg-gray-100 object-cover"
-              srcset={sizes
-                .map((size) => `${urlFor(post.mainImage, size)} ${size}w`)
-                .join(', ')}
-              sizes="(max-width: 639px) 100vw, (max-width: 1999px) 50vw, 62.5rem"
-              src={urlFor(post.mainImage, 768)}
-              width="1024"
-              height="1024"
-            />
-          </figure>
-        )
-      }
-    </div>
-
-    <div class="space-y-4 px-4 sm:px-8 md:px-12 lg:px-16">
-      {
-        post?.locations?.length > 0 && (
-          <div class="flex items-center gap-4">
-            {country && country?.countryCode && (
-              <CountryShape
-                countryCode={country.countryCode}
-                size="xs"
-                transition:name={`country_${country._id}`}
-              />
-            )}
-
-            {post?.locations && (
-              <p
-                class="flex flex-wrap gap-3 text-lg"
-                transition:name={`post_${post._id}_locations`}
+  <article
+    class="container mb-20 lg:mb-24"
+    transition:name={`post-article-${post._id}`}
+  >
+    <div class="mx-auto">
+      <div class="mb-12 grid gap-12 lg:grid-cols-2 lg:items-start">
+        <div class="order-2 lg:order-1">
+          {
+            post?.mainImage && (
+              <figure
+                class="relative overflow-hidden bg-surface shadow-xl"
+                transition:name={`post-image-${post._id}`}
               >
-                <span class="sr-only">Locations:</span>
-                {post.locations.map((location) =>
-                  location.type === 'country' ? (
-                    <a href={`/country/${location.slug}`} class="link">
-                      {location.name}
-                    </a>
-                  ) : (
-                    <span>{location.name}</span>
-                  ),
+                <img
+                  alt={post.mainImage?.alt || post.title}
+                  title={post.mainImage?.alt || post.title}
+                  class="aspect-square w-full object-cover"
+                  srcset={sizes
+                    .map((size) => `${urlFor(post.mainImage, size)} ${size}w`)
+                    .join(', ')}
+                  sizes="(max-width: 1023px) 100vw, 50vw"
+                  src={urlFor(post.mainImage, 1024)}
+                  width="1024"
+                  height="1024"
+                />
+              </figure>
+            )
+          }
+        </div>
+
+        <div class="order-1 space-y-8 lg:order-2 lg:sticky lg:top-24">
+          {
+            post?.locations?.length > 0 && (
+              <div class="flex flex-wrap items-center gap-2">
+                {country && country?.countryCode && (
+                  <CountryShape
+                    countryCode={country.countryCode}
+                    size="xs"
+                    transition:name={`country_${country._id}`}
+                  />
                 )}
-              </p>
-            )}
-          </div>
-        )
-      }
 
-      <Heading as="h1" transition:name={`post_${post._id}_title`}>
-        {post.title}
-      </Heading>
+                {post?.locations && (
+                  <div
+                    class="flex flex-wrap items-center gap-2"
+                    transition:name={`post-locations-${post._id}`}
+                  >
+                    <span class="sr-only">Locations:</span>
+                    {post.locations.map((location) =>
+                      location.type === 'country' ? (
+                        <a
+                          href={`/country/${location.slug}`}
+                          class="text-xs font-semibold uppercase tracking-wider rounded-full px-2.5 py-1 transition-all duration-300 backdrop-blur-sm bg-current/20 hover:bg-current/30 text-white"
+                        >
+                          {location.name}
+                        </a>
+                      ) : (
+                        <span class="text-xs font-semibold uppercase tracking-wider text-current/70">
+                          {location.name}
+                        </span>
+                      )
+                    )}
+                  </div>
+                )}
+              </div>
+            )
+          }
 
-      {
-        (post?.body || post?.summary) && (
-          <div
-            class="max-w-[40ch] lg:py-4"
-            transition:name={`post_${post._id}_description`}
-          >
-            <PortableText value={post.body || post.summary} components={{}} />
-          </div>
-        )
-      }
+          <h1 class="type-h1 mb-6" transition:name={`post-title-${post._id}`}>
+            {post.title}
+          </h1>
 
-      {
-        post?.credits && post.credits.length > 0 && (
-          <Credits
-            credits={post.credits}
-            transition:name={`post_${post._id}_credits`}
-          />
-        )
-      }
+          {
+            (post?.body || post?.summary) && (
+              <div
+                class="prose prose-lg max-w-none text-current/80 prose-headings:font-bold prose-headings:text-current prose-a:link-reverse prose-strong:text-current"
+                transition:name={`post-description-${post._id}`}
+              >
+                <PortableText
+                  value={post.body || post.summary}
+                  components={{}}
+                />
+              </div>
+            )
+          }
+
+          {
+            post?.credits && post.credits.length > 0 && (
+              <Credits
+                credits={post.credits}
+                transition:name={`post-credits-${post._id}`}
+              />
+            )
+          }
+        </div>
+      </div>
     </div>
   </article>
 
   {
     post?.morePosts && post?.morePosts?.length > 0 && (
-      <section class="container">
-        <div class="mb-8 text-center lg:mb-12">
-          <Heading as="h2">More Posts</Heading>
+      <section class="mb-20 lg:mb-24" transition:name="more-posts-section">
+        <div class="container mb-6">
+          <h2 class="type-h4 mb-2" transition:name="more-posts-title">
+            More from the Gallery
+          </h2>
+          <p
+            class="type-sm text-current/70"
+            transition:name="more-posts-subtitle"
+          >
+            Discover more manhole cover designs
+          </p>
         </div>
-        <div class="xs:grid-cols-2 grid grid-cols-1 justify-start gap-4 align-top lg:grid-cols-3">
+        <div class="gallery-grid w-full" transition:name="more-posts-grid">
           {post.morePosts.map((post) => (
             <PostTeaser
               imageSizes="(max-width: 474px) 100vw, (max-width: 1023px) 50vw, 20.625rem"

@@ -1,7 +1,7 @@
 ---
-import { getCountries, getCountryList } from '~/sanity/queries';
+import { getCountries } from '~/sanity/queries';
 import PageLayout from '~/layouts/PageLayout.astro';
-import { CountryShape, Heading, PostTeaser, Text } from '~/components';
+import { CountryShape, PostTeaser } from '~/components';
 
 export async function getStaticPaths() {
   const countries = await getCountries();
@@ -10,8 +10,6 @@ export async function getStaticPaths() {
     props: country,
   }));
 }
-
-const countries = await getCountryList();
 
 export type Props = Country;
 
@@ -23,74 +21,41 @@ const country = Astro.props;
     title: `${country.name} | Manhole Gallery`,
   }}
 >
-  <article class="mx-auto max-w-[125rem]">
-    <div>
-      <div class="container">
-        <div
-          class="flex flex-col gap-y-8 md:flex-row md:items-end md:justify-between"
-        >
-          <div
-            class="space-y-4 text-center md:space-y-8 md:text-left lg:space-y-10"
-          >
-            {
-              country?.countryCode && (
-                <CountryShape
-                  countryCode={country.countryCode}
-                  class:list="mx-auto md:mx-0 max-w-full"
-                  transition:name={`country_${country._id}`}
-                />
-              )
-            }
-            <div>
-              <Heading as="h1" size="h1">{country.name}</Heading>
-              {
-                country.nameLocalised && (
-                  <Heading as="p" size="h3">
-                    {country.nameLocalised}
-                  </Heading>
-                )
-              }
-            </div>
-          </div>
-
-          <div class="text-center md:text-right">
-            <Text size="md">Other countries</Text>
-            <Text
-              size="sm"
-              class:list="flex justify-center md:justify-end gap-2 flex-wrap"
-            >
-              {
-                countries
-                  ?.filter(({ _id }) => _id != country._id)
-                  ?.map((country) => (
-                    <a
-                      class="link"
-                      href={`/country/${country.slug}`}
-                      aria-label={`View all posts in ${country.name}`}
-                      transition:name={`country_list_${country._id}`}
-                    >
-                      {country.name}
-                    </a>
-                  ))
-              }
-            </Text>
-          </div>
-        </div>
+  <div class="container mb-16 md:mb-20 lg:mb-24">
+    <div class="mx-auto max-w-4xl text-center">
+      <div class="mb-8 flex justify-center">
+        {
+          country?.countryCode && (
+            <CountryShape
+              countryCode={country.countryCode}
+              class:list="mx-auto max-w-full"
+              transition:name={`country_${country._id}`}
+            />
+          )
+        }
+      </div>
+      <div class="space-y-3">
+        <h1 class="type-h1" transition:name={`country-title-${country._id}`}>{country.name}</h1>
+        {
+          country.nameLocalised && (
+            <p class="type-h3" transition:name={`country-subtitle-${country._id}`}>{country.nameLocalised}</p>
+          )
+        }
       </div>
     </div>
+  </div>
 
-    {
-      country?.posts && country.posts.length > 0 && (
-        <div class="xs:grid-cols-2 mx-auto mt-8 grid max-w-[125rem] flex-1 grid-cols-1 justify-start gap-4 align-top md:mt-10 lg:mt-12 lg:grid-cols-3">
-          {country.posts.map((post, index) => (
-            <PostTeaser
-              imageSizes="(max-width: 474px) 100vw, (max-width: 1023px) 50vw, (max-width: 125rem) 33.334vw, 40rem"
-              post={post}
-              lazy={index >= 6}
-            />
-          ))}
-        </div>
-      )
-    }
-  </article>
+  {
+    country?.posts && country.posts.length > 0 && (
+      <div class="gallery-grid w-full" transition:name={`country-gallery-${country._id}`}>
+        {country.posts.map((post, index) => (
+          <PostTeaser
+            imageSizes="(max-width: 474px) 100vw, (max-width: 1023px) 50vw, (max-width: 125rem) 33.334vw, 40rem"
+            post={post}
+            lazy={index >= 6}
+          />
+        ))}
+      </div>
+    )
+  }
 </PageLayout>

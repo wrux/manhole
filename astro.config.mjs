@@ -1,7 +1,7 @@
 import { defineConfig } from 'astro/config';
 import sanityIntegration from '@sanity/astro';
 import react from '@astrojs/react';
-import vercel from '@astrojs/vercel/serverless';
+import vercel from '@astrojs/vercel';
 import sitemap from '@astrojs/sitemap';
 import tailwindcss from '@tailwindcss/vite';
 import { dataset, projectId } from './src/sanity/config';
@@ -14,7 +14,9 @@ export default defineConfig({
       enabled: true,
     },
   }),
-  output: 'hybrid',
+  output: 'static',
+  // View transitions are enabled by default in Astro 3+
+  // ClientRouter handles client-side navigation
   integrations: [
     sanityIntegration({
       projectId,

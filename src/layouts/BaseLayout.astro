@@ -1,6 +1,6 @@
 ---
 import { SEO } from 'astro-seo';
-import { ViewTransitions } from 'astro:transitions';
+import { ClientRouter } from 'astro:transitions';
 
 import '~/styles/app.css';
 
@@ -24,7 +24,7 @@ const image =
   meta?.image || 'https://manhole.gallery/manhole-gallery-social-image.webp';
 ---
 
-<html lang="en" class="flex min-h-full flex-col" transition:animate="none">
+<html lang="en" class="flex min-h-full flex-col">
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width" />
@@ -64,10 +64,34 @@ const image =
     <meta name="msapplication-TileColor" content="#f39f5a" />
     <meta name="theme-color" content="#000000" />
 
-    <ViewTransitions />
+    <ClientRouter />
+
+    <script>
+      // Check if view transitions are supported
+      if (typeof document.startViewTransition === 'undefined') {
+        console.warn(
+          'View Transitions API is not supported in this browser. View transitions will not work.'
+        );
+      }
+
+      // Debug view transitions in development
+      if (import.meta.env.DEV) {
+        document.addEventListener('astro:page-load', () => {
+          console.log('✅ View transition completed');
+        });
+
+        document.addEventListener('astro:before-preparation', () => {
+          console.log('🔄 View transition starting');
+        });
+
+        document.addEventListener('astro:after-swap', () => {
+          console.log('✨ View transition swap completed');
+        });
+      }
+    </script>
   </head>
   <body
-    class="flex min-h-full max-w-[100vw] flex-1 flex-col bg-white text-black dark:bg-black dark:text-white"
+    class="flex min-h-full max-w-[100vw] flex-1 flex-col bg-surface text-white antialiased"
   >
     <slot />
   </body>

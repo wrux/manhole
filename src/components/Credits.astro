@@ -1,53 +1,96 @@
 ---
-import { Heading } from '.';
-
 export type Props = {
   credits: Array<Credit>;
 };
 
 const { credits, ...props } = Astro.props;
-
-const labels = {
-  author: 'Authored by',
-  edit: 'Edited by',
-  photo: 'Photo by',
-};
 ---
 
-<div {...props}>
-  <Heading as="p" class:list="mb-3" size="h6">Credits</Heading>
+<div {...props} class="space-y-3">
   {
     credits.length > 0 ? (
-      <div class="space-y-1.5">
-        {credits.map((credit) => {
-          const label = labels?.[credit.type];
-          return (
-            <div>
-              <p>
-                {label && (
-                  <span class="mr-1 inline font-semibold">{label}</span>
-                )}
-                {credit?.person?.website ? (
-                  <a
-                    href={credit?.person?.website}
-                    class="link"
-                    target="_blank"
-                    rel="noreferrer"
-                  >
-                    {credit?.person?.fullName}
-                    <span class="sr-only">(opens in new tab)</span>
-                  </a>
-                ) : (
-                  <span>{credit?.person?.fullName}</span>
-                )}
-              </p>
-              {credit?.note && <p class="text-sm italic">{credit.note}</p>}
-            </div>
-          );
-        })}
-      </div>
+      credits.map((credit) => (
+        <div class="flex items-start gap-2">
+          <span class="mt-0.5 text-current/60" aria-hidden="true">
+            {credit.type === 'author' && (
+              <svg
+                class="h-5 w-5"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"
+                />
+              </svg>
+            )}
+            {credit.type === 'photo' && (
+              <svg
+                class="h-5 w-5"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M3 9a2 2 0 012-2h.93a2 2 0 001.664-.89l.812-1.22A2 2 0 0110.07 4h3.86a2 2 0 011.664.89l.812 1.22A2 2 0 0018.07 7H19a2 2 0 012 2v9a2 2 0 01-2 2H5a2 2 0 01-2-2V9z"
+                />
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M15 13a3 3 0 11-6 0 3 3 0 016 0z"
+                />
+              </svg>
+            )}
+            {credit.type === 'edit' && (
+              <svg
+                class="h-5 w-5"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"
+                />
+              </svg>
+            )}
+          </span>
+          <div class="flex-1">
+            <p class="type-sm">
+              {credit?.person?.website ? (
+                <a
+                  href={credit?.person?.website}
+                  class="link-reverse"
+                  target="_blank"
+                  rel="noreferrer"
+                >
+                  {credit?.person?.fullName}
+                  <span class="sr-only">(opens in new tab)</span>
+                </a>
+              ) : (
+                <span>{credit?.person?.fullName}</span>
+              )}
+            </p>
+            {credit?.note && (
+              <p class="type-sm text-current/60 mt-1">{credit.note}</p>
+            )}
+          </div>
+        </div>
+      ))
     ) : (
-      <p>No credits.</p>
+      <p class="type-sm text-current/60">No credits.</p>
     )
   }
 </div>

@@ -1,24 +1,130 @@
 @import 'tailwindcss';
-
-@import './_links.css' layer(utilities);
-@import './_animations.css' layer(utilities);
+@import './_animations.css';
+@import './_links.css';
 
 @theme {
-  /* https://colorhunt.co/palette/451952662549ae445af39f5a */
-  --color-primary: #451952;
-  --color-primary-alt: #662549;
-  --color-secondary: #ae445a;
-  --color-tertiary: #f39f5a;
+  /* Modern manhole-inspired palette - industrial yet vibrant */
+  --color-primary: #ffffff;
+  --color-primary-alt: #e0e0e0;
+  --color-secondary: #ff6b35;
+  --color-tertiary: #f7931e;
+  --color-accent: #4ecdc4;
+  --color-surface: #0a0a0a;
 
-  --font-family-sans: 'InterVariable', Inter, ui-sans-serif, system-ui,
-    sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol',
-    'Noto Color Emoji';
+  --font-family-sans:
+    'InterVariable', Inter, ui-sans-serif, system-ui, sans-serif,
+    'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
 
-  --shadow-heavy: 2px 4px 6px rgba(0, 0, 0, 0.666);
+  --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.05);
+  --shadow-md: 0 4px 6px rgba(0, 0, 0, 0.1);
+  --shadow-lg: 0 10px 15px rgba(0, 0, 0, 0.1);
+  --shadow-xl: 0 20px 25px rgba(0, 0, 0, 0.15);
+  --shadow-heavy: 0 4px 20px rgba(0, 0, 0, 0.3);
 
-  --width-screen-xl: 80rem;
+  --width-screen-xl: 90rem;
+
+  --radius-sm: 0.25rem;
+  --radius-md: 0.5rem;
+  --radius-lg: 1rem;
+  --radius-full: 9999px;
 }
 
-@utility container {
-  @apply mx-auto max-w-screen-xl px-4 sm:px-2 lg:px-4 xl:px-6 2xl:px-8;
+@layer components {
+  .container {
+    @apply mx-auto w-full max-w-screen-xl px-4 sm:px-6 lg:px-8 xl:px-12;
+  }
+
+  /* Typography - Headings */
+  .type-h1 {
+    @apply font-sans font-bold leading-[1.1] tracking-tight text-4xl md:text-5xl lg:text-6xl xl:text-7xl;
+  }
+
+  .type-h2 {
+    @apply font-sans font-bold leading-tight tracking-tight text-3xl md:text-4xl lg:text-5xl;
+  }
+
+  .type-h3 {
+    @apply font-sans font-bold leading-tight tracking-tight text-2xl md:text-3xl lg:text-4xl;
+  }
+
+  .type-h4 {
+    @apply font-sans font-semibold leading-tight text-xl md:text-2xl;
+  }
+
+  .type-h5 {
+    @apply font-sans font-semibold leading-tight text-lg md:text-xl tracking-wider;
+  }
+
+  .type-h6 {
+    @apply font-sans font-semibold leading-tight text-base md:text-lg;
+  }
+
+  /* Typography - Text sizes */
+  .type-sm {
+    @apply font-sans font-normal leading-relaxed text-sm lg:text-base;
+  }
+
+  .type-md {
+    @apply font-sans font-normal leading-relaxed text-base lg:text-lg;
+  }
+
+  .type-lg {
+    @apply font-sans font-normal leading-relaxed text-lg lg:text-xl;
+  }
+
+  /* Gallery grid - dynamic columns, ~360px card width */
+  .gallery-grid {
+    gap: 0;
+    width: 100%;
+    max-width: none;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(min(360px, 100%), 1fr));
+  }
+
+  /* Card hover effect */
+  .card-hover {
+    @apply transition-all duration-300 ease-out;
+    @apply hover:scale-[1.02] hover:shadow-xl;
+  }
+
+  /* Circular accent - manhole cover inspired */
+  .manhole-accent {
+    @apply relative;
+  }
+
+  .manhole-accent::before {
+    content: '';
+    @apply absolute -inset-1 rounded-full border-2 border-current opacity-20;
+    @apply transition-opacity duration-300;
+  }
+
+  .manhole-accent:hover::before {
+    @apply opacity-40;
+  }
+
+  /* Line clamp utility */
+  .line-clamp-2 {
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+
+  /* Header branding SVG hover effect */
+  .header-branding {
+    position: relative;
+  }
+
+  .header-circle {
+    transition:
+      stroke 0.5s ease,
+      fill 0.5s ease,
+      stroke-width 0.5s ease;
+    fill: transparent;
+  }
+
+  .header-branding:hover .header-circle {
+    stroke: #ff6b35;
+    fill: #ff6b35;
+  }
 }

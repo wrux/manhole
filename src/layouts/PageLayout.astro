@@ -1,6 +1,7 @@
 ---
-import { Heading, Text, Wordmark } from '~/components';
+import { Wordmark } from '~/components';
 import BaseLayout from './BaseLayout.astro';
+import { getCountryList } from '~/sanity/queries';
 
 type meta = {
   title?: string;
@@ -13,75 +14,359 @@ export type Props = {
 };
 
 const { meta } = Astro.props;
+const countries = await getCountryList();
+const currentPath = Astro.url.pathname;
 ---
 
 <BaseLayout meta={meta}>
   <header
     id="site-header"
-    class="sticky top-0 z-50 mb-8 w-full bg-white/70 py-4 backdrop-blur-lg transition-all duration-300 dark:bg-black/70"
+    class="sticky top-0 z-50 mb-8 w-full py-3 lg:py-6 transition-all duration-300 lg:mb-12 lg:mix-blend-difference"
+    transition:name="site-header"
   >
-    <div class="container flex justify-center md:justify-start">
-      <a class="block w-full text-lg md:w-auto lg:text-2xl" href="/">
-        <Wordmark />
-      </a>
+    <div class="container max-w-full">
+      <div class="flex items-center justify-between gap-4">
+        <a
+          href="/"
+          class="group header-branding inline-flex items-center gap-3 rounded-full bg-white/10 px-3 py-2 transition-all duration-300 backdrop-blur-sm"
+          aria-label="Manhole Gallery - Home"
+          transition:name="header-logo"
+        >
+          <div class="relative h-2 w-2" aria-hidden="true">
+            <svg
+              class="h-full w-full header-branding-svg"
+              viewBox="0 0 16 16"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <circle
+                cx="8"
+                cy="8"
+                r="7"
+                stroke="white"
+                stroke-width="2"
+                fill="none"
+                class="header-circle"></circle>
+            </svg>
+          </div>
+          <span
+            class="text-xs font-semibold uppercase tracking-wider text-white transition-all duration-300"
+          >
+            Manhole Gallery
+          </span>
+        </a>
+
+        {
+          countries && countries.length > 0 && (
+            <>
+              {/* Desktop Navigation */}
+              <nav
+                class="hidden lg:flex flex-wrap items-center gap-2"
+                aria-label="Countries"
+                transition:name="desktop-nav"
+              >
+                {countries.map((country) => {
+                  const isActive = currentPath === `/country/${country.slug}`;
+                  return (
+                    <a
+                      class={`text-xs font-semibold uppercase tracking-wider rounded-full px-2.5 py-1 transition-all duration-300 backdrop-blur-sm ${
+                        isActive
+                          ? 'bg-secondary text-black'
+                          : 'bg-white/10 hover:bg-white/20 text-white'
+                      }`}
+                      href={`/country/${country.slug}`}
+                      aria-label={`View all posts in ${country.name}`}
+                      aria-current={isActive ? 'page' : undefined}
+                      transition:name={`country_list_${country._id}`}
+                    >
+                      {country.name}
+                    </a>
+                  );
+                })}
+              </nav>
+
+              {/* Mobile Menu Button */}
+              <button
+                id="mobile-menu-button"
+                class="lg:hidden rounded-full bg-white/10 p-2 text-white transition-all duration-300 hover:bg-white/20 backdrop-blur-sm"
+                aria-label="Toggle menu"
+                aria-expanded="false"
+                aria-controls="mobile-menu"
+              >
+                <svg
+                  class="h-5 w-5"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    id="menu-icon"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="2"
+                    d="M4 6h16M4 12h16M4 18h16"
+                  />
+                  <path
+                    id="close-icon"
+                    class="hidden"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="2"
+                    d="M6 18L18 6M6 6l12 12"
+                  />
+                </svg>
+              </button>
+            </>
+          )
+        }
+      </div>
     </div>
   </header>
+
+  {/* Mobile Navigation - Slides down from top */}
+  {
+    countries && countries.length > 0 && (
+      <nav
+        id="mobile-menu"
+        class="mobile-menu fixed top-0 left-0 right-0 z-40 w-full bg-surface transform -translate-y-full transition-transform duration-300 ease-in-out lg:hidden shadow-lg"
+        aria-label="Countries"
+      >
+        <div class="container pt-16 pb-8">
+          <div class="flex flex-col gap-2">
+            {countries.map((country) => {
+              const isActive = currentPath === `/country/${country.slug}`;
+              return (
+                <a
+                  class={`text-xs font-semibold uppercase tracking-wider rounded-full px-4 py-3 transition-all duration-300 text-center ${
+                    isActive
+                      ? 'bg-secondary text-black'
+                      : 'bg-current/20 hover:bg-current/30 text-white'
+                  }`}
+                  href={`/country/${country.slug}`}
+                  aria-label={`View all posts in ${country.name}`}
+                  aria-current={isActive ? 'page' : undefined}
+                  transition:name={`country_list_${country._id}`}
+                >
+                  {country.name}
+                </a>
+              );
+            })}
+          </div>
+        </div>
+      </nav>
+    )
+  }
 
   <main class="w-full flex-1" transition:animate="fade">
     <slot />
   </main>
 
-  <footer class="mb-16 mt-8 w-full md:mb-24 md:mt-12 lg:mb-32 lg:mt-16">
+  <footer class="mt-16 w-full py-8 md:mt-20" transition:name="site-footer">
     <div class="container">
-      <div
-        class="grid gap-x-16 gap-y-8 text-center md:grid-cols-2 md:text-start xl:grid-cols-4"
-      >
-        <div class="md:col-span-2 xl:col-span-1">
-          <a class="block w-full text-lg md:w-auto" href="/">
-            <Wordmark />
+      <div class="flex flex-wrap items-center justify-center gap-4 text-center">
+        <p class="type-sm text-current/50">
+          © {new Date().getFullYear()} Manhole Gallery
+        </p>
+        <span class="text-current/30">·</span>
+        <p class="type-sm text-current/50">
+          Created by{' '}
+          <a
+            href="https://wrux.com"
+            class="transition-opacity hover:opacity-70"
+            target="_blank"
+            rel="nofollow"
+          >
+            Callum Bonnyman
           </a>
-        </div>
-
-        <div class="space-y-4 xl:col-span-2">
-          <Heading
-            as="p"
-            size="h5"
-            class:list="leading-none border-t-2 border-current pt-8 lg:mt-4"
-          >
-            About
-          </Heading>
-          <Text size="sm">
-            Manhole is a collection of images of manhole covers from around the
-            world.
-          </Text>
-          <Text size="sm">
-            Manhole is an open source project by <a
-              href="https://callum.co.uk"
-              target="_blank"
-              class="link">Callum Bonnyman</a
-            >.
-          </Text>
-        </div>
-
-        <div class="space-y-4">
-          <Heading
-            as="p"
-            size="h5"
-            class:list="leading-none border-t-2 border-current pt-8 lg:mt-4"
-          >
-            Like this website?
-          </Heading>
-          <Text size="sm">
-            Check out and star the project on
-            <a
-              href="https://github.com/wrux/manhole"
-              rel="nofollow"
-              class="link"
-              target="_blank">Github</a
-            >.
-          </Text>
-        </div>
+        </p>
+        <span class="text-current/30">·</span>
+        <a
+          href="https://github.com/wrux/manhole"
+          rel="nofollow"
+          class="type-sm text-current/50 transition-opacity hover:opacity-70"
+          target="_blank"
+        >
+          GitHub
+        </a>
       </div>
     </div>
   </footer>
+
+  <script>
+    // Mobile menu toggle - works with Astro view transitions
+    let handleMenuToggle: ((e: any) => void) | null = null;
+    let handleLinkClick: ((e: any) => void) | null = null;
+    let handleOutsideClick: ((e: any) => void) | null = null;
+
+    function setupMobileMenu() {
+      const menuButton = document.getElementById('mobile-menu-button');
+      const mobileMenu = document.getElementById('mobile-menu');
+      const body = document.body;
+
+      if (!menuButton || !mobileMenu) return;
+
+      // Remove old listeners if they exist
+      if (handleMenuToggle) {
+        document.removeEventListener('click', handleMenuToggle);
+      }
+      if (handleLinkClick) {
+        document.removeEventListener('click', handleLinkClick);
+      }
+      if (handleOutsideClick) {
+        document.removeEventListener('click', handleOutsideClick);
+      }
+
+      // Use event delegation on document to work with view transitions
+      handleMenuToggle = function (e: any) {
+        const target = e.target;
+        if (
+          target.id === 'mobile-menu-button' ||
+          target.closest('#mobile-menu-button')
+        ) {
+          const button = document.getElementById('mobile-menu-button');
+          const menu = document.getElementById('mobile-menu');
+          const menuIconEl = document.getElementById('menu-icon');
+          const closeIconEl = document.getElementById('close-icon');
+
+          if (!button || !menu) return;
+
+          const isExpanded = button.getAttribute('aria-expanded') === 'true';
+
+          if (isExpanded) {
+            // Close menu
+            menu.classList.remove('translate-y-0');
+            menu.classList.add('-translate-y-full');
+            button.setAttribute('aria-expanded', 'false');
+            if (menuIconEl) menuIconEl.classList.remove('hidden');
+            if (closeIconEl) closeIconEl.classList.add('hidden');
+            body.style.overflow = '';
+          } else {
+            // Open menu
+            menu.classList.remove('-translate-y-full');
+            menu.classList.add('translate-y-0');
+            button.setAttribute('aria-expanded', 'true');
+            if (menuIconEl) menuIconEl.classList.add('hidden');
+            if (closeIconEl) closeIconEl.classList.remove('hidden');
+            body.style.overflow = 'hidden';
+          }
+        }
+      };
+
+      // Close menu when clicking on a link
+      handleLinkClick = function (e: any) {
+        const target = e.target;
+        const currentMenu = document.getElementById('mobile-menu');
+        if (
+          target.tagName === 'A' &&
+          currentMenu &&
+          currentMenu.contains(target)
+        ) {
+          const menu = document.getElementById('mobile-menu');
+          const button = document.getElementById('mobile-menu-button');
+          const menuIconEl = document.getElementById('menu-icon');
+          const closeIconEl = document.getElementById('close-icon');
+
+          if (menu) menu.classList.remove('translate-y-0');
+          if (menu) menu.classList.add('-translate-y-full');
+          if (button) button.setAttribute('aria-expanded', 'false');
+          if (menuIconEl) menuIconEl.classList.remove('hidden');
+          if (closeIconEl) closeIconEl.classList.add('hidden');
+          body.style.overflow = '';
+        }
+      };
+
+      // Close menu when clicking outside
+      handleOutsideClick = function (e: any) {
+        const target = e.target;
+        const menu = document.getElementById('mobile-menu');
+        const button = document.getElementById('mobile-menu-button');
+
+        if (!menu || !button) return;
+
+        const isMenuOpen = button.getAttribute('aria-expanded') === 'true';
+        const isClickInsideMenu = menu.contains(target);
+        const isClickOnButton =
+          target.id === 'mobile-menu-button' ||
+          target.closest('#mobile-menu-button');
+
+        if (isMenuOpen && !isClickInsideMenu && !isClickOnButton) {
+          const menuIconEl = document.getElementById('menu-icon');
+          const closeIconEl = document.getElementById('close-icon');
+
+          menu.classList.remove('translate-y-0');
+          menu.classList.add('-translate-y-full');
+          button.setAttribute('aria-expanded', 'false');
+          if (menuIconEl) menuIconEl.classList.remove('hidden');
+          if (closeIconEl) closeIconEl.classList.add('hidden');
+          body.style.overflow = '';
+        }
+      };
+
+      // Add new listeners
+      document.addEventListener('click', handleMenuToggle);
+      document.addEventListener('click', handleLinkClick);
+      document.addEventListener('click', handleOutsideClick);
+    }
+
+    // Setup on page load
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', setupMobileMenu);
+    } else {
+      setupMobileMenu();
+    }
+
+    // Re-setup after view transitions
+    document.addEventListener('astro:page-load', setupMobileMenu);
+  </script>
+
+  <script>
+    // Enhanced view transition handling
+    document.addEventListener('astro:before-preparation', (event) => {
+      // Add loading state during transitions
+      document.body.style.pointerEvents = 'none';
+
+      // Ensure view transitions are enabled
+      if (typeof document.startViewTransition === 'function') {
+        // View transitions are supported
+      }
+    });
+
+    document.addEventListener('astro:after-swap', () => {
+      // Restore pointer events after transition
+      document.body.style.pointerEvents = '';
+
+      // Don't scroll to top automatically - let user control scroll position
+      // Smooth scroll to top on navigation (optional)
+      // if (window.scrollY > 100) {
+      //   window.scrollTo({ top: 0, behavior: 'smooth' });
+      // }
+    });
+
+    // Optimize image loading during transitions
+    document.addEventListener('astro:page-load', () => {
+      // Preload images for smoother transitions
+      const images = document.querySelectorAll('img[transition\\:name]');
+      images.forEach((img) => {
+        if (img instanceof HTMLImageElement && !img.complete) {
+          img.loading = 'eager';
+        }
+      });
+    });
+
+    // Ensure view transitions work on all links
+    document.addEventListener(
+      'click',
+      (e) => {
+        const target = e.target as HTMLElement;
+        if (target) {
+          const link = target.closest('a[href]') as HTMLAnchorElement;
+          if (link && link.href && link.hostname === window.location.hostname) {
+            // Internal link - view transitions will handle it
+          }
+        }
+      },
+      true
+    );
+  </script>
 </BaseLayout>

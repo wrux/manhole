@@ -1,4 +1,4 @@
-import { type StructureBuilder } from 'sanity/desk';
+import { type StructureBuilder } from 'sanity/structure';
 import { BookOpen, Buildings, Person } from '@phosphor-icons/react';
 
 export const defaultDocumentNodeResolver = (S: StructureBuilder) =>

@@ -1,7 +1,7 @@
 ---
 import { sanityClient } from 'sanity:client';
 import imageUrlBuilder from '@sanity/image-url';
-import type { SanityImageSource } from '@sanity/image-url/lib/types/types';
+import type { SanityImageSource } from '@sanity/image-url';
 
 const imageBuilder = imageUrlBuilder(sanityClient).format('webp');
 
@@ -21,32 +21,49 @@ function urlFor(source: SanityImageSource, size: number): string {
 }
 ---
 
-<article class="group relative">
-  {
-    post?.mainImage && (
-      <figure>
-        <img
-          alt={post.mainImage?.alt || ''}
-          title={post.mainImage?.alt}
-          class="absolute inset-0 aspect-square h-auto max-w-full bg-gray-100 object-cover"
-          srcset={sizes
-            .map((size) => `${urlFor(post.mainImage, size)} ${size}w`)
-            .join(', ')}
-          sizes={imageSizes}
-          src={urlFor(post.mainImage, 768)}
-          width="1024"
-          height="1024"
-          loading={lazy ? 'lazy' : 'eager'}
-        />
-      </figure>
-    )
-  }
-  <div class="relative z-10 flex aspect-square items-end p-4 lg:p-8">
-    <a
-      class="before:bg-primary/50 block text-2xl font-bold leading-none text-white opacity-0 transition-all duration-500 before:absolute before:inset-0 before:z-[-1] hover:opacity-100 focus:opacity-100 md:text-3xl lg:text-5xl"
-      href={`/post/${post.slug}`}
-    >
-      {post.title}
-    </a>
-  </div>
+<article
+  class="group relative aspect-square overflow-hidden bg-surface shadow-sm ring-1 ring-inset ring-current/5 transition-all duration-300 hover:shadow-lg hover:ring-current/10"
+  transition:name={`post-teaser-${post._id}`}
+>
+  <a
+    href={`/post/${post.slug}`}
+    class="block h-full w-full"
+    aria-label={`View ${post.title}`}
+  >
+    {
+      post?.mainImage && (
+        <figure
+          class="relative h-full w-full overflow-hidden bg-current/5"
+          transition:name={`post-image-${post._id}`}
+        >
+          <img
+            alt={post.mainImage?.alt || post.title}
+            title={post.mainImage?.alt || post.title}
+            class="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
+            srcset={sizes
+              .map((size) => `${urlFor(post.mainImage, size)} ${size}w`)
+              .join(', ')}
+            sizes={imageSizes}
+            src={urlFor(post.mainImage, 768)}
+            width="1024"
+            height="1024"
+            loading={lazy ? 'lazy' : 'eager'}
+          />
+          <div
+            class="absolute inset-0 bg-linear-to-t from-black via-black/80 to-transparent"
+            style="background: linear-gradient(to top, rgba(0, 0, 0, 1) 0%, rgba(0, 0, 0, 0.8) 50%, transparent 100%);"
+            transition:name={`post-overlay-${post._id}`}
+          />
+        </figure>
+      )
+    }
+    <div class="absolute inset-0 flex items-end p-3 lg:p-5">
+      <h3
+        class="type-h5 text-white drop-shadow-lg"
+        transition:name={`post-title-${post._id}`}
+      >
+        <span class="line-clamp-2">{post.title}</span>
+      </h3>
+    </div>
+  </a>
 </article>
