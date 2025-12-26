@@ -177,12 +177,12 @@ const country = post?.locations?.find(
 
   {
     post?.morePosts && post?.morePosts?.length > 0 && (
-      <section class="container mb-20 lg:mb-24">
-        <div class="mb-12 text-center">
+      <section class="mb-20 lg:mb-24">
+        <div class="container mb-12 text-center">
           <h2 class="type-h2 mb-4">More from the Gallery</h2>
           <p class="type-md text-current/70">Discover more manhole cover designs</p>
         </div>
-        <div class="gallery-grid">
+        <div class="gallery-grid w-full px-4 sm:px-6 lg:px-8 xl:px-12">
           {post.morePosts.map((post) => (
             <PostTeaser
               imageSizes="(max-width: 474px) 100vw, (max-width: 1023px) 50vw, 20.625rem"

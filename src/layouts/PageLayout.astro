@@ -19,6 +19,7 @@ const { meta } = Astro.props;
   <header
     id="site-header"
     class="sticky top-0 z-50 mb-8 w-full py-6 transition-all duration-300 lg:mb-12"
+    style="mix-blend-mode: difference;"
   >
     <div class="container">
       <a
@@ -27,12 +28,12 @@ const { meta } = Astro.props;
         aria-label="Manhole Gallery - Home"
       >
         <div
-          class="relative h-2 w-2 rounded-full border border-current transition-all duration-500 group-hover:scale-125 group-hover:border-secondary"
+          class="relative h-2 w-2 rounded-full border border-white transition-all duration-500 group-hover:scale-125 group-hover:border-secondary"
           aria-hidden="true"
         >
-          <div class="absolute inset-0 rounded-full bg-current opacity-0 blur-sm transition-opacity duration-500 group-hover:opacity-20"></div>
+          <div class="absolute inset-0 rounded-full bg-white opacity-0 blur-sm transition-opacity duration-500 group-hover:opacity-20"></div>
         </div>
-        <span class="text-xs font-semibold uppercase tracking-wider text-current/80 transition-colors group-hover:text-current">
+        <span class="text-xs font-semibold uppercase tracking-wider text-white transition-colors group-hover:text-white">
           Manhole Gallery
         </span>
       </a>
@@ -43,49 +44,33 @@ const { meta } = Astro.props;
     <slot />
   </main>
 
-  <footer class="mt-20 w-full border-t border-current/10 py-16 md:mt-24 md:py-20">
+  <footer class="mt-16 w-full py-8 md:mt-20">
     <div class="container">
-      <div class="grid gap-12 md:grid-cols-2 lg:grid-cols-3">
-        <div>
-          <a class="mb-6 block text-xl transition-transform duration-300 hover:scale-105" href="/">
-            <Wordmark />
-          </a>
-          <p class="type-sm text-current/70">
-            A gallery celebrating the hidden art beneath our feet.
-          </p>
-        </div>
-
-        <div class="space-y-4">
-          <p class="type-h6">About</p>
-          <p class="type-sm text-current/70">
-            Manhole Gallery is a collection of manhole cover designs from around the world, showcasing the artistic and cultural diversity found in urban infrastructure.
-          </p>
-          <p class="type-sm text-current/70">
-            An open source project by <a
-              href="https://callum.co.uk"
-              target="_blank"
-              class="link-reverse">Callum Bonnyman</a
-            >.
-          </p>
-        </div>
-
-        <div class="space-y-4">
-          <p class="type-h6">Contribute</p>
-          <p class="type-sm text-current/70">
-            Found this project interesting? Check it out on
-            <a
-              href="https://github.com/wrux/manhole"
-              rel="nofollow"
-              class="link-reverse"
-              target="_blank">GitHub</a
-            >.
-          </p>
-        </div>
-      </div>
-      <div class="mt-12 border-t border-current/10 pt-8 text-center">
-        <p class="type-sm text-current/60">
-          © {new Date().getFullYear()} Manhole Gallery. All rights reserved.
+      <div class="flex flex-wrap items-center justify-center gap-4 text-center">
+        <p class="type-sm text-current/50">
+          © {new Date().getFullYear()} Manhole Gallery
         </p>
+        <span class="text-current/30">·</span>
+        <p class="type-sm text-current/50">
+          Created by{' '}
+          <a
+            href="https://wrux.com"
+            class="transition-opacity hover:opacity-70"
+            target="_blank"
+            rel="nofollow"
+          >
+            Callum Bonnyman
+          </a>
+        </p>
+        <span class="text-current/30">·</span>
+        <a
+          href="https://github.com/wrux/manhole"
+          rel="nofollow"
+          class="type-sm text-current/50 transition-opacity hover:opacity-70"
+          target="_blank"
+        >
+          GitHub
+        </a>
       </div>
     </div>
   </footer>

@@ -10,43 +10,43 @@ const countries = await getCountryList();
 <PageLayout>
   <div class="container mb-16 md:mb-20 lg:mb-24">
     <div class="mx-auto max-w-4xl text-center">
-      <div class="mb-8 flex justify-center md:mb-12">
-        <div class="h-1 w-1 rounded-full bg-current"></div>
-      </div>
       <h1 class="type-h1 mb-6 md:mb-8">
         <span class="sr-only">Manhole Gallery</span>
         <span class="block">The Pavement</span>
-        <span class="block bg-gradient-to-r from-secondary to-tertiary bg-clip-text text-transparent">Chronicles</span>
+        <span
+          class="block bg-gradient-to-r from-secondary to-tertiary bg-clip-text text-transparent"
+          >Chronicles</span
+        >
       </h1>
       <p class="type-lg mb-8 leading-relaxed text-current/80 md:mb-12">
         Manhole Gallery is your portal to the world's hidden street art,
-        showcasing captivating manhole cover designs from all <em class="not-italic font-semibold text-secondary">around</em>
-        the globe. Explore the artistic and cultural diversity beneath your
-        feet with us!
+        showcasing captivating manhole cover designs from all <em
+          class="not-italic font-semibold text-secondary">around</em
+        >
+        the globe. Explore the artistic and cultural diversity beneath your feet with
+        us!
       </p>
 
       {
         countries && countries.length > 0 && (
           <div class="flex flex-wrap justify-center gap-2 md:gap-3">
-            {
-              countries.map((country) => (
-                <a
-                  class="type-sm rounded-full border border-current/20 px-4 py-2 transition-all hover:border-secondary hover:bg-secondary/10"
-                  href={`/country/${country.slug}`}
-                  aria-label={`View all posts in ${country.name}`}
-                  transition:name={`country_list_${country._id}`}
-                >
-                  {country.name}
-                </a>
-              ))
-            }
+            {countries.map((country) => (
+              <a
+                class="type-sm rounded-full border border-current/20 px-4 py-2 transition-all hover:border-secondary hover:bg-secondary/10"
+                href={`/country/${country.slug}`}
+                aria-label={`View all posts in ${country.name}`}
+                transition:name={`country_list_${country._id}`}
+              >
+                {country.name}
+              </a>
+            ))}
           </div>
         )
       }
     </div>
   </div>
 
-  <div class="container gallery-grid">
+  <div class="gallery-grid w-full px-4 sm:px-6 lg:px-8 xl:px-12">
     {
       posts.map((post, index) => (
         <PostTeaser
@@ -60,13 +60,12 @@ const countries = await getCountryList();
       posts.length % 3 !== 0 && (
         <div class="col-span-[-1] teaser-placeholder hidden flex-col items-center justify-center space-y-6 rounded-lg border-2 border-dashed border-current/20 bg-surface/50 p-12 text-center dark:bg-surface-dark/50">
           <div class="manhole-accent">
-            <div class="h-16 w-16 rounded-full border-4 border-current"></div>
+            <div class="h-16 w-16 rounded-full border-4 border-current" />
           </div>
-          <p class="type-h4">
-            Feel free to contribute
-          </p>
+          <p class="type-h4">Feel free to contribute</p>
           <p class="type-sm text-current/70 max-w-md">
-            Have a manhole cover design you'd like to share? We'd love to feature it!
+            Have a manhole cover design you'd like to share? We'd love to
+            feature it!
           </p>
           <a href="mailto:callum@wrux.com" class="button">
             <span>Get in Touch</span>

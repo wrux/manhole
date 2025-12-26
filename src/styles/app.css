@@ -72,9 +72,17 @@
     @apply font-sans font-normal leading-relaxed text-lg lg:text-xl;
   }
 
-  /* Gallery grid - modern masonry-inspired */
+  /* Gallery grid - dynamic columns, ~360px card width */
   .gallery-grid {
-    @apply grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(min(360px, 100%), 1fr));
+    gap: 1rem;
+  }
+
+  @media (min-width: 640px) {
+    .gallery-grid {
+      gap: 1.5rem;
+    }
   }
 
   /* Card hover effect */
@@ -96,5 +104,13 @@
 
   .manhole-accent:hover::before {
     @apply opacity-40;
+  }
+
+  /* Line clamp utility */
+  .line-clamp-2 {
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
   }
 }

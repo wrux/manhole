@@ -78,7 +78,7 @@ const country = Astro.props;
 
     {
       country?.posts && country.posts.length > 0 && (
-        <div class="gallery-grid">
+        <div class="gallery-grid w-full px-4 sm:px-6 lg:px-8 xl:px-12">
           {country.posts.map((post, index) => (
             <PostTeaser
               imageSizes="(max-width: 474px) 100vw, (max-width: 1023px) 50vw, (max-width: 125rem) 33.334vw, 40rem"
