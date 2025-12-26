@@ -1,5 +1,5 @@
 import { defineConfig } from 'sanity';
-import { deskTool } from 'sanity/desk';
+import { structureTool } from 'sanity/structure';
 import { media } from 'sanity-plugin-media';
 import { visionTool } from '@sanity/vision';
 import {
@@ -33,7 +33,7 @@ export default defineConfig({
         projectUsersWidget(),
       ],
     }),
-    deskTool({
+    structureTool({
       structure,
       defaultDocumentNode: defaultDocumentNodeResolver,
     }),

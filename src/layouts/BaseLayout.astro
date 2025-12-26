@@ -1,6 +1,6 @@
 ---
 import { SEO } from 'astro-seo';
-import { ViewTransitions } from 'astro:transitions';
+import { ClientRouter } from 'astro:transitions';
 
 import '~/styles/app.css';
 
@@ -64,7 +64,7 @@ const image =
     <meta name="msapplication-TileColor" content="#f39f5a" />
     <meta name="theme-color" content="#000000" />
 
-    <ViewTransitions />
+    <ClientRouter />
   </head>
   <body
     class="flex min-h-full max-w-[100vw] flex-1 flex-col bg-white text-black dark:bg-black dark:text-white"
