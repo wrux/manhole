@@ -1,7 +1,7 @@
 ---
 import { getCountries, getCountryList } from '~/sanity/queries';
 import PageLayout from '~/layouts/PageLayout.astro';
-import { CountryShape, Heading, PostTeaser, Text } from '~/components';
+import { CountryShape, PostTeaser } from '~/components';
 
 export async function getStaticPaths() {
   const countries = await getCountries();
@@ -30,7 +30,7 @@ const country = Astro.props;
           class="flex flex-col gap-y-8 md:flex-row md:items-end md:justify-between"
         >
           <div
-            class="space-y-4 text-center md:space-y-8 md:text-left lg:space-y-10"
+            class="space-y-6 text-center md:space-y-8 md:text-left lg:space-y-10"
           >
             {
               country?.countryCode && (
@@ -41,24 +41,21 @@ const country = Astro.props;
                 />
               )
             }
-            <div>
-              <Heading as="h1" size="h1">{country.name}</Heading>
+            <div class="space-y-2">
+              <h1 class="type-h1">{country.name}</h1>
               {
                 country.nameLocalised && (
-                  <Heading as="p" size="h3">
+                  <p class="type-h3 text-primary/80">
                     {country.nameLocalised}
-                  </Heading>
+                  </p>
                 )
               }
             </div>
           </div>
 
           <div class="text-center md:text-right">
-            <Text size="md">Other countries</Text>
-            <Text
-              size="sm"
-              class:list="flex justify-center md:justify-end gap-2 flex-wrap"
-            >
+            <p class="type-md mb-2">Other countries</p>
+            <p class="type-sm flex justify-center md:justify-end gap-2 flex-wrap">
               {
                 countries
                   ?.filter(({ _id }) => _id != country._id)
@@ -73,7 +70,7 @@ const country = Astro.props;
                     </a>
                   ))
               }
-            </Text>
+            </p>
           </div>
         </div>
       </div>

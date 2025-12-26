@@ -6,7 +6,6 @@ import { sanityClient } from 'sanity:client';
 import {
   CountryShape,
   Credits,
-  Heading,
   PortableText,
   PostTeaser,
 } from '~/components';
@@ -109,7 +108,7 @@ const country = post?.locations?.find(
       }
     </div>
 
-    <div class="space-y-4 px-4 sm:px-8 md:px-12 lg:px-16">
+    <div class="space-y-6 px-4 sm:px-8 md:px-12 lg:px-16">
       {
         post?.locations?.length > 0 && (
           <div class="flex items-center gap-4">
@@ -123,7 +122,7 @@ const country = post?.locations?.find(
 
             {post?.locations && (
               <p
-                class="flex flex-wrap gap-3 text-lg"
+                class="type-md flex flex-wrap gap-3"
                 transition:name={`post_${post._id}_locations`}
               >
                 <span class="sr-only">Locations:</span>
@@ -142,14 +141,14 @@ const country = post?.locations?.find(
         )
       }
 
-      <Heading as="h1" transition:name={`post_${post._id}_title`}>
+      <h1 class="type-h1 mb-4" transition:name={`post_${post._id}_title`}>
         {post.title}
-      </Heading>
+      </h1>
 
       {
         (post?.body || post?.summary) && (
           <div
-            class="max-w-[40ch] lg:py-4"
+            class="max-w-[50ch] lg:py-2"
             transition:name={`post_${post._id}_description`}
           >
             <PortableText value={post.body || post.summary} components={{}} />
@@ -168,12 +167,12 @@ const country = post?.locations?.find(
     </div>
   </article>
 
-  {
-    post?.morePosts && post?.morePosts?.length > 0 && (
-      <section class="container">
-        <div class="mb-8 text-center lg:mb-12">
-          <Heading as="h2">More Posts</Heading>
-        </div>
+      {
+        post?.morePosts && post?.morePosts?.length > 0 && (
+          <section class="container">
+            <div class="mb-8 text-center lg:mb-12">
+              <h2 class="type-h2">More Posts</h2>
+            </div>
         <div class="xs:grid-cols-2 grid grid-cols-1 justify-start gap-4 align-top lg:grid-cols-3">
           {post.morePosts.map((post) => (
             <PostTeaser

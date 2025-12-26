@@ -1,6 +1,4 @@
 ---
-import { Heading } from '.';
-
 export type Props = {
   credits: Array<Credit>;
 };
@@ -15,7 +13,7 @@ const labels = {
 ---
 
 <div {...props}>
-  <Heading as="p" class:list="mb-3" size="h6">Credits</Heading>
+  <p class="type-h6 mb-3">Credits</p>
   {
     credits.length > 0 ? (
       <div class="space-y-1.5">

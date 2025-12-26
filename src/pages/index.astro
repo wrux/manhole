@@ -1,7 +1,7 @@
 ---
 import { getCountryList, getPostTeasers } from '~/sanity/queries';
 import PageLayout from '~/layouts/PageLayout.astro';
-import { Heading, PostTeaser, Text } from '~/components';
+import { PostTeaser } from '~/components';
 
 const posts = await getPostTeasers();
 const countries = await getCountryList();
@@ -13,23 +13,20 @@ const countries = await getCountryList();
       class="flex flex-col gap-y-8 md:flex-row md:items-end md:justify-between"
     >
       <div class="mx-auto max-w-[50ch] text-center md:mx-0 md:text-left">
-        <Heading class:list="mb-8" as="h1">
+        <h1 class="type-h1 mb-6 md:mb-8">
           <span class="sr-only">Mahole Gallery</span> The Pavement Chronicles
-        </Heading>
-        <Text size="lg">
+        </h1>
+        <p class="type-lg leading-relaxed">
           Manhole Gallery is your portal to the world's hidden street art,
           showcasing captivating manhole cover designs from all <em>around</em>
           the flat earth. Explore the artistic and cultural diversity beneath your
           feet with us!
-        </Text>
+        </p>
       </div>
 
       <div class="text-center md:text-right">
-        <Text size="md">Countries mentioned</Text>
-        <Text
-          size="sm"
-          class:list="flex justify-center md:justify-end gap-2 flex-wrap"
-        >
+        <p class="type-md mb-2">Countries mentioned</p>
+        <p class="type-sm flex justify-center md:justify-end gap-2 flex-wrap">
           {
             countries?.map((country) => (
               <a
@@ -42,7 +39,7 @@ const countries = await getCountryList();
               </a>
             ))
           }
-        </Text>
+        </p>
       </div>
     </div>
   </div>
@@ -62,9 +59,9 @@ const countries = await getCountryList();
     {
       posts.length % 3 !== 0 && (
         <div class="col-span-[-1] teaser-placeholder hidden flex-col justify-center space-y-4 border-2 border-dashed border-black/30 text-center align-middle dark:border-white/30">
-          <Heading as="p" size="h3">
+          <p class="type-h3">
             Feel free to contribute
-          </Heading>
+          </p>
           <p>
             <a href="mailto:callum@wrux.com" class="button">
               Message Me
