@@ -28,11 +28,15 @@
     "groq": "^5.1.0",
     "react": "^19.2.3",
     "react-dom": "^19.2.3",
+    "rollup": "^4.54.0",
     "sanity": "^5.1.0",
     "sanity-plugin-asset-source-unsplash": "^7.0.0",
     "sanity-plugin-dashboard-widget-document-list": "^2.1.1",
     "sanity-plugin-media": "^4.1.1",
     "styled-components": "^6.1.19",
     "tailwindcss": "^4.1.18"
+  },
+  "optionalDependencies": {
+    "@rollup/rollup-linux-x64-gnu": "^4.54.0"
   }
 }
