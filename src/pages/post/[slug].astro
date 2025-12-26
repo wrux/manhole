@@ -3,12 +3,7 @@ import imageUrlBuilder from '@sanity/image-url';
 import type { SanityImageSource } from '@sanity/image-url';
 import { getPosts } from '~/sanity/queries';
 import { sanityClient } from 'sanity:client';
-import {
-  CountryShape,
-  Credits,
-  PortableText,
-  PostTeaser,
-} from '~/components';
+import { CountryShape, Credits, PortableText, PostTeaser } from '~/components';
 import PageLayout from '~/layouts/PageLayout.astro';
 
 const imageBuilder = imageUrlBuilder(sanityClient).format('webp');
@@ -73,7 +68,7 @@ const schema = {
 };
 
 const country = post?.locations?.find(
-  (location) => location.type === 'country',
+  (location) => location.type === 'country'
 ) as Country;
 ---
 
@@ -92,7 +87,7 @@ const country = post?.locations?.find(
         <div class="order-2 lg:order-1">
           {
             post?.mainImage && (
-              <figure class="relative overflow-hidden rounded-2xl bg-surface shadow-xl dark:bg-surface-dark">
+              <figure class="relative overflow-hidden bg-surface shadow-xl dark:bg-surface-dark">
                 <img
                   alt={post.mainImage?.alt || post.title}
                   title={post.mainImage?.alt || post.title}
@@ -105,7 +100,6 @@ const country = post?.locations?.find(
                   width="1024"
                   height="1024"
                 />
-                <div class="absolute inset-0 rounded-2xl ring-1 ring-inset ring-current/5"></div>
               </figure>
             )
           }
@@ -114,7 +108,7 @@ const country = post?.locations?.find(
         <div class="order-1 space-y-8 lg:order-2 lg:sticky lg:top-24">
           {
             post?.locations?.length > 0 && (
-              <div class="flex flex-wrap items-center gap-3">
+              <div class="flex flex-wrap items-center gap-2">
                 {country && country?.countryCode && (
                   <CountryShape
                     countryCode={country.countryCode}
@@ -133,13 +127,15 @@ const country = post?.locations?.find(
                       location.type === 'country' ? (
                         <a
                           href={`/country/${location.slug}`}
-                          class="type-sm rounded-full border border-current/20 px-3 py-1 transition-all hover:border-secondary hover:bg-secondary/10"
+                          class="text-xs font-semibold uppercase tracking-wider rounded-full px-2.5 py-1 transition-all duration-300 backdrop-blur-sm bg-current/10 hover:bg-current/20 text-current dark:bg-current/20 dark:hover:bg-current/30 dark:text-white"
                         >
                           {location.name}
                         </a>
                       ) : (
-                        <span class="type-sm text-current/70">{location.name}</span>
-                      ),
+                        <span class="text-xs font-semibold uppercase tracking-wider text-current/70">
+                          {location.name}
+                        </span>
+                      )
                     )}
                   </div>
                 )}
@@ -157,7 +153,10 @@ const country = post?.locations?.find(
                 class="prose prose-lg max-w-none text-current/80 prose-headings:font-bold prose-headings:text-current prose-a:link-reverse prose-strong:text-current"
                 transition:name={`post_${post._id}_description`}
               >
-                <PortableText value={post.body || post.summary} components={{}} />
+                <PortableText
+                  value={post.body || post.summary}
+                  components={{}}
+                />
               </div>
             )
           }
@@ -178,11 +177,13 @@ const country = post?.locations?.find(
   {
     post?.morePosts && post?.morePosts?.length > 0 && (
       <section class="mb-20 lg:mb-24">
-        <div class="container mb-12 text-center">
-          <h2 class="type-h2 mb-4">More from the Gallery</h2>
-          <p class="type-md text-current/70">Discover more manhole cover designs</p>
+        <div class="container mb-6">
+          <h2 class="type-h4 mb-2">More from the Gallery</h2>
+          <p class="type-sm text-current/70">
+            Discover more manhole cover designs
+          </p>
         </div>
-        <div class="gallery-grid w-full px-4 sm:px-6 lg:px-8 xl:px-12">
+        <div class="gallery-grid w-full">
           {post.morePosts.map((post) => (
             <PostTeaser
               imageSizes="(max-width: 474px) 100vw, (max-width: 1023px) 50vw, 20.625rem"

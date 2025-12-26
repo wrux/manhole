@@ -11,9 +11,9 @@
   --color-surface: #f8f8f8;
   --color-surface-dark: #0a0a0a;
 
-  --font-family-sans: 'InterVariable', Inter, ui-sans-serif, system-ui,
-    sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol',
-    'Noto Color Emoji';
+  --font-family-sans:
+    'InterVariable', Inter, ui-sans-serif, system-ui, sans-serif,
+    'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
 
   --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.05);
   --shadow-md: 0 4px 6px rgba(0, 0, 0, 0.1);
@@ -74,15 +74,11 @@
 
   /* Gallery grid - dynamic columns, ~360px card width */
   .gallery-grid {
+    gap: 0;
+    width: 100%;
+    max-width: none;
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(min(360px, 100%), 1fr));
-    gap: 1rem;
-  }
-
-  @media (min-width: 640px) {
-    .gallery-grid {
-      gap: 1.5rem;
-    }
   }
 
   /* Card hover effect */
@@ -120,7 +116,10 @@
   }
 
   .header-circle {
-    transition: stroke 0.5s ease, fill 0.5s ease, stroke-width 0.5s ease;
+    transition:
+      stroke 0.5s ease,
+      fill 0.5s ease,
+      stroke-width 0.5s ease;
     fill: transparent;
   }
 

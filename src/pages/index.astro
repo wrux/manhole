@@ -13,19 +13,20 @@ const posts = await getPostTeasers();
         <span class="sr-only">Manhole Gallery</span>
         <span class="block">The Pavement</span>
         <span
-          class="block bg-gradient-to-r from-secondary to-tertiary bg-clip-text text-transparent"
+          class="block bg-linear-to-r from-secondary to-tertiary bg-clip-text text-transparent"
           >Chronicles</span
         >
       </h1>
       <p class="type-lg mb-8 leading-relaxed text-current/80 md:mb-12">
-        Discover the <em
-          class="not-italic font-semibold text-secondary">unseen</em
-        > artistry of manhole covers from cities around the world. Each design tells a story of culture, craftsmanship, and the beauty found in everyday infrastructure.
+        Discover the <em class="not-italic font-semibold text-secondary"
+          >unseen</em
+        > artistry of manhole covers from cities around the world. Each design tells
+        a story of culture, craftsmanship, and the beauty found in everyday infrastructure.
       </p>
     </div>
   </div>
 
-  <div class="gallery-grid w-full px-4 sm:px-6 lg:px-8 xl:px-12">
+  <div class="gallery-grid w-full">
     {
       posts.map((post, index) => (
         <PostTeaser
