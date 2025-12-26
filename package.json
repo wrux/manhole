@@ -37,6 +37,7 @@
     "tailwindcss": "^4.1.18"
   },
   "optionalDependencies": {
-    "@rollup/rollup-linux-x64-gnu": "^4.54.0"
+    "@rollup/rollup-linux-x64-gnu": "^4.54.0",
+    "lightningcss-linux-x64-gnu": "^1.30.2"
   }
 }
