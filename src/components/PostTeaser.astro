@@ -21,32 +21,37 @@ function urlFor(source: SanityImageSource, size: number): string {
 }
 ---
 
-<article class="group relative">
-  {
-    post?.mainImage && (
-      <figure>
-        <img
-          alt={post.mainImage?.alt || ''}
-          title={post.mainImage?.alt}
-          class="absolute inset-0 aspect-square h-auto max-w-full bg-gray-100 object-cover"
-          srcset={sizes
-            .map((size) => `${urlFor(post.mainImage, size)} ${size}w`)
-            .join(', ')}
-          sizes={imageSizes}
-          src={urlFor(post.mainImage, 768)}
-          width="1024"
-          height="1024"
-          loading={lazy ? 'lazy' : 'eager'}
-        />
-      </figure>
-    )
-  }
-  <div class="relative z-10 flex aspect-square items-end p-4 lg:p-8">
-    <a
-      class="before:bg-primary/50 block text-2xl font-bold leading-none text-white opacity-0 transition-all duration-500 before:absolute before:inset-0 before:z-[-1] hover:opacity-100 focus:opacity-100 md:text-3xl lg:text-5xl"
-      href={`/post/${post.slug}`}
-    >
-      {post.title}
-    </a>
-  </div>
+<article class="group relative overflow-hidden rounded-lg bg-surface shadow-md transition-all duration-500 hover:shadow-xl dark:bg-surface-dark">
+  <a href={`/post/${post.slug}`} class="block">
+    {
+      post?.mainImage && (
+        <figure class="relative aspect-square overflow-hidden">
+          <img
+            alt={post.mainImage?.alt || post.title}
+            title={post.mainImage?.alt || post.title}
+            class="h-full w-full object-cover transition-transform duration-700 group-hover:scale-110"
+            srcset={sizes
+              .map((size) => `${urlFor(post.mainImage, size)} ${size}w`)
+              .join(', ')}
+            sizes={imageSizes}
+            src={urlFor(post.mainImage, 768)}
+            width="1024"
+            height="1024"
+            loading={lazy ? 'lazy' : 'eager'}
+          />
+          <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent opacity-0 transition-opacity duration-500 group-hover:opacity-100"></div>
+        </figure>
+      )
+    }
+    <div class="absolute inset-0 flex items-end p-6 opacity-0 transition-all duration-500 group-hover:opacity-100 lg:p-8">
+      <h3 class="type-h3 text-white drop-shadow-lg">
+        {post.title}
+      </h3>
+    </div>
+    <div class="absolute bottom-0 left-0 right-0 p-6 lg:p-8">
+      <h3 class="type-h4 text-current transition-opacity duration-500 group-hover:opacity-0">
+        {post.title}
+      </h3>
+    </div>
+  </a>
 </article>

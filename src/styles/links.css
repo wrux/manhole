@@ -1,52 +1,65 @@
 .button {
-  @apply border-gray-500 px-6 py-3 text-base transition-colors duration-300;
+  @apply relative px-8 py-4 text-sm font-semibold uppercase tracking-wider transition-all duration-300;
+  @apply border-2 border-current bg-transparent;
+  @apply hover:bg-current hover:text-white;
+  @apply focus:outline-none focus:ring-2 focus:ring-current focus:ring-offset-2;
 
   display: inline-block;
-  border-width: 2px;
-  background-color: transparent;
   border-radius: 9999px;
   cursor: pointer;
-  font-weight: 600;
-  text-transform: uppercase;
-  letter-spacing: 0.05em;
   line-height: 1;
+  overflow: hidden;
+}
 
-  &:hover,
-  &:focus {
-    @apply bg-secondary border-secondary;
-  }
+.button::before {
+  content: '';
+  @apply absolute inset-0 rounded-full bg-current opacity-0 transition-opacity duration-300;
+  transform: scale(0);
+}
+
+.button:hover::before {
+  @apply opacity-100;
+  transform: scale(1);
+}
+
+.button span {
+  @apply relative z-10;
 }
 
 .link {
-  @apply text-primary dark:text-tertiary transition-colors;
+  @apply relative text-current transition-colors duration-200;
+  @apply hover:text-secondary;
+
+  display: inline-block;
+  cursor: pointer;
+  text-decoration: none;
+  position: relative;
+}
+
+.link::after {
+  content: '';
+  @apply absolute bottom-0 left-0 h-0.5 w-0 bg-secondary transition-all duration-300;
+}
+
+.link:hover::after,
+.link:focus::after {
+  @apply w-full;
+}
+
+.link-reverse {
+  @apply relative text-current transition-all duration-200;
+  @apply hover:text-secondary;
 
   display: inline-block;
   cursor: pointer;
   text-decoration: underline;
   text-decoration-color: currentColor;
   text-underline-offset: 0.3em;
-
-  &:hover,
-  &:focus {
-    @apply text-secondary;
-
-    text-decoration-color: transparent;
-  }
+  text-decoration-thickness: 2px;
 }
 
-.link-reverse {
-  @apply transition-colors;
-
-  display: inline-block;
-  cursor: pointer;
+.link-reverse:hover,
+.link-reverse:focus {
+  @apply text-secondary;
   text-decoration-color: transparent;
-  text-decoration-color: currentColor;
-  text-underline-offset: 0.3em;
-
-  &:hover,
-  &:focus {
-    @apply text-secondary;
-
-    text-decoration: underline;
-  }
 }

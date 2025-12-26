@@ -23,62 +23,62 @@ const country = Astro.props;
     title: `${country.name} | Manhole Gallery`,
   }}
 >
-  <article class="mx-auto max-w-[125rem]">
-    <div>
-      <div class="container">
-        <div
-          class="flex flex-col gap-y-8 md:flex-row md:items-end md:justify-between"
-        >
-          <div
-            class="space-y-6 text-center md:space-y-8 md:text-left lg:space-y-10"
-          >
-            {
-              country?.countryCode && (
-                <CountryShape
-                  countryCode={country.countryCode}
-                  class:list="mx-auto md:mx-0 max-w-full"
-                  transition:name={`country_${country._id}`}
-                />
-              )
-            }
-            <div class="space-y-2">
-              <h1 class="type-h1">{country.name}</h1>
-              {
-                country.nameLocalised && (
-                  <p class="type-h3 text-primary/80">
-                    {country.nameLocalised}
-                  </p>
-                )
-              }
-            </div>
-          </div>
+  <article class="container mb-20 lg:mb-24">
+    <div class="mx-auto max-w-4xl">
+      <div class="mb-16 text-center">
+        <div class="mb-8 flex justify-center">
+          {
+            country?.countryCode && (
+              <CountryShape
+                countryCode={country.countryCode}
+                class:list="mx-auto max-w-full"
+                transition:name={`country_${country._id}`}
+              />
+            )
+          }
+        </div>
+        <div class="space-y-3">
+          <h1 class="type-h1">{country.name}</h1>
+          {
+            country.nameLocalised && (
+              <p class="type-h3 text-current/70">
+                {country.nameLocalised}
+              </p>
+            )
+          }
+        </div>
+      </div>
 
-          <div class="text-center md:text-right">
-            <p class="type-md mb-2">Other countries</p>
-            <p class="type-sm flex justify-center md:justify-end gap-2 flex-wrap">
+      {
+        countries && countries.filter(({ _id }) => _id != country._id).length > 0 && (
+          <div class="mb-16">
+            <div class="mb-4 flex justify-center">
+              <div class="h-px w-12 bg-current/20"></div>
+            </div>
+            <div class="flex flex-wrap justify-center gap-2 md:gap-3">
               {
                 countries
-                  ?.filter(({ _id }) => _id != country._id)
-                  ?.map((country) => (
+                  .filter(({ _id }) => _id != country._id)
+                  .map((c) => (
                     <a
-                      class="link"
-                      href={`/country/${country.slug}`}
-                      aria-label={`View all posts in ${country.name}`}
-                      transition:name={`country_list_${country._id}`}
+                      class="type-sm rounded-full border border-current/20 px-4 py-2 transition-all hover:border-secondary hover:bg-secondary/10"
+                      href={`/country/${c.slug}`}
+                      aria-label={`View all posts in ${c.name}`}
+                      transition:name={`country_list_${c._id}`}
                     >
-                      {country.name}
+                      {c.name}
                     </a>
                   ))
               }
-            </p>
+            </div>
           </div>
-        </div>
-      </div>
+        )
+      }
     </div>
 
     {
       country?.posts && country.posts.length > 0 && (
-        <div class="xs:grid-cols-2 mx-auto mt-8 grid max-w-[125rem] flex-1 grid-cols-1 justify-start gap-4 align-top md:mt-10 lg:mt-12 lg:grid-cols-3">
+        <div class="gallery-grid">
           {country.posts.map((post, index) => (
             <PostTeaser
               imageSizes="(max-width: 474px) 100vw, (max-width: 1023px) 50vw, (max-width: 125rem) 33.334vw, 40rem"

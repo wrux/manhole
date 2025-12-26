@@ -12,23 +12,23 @@ const labels = {
 };
 ---
 
-<div {...props}>
-  <p class="type-h6 mb-3">Credits</p>
+<div {...props} class="rounded-lg border border-current/10 bg-surface/50 p-6 dark:bg-surface-dark/50">
+  <p class="type-h6 mb-4">Credits</p>
   {
     credits.length > 0 ? (
-      <div class="space-y-1.5">
+      <div class="space-y-3">
         {credits.map((credit) => {
           const label = labels?.[credit.type];
           return (
-            <div>
-              <p>
+            <div class="space-y-1">
+              <p class="type-sm">
                 {label && (
-                  <span class="mr-1 inline font-semibold">{label}</span>
+                  <span class="mr-2 inline font-semibold text-current/70">{label}</span>
                 )}
                 {credit?.person?.website ? (
                   <a
                     href={credit?.person?.website}
-                    class="link"
+                    class="link-reverse"
                     target="_blank"
                     rel="noreferrer"
                   >
@@ -39,13 +39,13 @@ const labels = {
                   <span>{credit?.person?.fullName}</span>
                 )}
               </p>
-              {credit?.note && <p class="text-sm italic">{credit.note}</p>}
+              {credit?.note && <p class="type-sm italic text-current/60">{credit.note}</p>}
             </div>
           );
         })}
       </div>
     ) : (
-      <p>No credits.</p>
+      <p class="type-sm text-current/60">No credits.</p>
     )
   }
 </div>

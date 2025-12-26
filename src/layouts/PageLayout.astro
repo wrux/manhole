@@ -18,11 +18,23 @@ const { meta } = Astro.props;
 <BaseLayout meta={meta}>
   <header
     id="site-header"
-    class="sticky top-0 z-50 mb-8 w-full bg-white/70 py-4 backdrop-blur-lg transition-all duration-300 dark:bg-black/70"
+    class="sticky top-0 z-50 mb-8 w-full py-6 transition-all duration-300 lg:mb-12"
   >
-    <div class="container flex justify-center md:justify-start">
-      <a class="block w-full text-lg md:w-auto lg:text-2xl" href="/">
-        <Wordmark />
+    <div class="container">
+      <a
+        href="/"
+        class="group inline-flex items-center gap-3 transition-opacity duration-300 hover:opacity-70"
+        aria-label="Manhole Gallery - Home"
+      >
+        <div
+          class="relative h-2 w-2 rounded-full border border-current transition-all duration-500 group-hover:scale-125 group-hover:border-secondary"
+          aria-hidden="true"
+        >
+          <div class="absolute inset-0 rounded-full bg-current opacity-0 blur-sm transition-opacity duration-500 group-hover:opacity-20"></div>
+        </div>
+        <span class="text-xs font-semibold uppercase tracking-wider text-current/80 transition-colors group-hover:text-current">
+          Manhole Gallery
+        </span>
       </a>
     </div>
   </header>
@@ -31,48 +43,49 @@ const { meta } = Astro.props;
     <slot />
   </main>
 
-  <footer class="mb-16 mt-8 w-full md:mb-24 md:mt-12 lg:mb-32 lg:mt-16">
+  <footer class="mt-20 w-full border-t border-current/10 py-16 md:mt-24 md:py-20">
     <div class="container">
-      <div
-        class="grid gap-x-16 gap-y-8 text-center md:grid-cols-2 md:text-start xl:grid-cols-4"
-      >
-        <div class="md:col-span-2 xl:col-span-1">
-          <a class="block w-full text-lg md:w-auto" href="/">
+      <div class="grid gap-12 md:grid-cols-2 lg:grid-cols-3">
+        <div>
+          <a class="mb-6 block text-xl transition-transform duration-300 hover:scale-105" href="/">
             <Wordmark />
           </a>
+          <p class="type-sm text-current/70">
+            A gallery celebrating the hidden art beneath our feet.
+          </p>
         </div>
 
-        <div class="space-y-4 xl:col-span-2">
-          <p class="type-h5 leading-none border-t-2 border-current pt-8 lg:mt-4">
-            About
+        <div class="space-y-4">
+          <p class="type-h6">About</p>
+          <p class="type-sm text-current/70">
+            Manhole Gallery is a collection of manhole cover designs from around the world, showcasing the artistic and cultural diversity found in urban infrastructure.
           </p>
-          <p class="type-sm">
-            Manhole is a collection of images of manhole covers from around the
-            world.
-          </p>
-          <p class="type-sm">
-            Manhole is an open source project by <a
+          <p class="type-sm text-current/70">
+            An open source project by <a
               href="https://callum.co.uk"
               target="_blank"
-              class="link">Callum Bonnyman</a
+              class="link-reverse">Callum Bonnyman</a
             >.
           </p>
         </div>
 
         <div class="space-y-4">
-          <p class="type-h5 leading-none border-t-2 border-current pt-8 lg:mt-4">
-            Like this website?
-          </p>
-          <p class="type-sm">
-            Check out and star the project on
+          <p class="type-h6">Contribute</p>
+          <p class="type-sm text-current/70">
+            Found this project interesting? Check it out on
             <a
               href="https://github.com/wrux/manhole"
               rel="nofollow"
-              class="link"
-              target="_blank">Github</a
+              class="link-reverse"
+              target="_blank">GitHub</a
             >.
           </p>
         </div>
+      </div>
+      <div class="mt-12 border-t border-current/10 pt-8 text-center">
+        <p class="type-sm text-current/60">
+          © {new Date().getFullYear()} Manhole Gallery. All rights reserved.
+        </p>
       </div>
     </div>
   </footer>

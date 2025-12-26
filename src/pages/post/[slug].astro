@@ -86,94 +86,103 @@ const country = post?.locations?.find(
       imageBuilder.image(post.mainImage).width(1600).height(900).url(),
   }}
 >
-  <article class="mx-auto mb-16 grid max-w-[125rem] gap-y-8 sm:grid-cols-2">
-    <div>
-      {
-        post?.mainImage && (
-          <figure class="aspect-square h-auto max-w-full">
-            <img
-              alt={post.mainImage?.alt || ''}
-              title={post.mainImage?.alt}
-              class="aspect-square h-auto max-w-full bg-gray-100 object-cover"
-              srcset={sizes
-                .map((size) => `${urlFor(post.mainImage, size)} ${size}w`)
-                .join(', ')}
-              sizes="(max-width: 639px) 100vw, (max-width: 1999px) 50vw, 62.5rem"
-              src={urlFor(post.mainImage, 768)}
-              width="1024"
-              height="1024"
-            />
-          </figure>
-        )
-      }
-    </div>
+  <article class="container mb-20 lg:mb-24">
+    <div class="mx-auto max-w-6xl">
+      <div class="mb-12 grid gap-12 lg:grid-cols-2 lg:items-start">
+        <div class="order-2 lg:order-1">
+          {
+            post?.mainImage && (
+              <figure class="relative overflow-hidden rounded-2xl bg-surface shadow-xl dark:bg-surface-dark">
+                <img
+                  alt={post.mainImage?.alt || post.title}
+                  title={post.mainImage?.alt || post.title}
+                  class="aspect-square w-full object-cover"
+                  srcset={sizes
+                    .map((size) => `${urlFor(post.mainImage, size)} ${size}w`)
+                    .join(', ')}
+                  sizes="(max-width: 1023px) 100vw, 50vw"
+                  src={urlFor(post.mainImage, 1024)}
+                  width="1024"
+                  height="1024"
+                />
+                <div class="absolute inset-0 rounded-2xl ring-1 ring-inset ring-current/5"></div>
+              </figure>
+            )
+          }
+        </div>
 
-    <div class="space-y-6 px-4 sm:px-8 md:px-12 lg:px-16">
-      {
-        post?.locations?.length > 0 && (
-          <div class="flex items-center gap-4">
-            {country && country?.countryCode && (
-              <CountryShape
-                countryCode={country.countryCode}
-                size="xs"
-                transition:name={`country_${country._id}`}
-              />
-            )}
-
-            {post?.locations && (
-              <p
-                class="type-md flex flex-wrap gap-3"
-                transition:name={`post_${post._id}_locations`}
-              >
-                <span class="sr-only">Locations:</span>
-                {post.locations.map((location) =>
-                  location.type === 'country' ? (
-                    <a href={`/country/${location.slug}`} class="link">
-                      {location.name}
-                    </a>
-                  ) : (
-                    <span>{location.name}</span>
-                  ),
+        <div class="order-1 space-y-8 lg:order-2 lg:sticky lg:top-24">
+          {
+            post?.locations?.length > 0 && (
+              <div class="flex flex-wrap items-center gap-3">
+                {country && country?.countryCode && (
+                  <CountryShape
+                    countryCode={country.countryCode}
+                    size="xs"
+                    transition:name={`country_${country._id}`}
+                  />
                 )}
-              </p>
-            )}
-          </div>
-        )
-      }
 
-      <h1 class="type-h1 mb-4" transition:name={`post_${post._id}_title`}>
-        {post.title}
-      </h1>
+                {post?.locations && (
+                  <div
+                    class="flex flex-wrap items-center gap-2"
+                    transition:name={`post_${post._id}_locations`}
+                  >
+                    <span class="sr-only">Locations:</span>
+                    {post.locations.map((location) =>
+                      location.type === 'country' ? (
+                        <a
+                          href={`/country/${location.slug}`}
+                          class="type-sm rounded-full border border-current/20 px-3 py-1 transition-all hover:border-secondary hover:bg-secondary/10"
+                        >
+                          {location.name}
+                        </a>
+                      ) : (
+                        <span class="type-sm text-current/70">{location.name}</span>
+                      ),
+                    )}
+                  </div>
+                )}
+              </div>
+            )
+          }
 
-      {
-        (post?.body || post?.summary) && (
-          <div
-            class="max-w-[50ch] lg:py-2"
-            transition:name={`post_${post._id}_description`}
-          >
-            <PortableText value={post.body || post.summary} components={{}} />
-          </div>
-        )
-      }
+          <h1 class="type-h1 mb-6" transition:name={`post_${post._id}_title`}>
+            {post.title}
+          </h1>
 
-      {
-        post?.credits && post.credits.length > 0 && (
-          <Credits
-            credits={post.credits}
-            transition:name={`post_${post._id}_credits`}
-          />
-        )
-      }
+          {
+            (post?.body || post?.summary) && (
+              <div
+                class="prose prose-lg max-w-none text-current/80 prose-headings:font-bold prose-headings:text-current prose-a:link-reverse prose-strong:text-current"
+                transition:name={`post_${post._id}_description`}
+              >
+                <PortableText value={post.body || post.summary} components={{}} />
+              </div>
+            )
+          }
+
+          {
+            post?.credits && post.credits.length > 0 && (
+              <Credits
+                credits={post.credits}
+                transition:name={`post_${post._id}_credits`}
+              />
+            )
+          }
+        </div>
+      </div>
     </div>
   </article>
 
-      {
-        post?.morePosts && post?.morePosts?.length > 0 && (
-          <section class="container">
-            <div class="mb-8 text-center lg:mb-12">
-              <h2 class="type-h2">More Posts</h2>
-            </div>
-        <div class="xs:grid-cols-2 grid grid-cols-1 justify-start gap-4 align-top lg:grid-cols-3">
+  {
+    post?.morePosts && post?.morePosts?.length > 0 && (
+      <section class="container mb-20 lg:mb-24">
+        <div class="mb-12 text-center">
+          <h2 class="type-h2 mb-4">More from the Gallery</h2>
+          <p class="type-md text-current/70">Discover more manhole cover designs</p>
+        </div>
+        <div class="gallery-grid">
           {post.morePosts.map((post) => (
             <PostTeaser
               imageSizes="(max-width: 474px) 100vw, (max-width: 1023px) 50vw, 20.625rem"

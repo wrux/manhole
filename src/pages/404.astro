@@ -7,22 +7,25 @@ const posts = await getPostTeasers(6);
 ---
 
 <PageLayout>
-  <div class="container mb-8 md:mb-12 lg:mb-16">
-    <div class="mx-auto max-w-[50ch] text-center md:mx-0 md:text-left">
-      <h1 class="type-h1 mb-8">404: Manhole not found!</h1>
-      <p class="type-lg mb-2">
+  <div class="container mb-16 md:mb-20 lg:mb-24">
+    <div class="mx-auto max-w-2xl text-center">
+      <div class="mb-8 flex justify-center">
+        <div class="manhole-accent">
+          <div class="h-24 w-24 rounded-full border-8 border-current"></div>
+        </div>
+      </div>
+      <h1 class="type-h1 mb-6">404: Manhole not found!</h1>
+      <p class="type-lg mb-8 text-current/80">
         Looks like our cover got away. While we search, enjoy more hole-some
         content on our site!
       </p>
-      <p class="type-md">
-        <a class="link" href="/">Go to the home page</a>
-      </p>
+      <a class="button" href="/">
+        <span>Return to Gallery</span>
+      </a>
     </div>
   </div>
 
-  <div
-    class="xs:grid-cols-2 mx-auto grid max-w-[125rem] flex-1 grid-cols-1 justify-start gap-4 align-top lg:grid-cols-3"
-  >
+  <div class="container gallery-grid">
     {
       posts.map((post) => (
         <PostTeaser

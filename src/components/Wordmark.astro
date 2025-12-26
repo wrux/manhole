@@ -1,12 +1,12 @@
 <div
-  class="group flex items-center gap-[0.333em] font-bold uppercase tracking-wider"
+  class="group flex items-center gap-2 font-bold uppercase tracking-wider transition-transform duration-300"
 >
   <span class="flex-1 text-right">manhole</span>
   <div
-    class="aspect-square h-[1.666em] w-[1.666em] shrink-0 rounded-full border-[0.333em] border-current"
+    class="relative aspect-square h-6 w-6 shrink-0 rounded-full border-2 border-current transition-all duration-300 group-hover:scale-110 group-hover:border-secondary md:h-7 md:w-7"
     aria-hidden="true"
-    user-select="none"
   >
+    <div class="absolute inset-0 rounded-full bg-current/10 opacity-0 transition-opacity duration-300 group-hover:opacity-100"></div>
   </div>
   <span class="flex-1 text-left">gallery</span>
 </div>
