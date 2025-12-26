@@ -1,5 +1,5 @@
 ---
-import { getCountries, getCountryList } from '~/sanity/queries';
+import { getCountries } from '~/sanity/queries';
 import PageLayout from '~/layouts/PageLayout.astro';
 import { CountryShape, PostTeaser } from '~/components';
 
@@ -10,8 +10,6 @@ export async function getStaticPaths() {
     props: country,
   }));
 }
-
-const countries = await getCountryList();
 
 export type Props = Country;
 
@@ -40,38 +38,10 @@ const country = Astro.props;
         <h1 class="type-h1">{country.name}</h1>
         {
           country.nameLocalised && (
-            <p class="type-h3 text-current/70">
-              {country.nameLocalised}
-            </p>
+            <p class="type-h3">{country.nameLocalised}</p>
           )
         }
       </div>
-
-      {
-        countries && countries.filter(({ _id }) => _id != country._id).length > 0 && (
-          <div class="mt-12">
-            <div class="mb-4 flex justify-center">
-              <div class="h-px w-12 bg-current/20"></div>
-            </div>
-            <div class="flex flex-wrap justify-center gap-2 md:gap-3">
-              {
-                countries
-                  .filter(({ _id }) => _id != country._id)
-                  .map((c) => (
-                    <a
-                      class="type-sm rounded-full border border-current/20 px-4 py-2 transition-all hover:border-secondary hover:bg-secondary/10"
-                      href={`/country/${c.slug}`}
-                      aria-label={`View all posts in ${c.name}`}
-                      transition:name={`country_list_${c._id}`}
-                    >
-                      {c.name}
-                    </a>
-                  ))
-              }
-            </div>
-          </div>
-        )
-      }
     </div>
   </div>
 

@@ -1,10 +1,9 @@
 ---
-import { getCountryList, getPostTeasers } from '~/sanity/queries';
+import { getPostTeasers } from '~/sanity/queries';
 import PageLayout from '~/layouts/PageLayout.astro';
 import { PostTeaser } from '~/components';
 
 const posts = await getPostTeasers();
-const countries = await getCountryList();
 ---
 
 <PageLayout>
@@ -23,23 +22,6 @@ const countries = await getCountryList();
           class="not-italic font-semibold text-secondary">unseen</em
         > artistry of manhole covers from cities around the world. Each design tells a story of culture, craftsmanship, and the beauty found in everyday infrastructure.
       </p>
-
-      {
-        countries && countries.length > 0 && (
-          <div class="flex flex-wrap justify-center gap-2 md:gap-3">
-            {countries.map((country) => (
-              <a
-                class="type-sm rounded-full border border-current/20 px-4 py-2 transition-all hover:border-secondary hover:bg-secondary/10"
-                href={`/country/${country.slug}`}
-                aria-label={`View all posts in ${country.name}`}
-                transition:name={`country_list_${country._id}`}
-              >
-                {country.name}
-              </a>
-            ))}
-          </div>
-        )
-      }
     </div>
   </div>
 
